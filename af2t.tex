@@ -1,0 +1,408 @@
+\documentclass[kpfonts]{patmorin}
+\listfiles
+\usepackage{pat}
+\usepackage{paralist}
+\usepackage{dsfont}  % for \mathds{A}
+\usepackage[utf8x]{inputenc}
+\usepackage{skull}
+
+\usepackage{graphicx}
+\usepackage[noend]{algorithmic}
+
+\usepackage[normalem]{ulem}
+\usepackage{cancel}
+\usepackage{enumitem}
+
+\usepackage{todonotes}
+
+\usepackage[longnamesfirst,numbers,sort&compress]{natbib}
+
+\usepackage[mathlines]{lineno}
+\setlength{\linenumbersep}{2em}
+% \linenumbers
+% \rightlinenumbers
+% \linenumbers
+\newcommand*\patchAmsMathEnvironmentForLineno[1]{%
+ \expandafter\let\csname old#1\expandafter\endcsname\csname #1\endcsname
+ \expandafter\let\csname oldend#1\expandafter\endcsname\csname end#1\endcsname
+ \renewenvironment{#1}%
+    {\linenomath\csname old#1\endcsname}%
+    {\csname oldend#1\endcsname\endlinenomath}}%
+\newcommand*\patchBothAmsMathEnvironmentsForLineno[1]{%
+ \patchAmsMathEnvironmentForLineno{#1}%
+ \patchAmsMathEnvironmentForLineno{#1*}}%
+\AtBeginDocument{%
+\patchBothAmsMathEnvironmentsForLineno{equation}%
+\patchBothAmsMathEnvironmentsForLineno{align}%
+\patchBothAmsMathEnvironmentsForLineno{flalign}%
+\patchBothAmsMathEnvironmentsForLineno{alignat}%
+\patchBothAmsMathEnvironmentsForLineno{gather}%
+\patchBothAmsMathEnvironmentsForLineno{multline}%
+}
+
+
+\newcommand{\coloured}[2]{{\color{#1}{#2}}}
+
+% Taken from
+% https://tex.stackexchange.com/questions/42726/align-but-show-one-equation-number-at-the-end
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+
+\setlength{\parskip}{1ex}
+
+\title{\MakeUppercase{(Layered) Partitions versus Decompositions}}
+\author{}
+
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\tw}{tw}
+\DeclareMathOperator{\stw}{stw}
+\DeclareMathOperator{\ltw}{ltw}
+\DeclareMathOperator{\pw}{pw}
+\DeclareMathOperator{\lpw}{lpw}
+\DeclareMathOperator{\lhptw}{lhp-tw}
+\DeclareMathOperator{\lhppw}{lhp-pw}
+
+\newcommand{\ellt}{{\lfloor\ell/2\rfloor}}
+
+\title{\MakeUppercase{Anagram-Free Edge-Colouring of 2-Trees}\thanks{This research was partly funded by NSERC.}}
+\author{Saman Bazarghani%
+    \thanks{Department of Computer Science and Electrical Engineering, University of Ottawa}\qquad
+    Therese Biedl%
+    \thanks{Department of Computer Science and Electrical Engineering, University of Ottawa}\qquad
+    Vida Dujmović\footnotemark[2]\qquad
+    Pat Morin\footnotemark[3]%
+    \thanks{School of Computer Science, Carleton University}}
+
+\DeclareMathOperator{\ddiv}{div}
+
+\newcommand{\colored}[2]{{\color{#1}#2}}
+
+
+\pagenumbering{roman}
+\begin{document}
+\maketitle
+
+\section{Shifting Lemmas}
+
+In this section we prove a useful shifting lemma inspired by work on data structures for approximate nearest-neighbour searching \cite{chan:closest-point}.
+
+The following lemma says that there are $b$ special shift values such that, for any $x$ and $y$ there exists a shift $s$ so that the radix-$b$ representations of $x+s$ and $y+s$ agree up to the $r$-th significant digit, i.e., $(x+s)\ddiv b^r=(y+s)\ddiv b^r$.
+
+\begin{clm}\label{one_bucket}
+    Let $w$ and $b$ be positive integers, let $0\le x < y < 2^w$ be two integers and let $r=\lceil\log_{b}(y-x+1)\rceil$.  For each $i\in\{0,\ldots,b-1\}$, let $s_i=\sum_{j=0}^w i\cdot b^j$. Then there exists $i\in\{0,\ldots,b-1\}$ such that
+   $\lfloor (x+s_j)/b^r\rfloor = \lfloor (y+s_j)/b^r\rfloor$; and
+\end{clm}
+
+\begin{proof}
+    TODO.
+\end{proof}
+
+For example, when $b=10$, $x=98$ and $y=105$, $y-x+1=8$, we have $r=\lceil\log_{10} 8\rceil=1$ and we take $s_j=2222$ so that $x+2222 = 2300$, and $y+2222=2307$.  The next observation just follows from the the fact that, in order to store $n=x-y+1$ objects in blocks of size at most $m=b^{r-1}$ we require at least $\lceil n/m\rceil$ blocks.
+
+\begin{obs}\label{big_gap}
+    The quantities in \cref{one_bucket} satisfy the equation $\lfloor(y+s_j)/b^{r-1}\rfloor-\lfloor(x+s_j)/b^{r-1}\rfloor+1\ge\lceil(y-x+1)/b^{r-1}\rceil\ge 2$.
+\end{obs}
+
+
+\section{Anagrams and Annoyagrams}
+
+An even-length string $s_1,\ldots,s_{2k}$ is an \emph{anagram} if $s_1,\ldots,s_k$ is a permutation of $s_{k+1},\ldots,s_{2k}$.  An \emph{annoyance} of a string $s=s_1,\ldots,s_n$ is a string obtained by duplicating a prefix of $s$ of length at most $n/2$ and duplicating a suffix of $s$ of length at most $n/2$.  More precisely, for $b <a$, let $s_a,\ldots,s_b$ be defined as the empty string.  For any integers $i\in\{0,\ldots,\floor{n/2}\}$ and $j\in\{\floor{n/2}+1,\ldots,n+1\}$, the string
+\[
+    s_1,\ldots,s_{i}, s_1,\ldots,s_n,s_{j},\ldots,s_n
+\]
+is an annoyance of $s$. A string $s$ is an \emph{annoyagram} if is has an annoyance $s'$ that is an anagram.
+
+For example, the string $\colored{blue}{b}zaxbzcxb\colored{red}{acbxzb}$ is not an anagram (there are an odd number of occurences of $z$), but it is an annoyagram since the annoyance $\colored{blue}{bb}zaxbzcx\,b\colored{red}{acbxzb acbxzb}$ is an anagram.  Note that an anagram has even length, by definition, but an annoyagram can have any length greater than or equal to two. (For example, $aaa$ is an annoyagram.)
+
+A string is \emph{anagram-free} if none of its substrings is an anagram. A string is \emph{annoyagram-free} if none of its substrings is an annoyagram. The string $de\colored{blue}{b}zaxbzcxb\colored{red}{acbxzb}ed$ is anagram-free (this requires some effort to verify) but is not annoyagram-free since the substring $\colored{blue}{b}zaxbzcxb\colored{red}{acbxzb}$ is the annoyagram discussed in the preceding paragraph.
+
+\section{Long Annoyagram-Free Strings}
+
+
+We now construct a family of arbitrarily large annoyagram-free strings over a constant sized alphabet $\{\sigma_1,\ldots,\sigma_m\}$.  The main tool we use similar to Pleasants' construction for anagram-free strings over a five character alphabet \cite{pleasants:non-repetitive}.
+
+For each $i\in\{1,\ldots,m\}$, let $\Sigma_i$ be the string obtained from $\sigma_1,\ldots,\sigma_m$ by removing $\sigma_i$ to obtain $\sigma_{1},\ldots,\sigma_{i-1},\sigma_{i+1},\ldots,\sigma_m$ and then adding $\sigma_i$ between each pair of consecutive symbols.  Thus, $\Sigma_i$ has length $m-1+m-2=2m-3$, contains $m-2$ occurrences of $\sigma_i$ and one occurrence of $\sigma_j$ for each $j\in\{\sigma_1,\ldots,\sigma_m\}\setminus\{\sigma_i\}$.
+
+For example, for $m=5$, if we denote let $a,b,c,d,e$ denote $\sigma_1,\ldots,\sigma_5$ respectively and let $A,B,C,D,E$ denote $\Sigma_1,\ldots,\Sigma_5$, respectively, then we obtain the length-7 blocks
+\[ A = bacadae, \quad B=abcbdbe,\quad C=acbcdce,\quad D=adbdcde,\quad E=aebeced \]
+
+Observe that, for each $i\in\{1,\ldots,m\}$, $\Sigma_i$ is anagram-free since $\Sigma_i$ clearly has no length-2 anagrams and, for $k\ge 2$ any substring $s_1,\ldots,s_{2k}$ of $\Sigma_i$ has a symbol in $\{\sigma_1,\sigma_2\}$ that appears in $s_1,\ldots,s_k$ but not in $s_{k+1},\ldots,s_{2k}$.
+
+\begin{clm}\label{base_case}
+    For each $i\in\{1,\ldots,m\}$, $\Sigma_i$ is annoyagram-free.
+\end{clm}
+
+\begin{proof}
+    Consider any substring $s=s_1,\ldots,s_n$ of $\Sigma_j$ of length $n\ge 2$.  If $s$ has length $n=2$ then the only annoyance of $s$ is $s$ itself. We have already argued, above, that $\Sigma_i$ is anagram-free therefore $s$ is not an anagram.
+
+    If $n\ge 3$ then $s_a$ appears only once in $s$ for some $a\in\{1,2\}$. In any annoyance $s'$ of $s$, $s_a$ appears only in the first half of $s'$ (possibly twice) but does not appear at all in the second half of $s'$. Therefore $s'$ is not an anagram.
+\end{proof}
+
+For each $i\in\{1,\ldots,m\}$, let $S_i^0=\sigma_i$ and, for each positive integer $k$, let $S_i^k$ be the string obtained from $S_i^{k-1}$ by replacing each occurrence of $\sigma_j$ with the string $\Sigma_j$ for each $j\in\{1,\ldots,m\}$.
+
+\begin{clm}\label{counts}
+    For each $k\in N$,
+    \begin{compactenum}[(i)]
+        \item $|S_i^k| = (2m-3)^k$;
+        \item $S_i^k$ contains $\tfrac{1}{m}(2m-3)^k + \tfrac{m-1}{m}(m-3)^k$ occurences of $\sigma_i$; and
+        \item $S_i^k$ contains $\tfrac{1}{m}(2m-3)^k - \tfrac{1}{m}(m-3)^k$ occurrences of $\sigma_j$ for each $j\in\{1,\ldots,m\}\setminus\{i\}$.
+    \end{compactenum}
+\end{clm}
+
+Start with an easy warm-up exercise:
+
+\begin{clm}\label{warm_up}
+    Let $s=s_1,\ldots,s_{2r}$ be a non-empty even-length annoyance of $\Sigma_i$ and let $s'$ be obtained by replacing each occurrence of $\sigma_j$ in $s$ with $S_j^k$ for each $j\in\{1,\ldots,m\}$.  Then $s'$ is not an anagram.
+\end{clm}
+
+\begin{proof}
+    By \cref{base_case}, $s$ is not an anagram, so there is some character $\sigma_j$ that oocurs $p$ times in $s_1,\ldots,s_r$ and appears $q\neq p$ times in $s_{r+1},\ldots,s_{2r}$. By \cref{counts}, $\sigma_j$ appears exactly $\tfrac{r}{m}(2m-3)^k + \tfrac{pm-r}{m}(m-3)^k$ times in the first half of $s'$ and appears exactly $\tfrac{r}{m}(2m-3)^k + \tfrac{qm-r}{m}(m-3)^k$ times in the second half of $s'$.  Since $p\neq q$, $s'$ is therefore not an anagram.
+\end{proof}
+
+\Cref{warm_up} shows that if we restrict ourselves to annoyances whose defining points are ``nicely aligned'' then the annoyagram-freeness of $S_i^k$ is inherited from the annoyagram-freeness of $S_i^1=\Sigma_i$.  Thus, the main challenge that remains is to deal with annoyances whose definining points are not so cleanly aligned with block boundaries.  The proof of \cref{warm_up} offers a hint as to how we might achieve this since it shows that, in a nicely aligned annoyance there is a symbol $\sigma_j$ that occurs $(m-3)^k$ times more often in one half of the annoyance $s'$ than in the other half.  We will make use of this extreme imbalance to argue that there remains an imbalance even when the block boundaries are not so well aligned.  This requires come care because every symbols occurs $\tfrac{r}{m}(2m-3)^k\pm O(r(m-3)^k)$.
+
+\subsection{Density Lemmas}
+
+\begin{clm}\label{prefix_bounds}
+    Let $s$ be a proper prefix or a proper suffix of $S_i^k$.  Recall that $m\ge 5$ and let $\alpha:= 2+\tfrac{2}{m-4}$ and $\beta := 1+\tfrac{4}{m(m-4)}$.  Then
+    \begin{compactenum}[(i)]
+        \item for each $j\in\{1,\ldots,m\}$, $n_j(s)\ge |s|/m - \alpha(m-3)^{k-1}$;
+        \item $n_{i}(s) \le |s|/m+\beta(m-3)^k$; and
+        \item for each $j\in\{1,\ldots,m\}\setminus\{i'\}$, $n_j(s) \le |s|/m+ (\beta+1)(m-3)^{k-1}$.
+    \end{compactenum}
+\end{clm}
+
+\begin{proof}
+    The proof is the same whether $s$ is a prefix or a suffix of $S_i^k$ so we assume, without loss of generality, that $s$ is a prefix of $S_i^k$. The proof is by induction on $k$.  In the base case $k=0$ and $|s|=1$ and the conditions are easily verified. Now assume $k\ge 1$.
+
+    Let $d=\lfloor |s|/(2m-3)^{k-1}\rfloor$.  Since $s$ is a proper prefix of $S_i^k$, $|s|< (2m-3)^k$, so $d < 2m-3$. Split $s$ into a prefix $s'$ of length $d(2m-3)^{k-1}$ and a suffix $q$ containing the rest of $s$.
+    The prefix $s'$ consists of $d$ blocks $B_1,\ldots,B_{d}$ each of size $(2m-3)^{k-1}$.  Each block $B_r$ is $S_{i_r}^{k-1}$ for some $i_r\in\{1,\ldots,m\}$.
+
+    We now prove (i).  By \cref{counts} $n_j(B_r)\ge \tfrac{1}{m}(2m-3)^{k-1} - \tfrac{1}{m}(m-3)^{k-1}$ for each $r\in\{1,\ldots,d\}$.  Therefore,
+    \begin{align*}
+        n_j(s') & = \sum_{r=1}^d n_j(B_r) \\
+        & \ge  \tfrac{d}{m}(2m-3)^{k-1} - \tfrac{d}{m}(m-3)^{k-1} \\
+        & = |s'|/m - \tfrac{d}{m}(m-3)^{k-1} \\
+        & \ge |s'|/m - \tfrac{2m-4}{m}(m-3)^{k-1} & \text{(since $d\le 2m-4$)}\\
+        & > |s'|/m - 2(m-3)^{k-1} \enspace .
+    \end{align*}
+    Now, the suffix $q$ is a prefix of the block $B_{d+1}$ immediately following $B_d$.  The block $B_{d+1}=S_{q}^{k-1}$ for some $q$.
+    Applying induction on $q$ we get $n_j(q) \ge |q|/m - \alpha(m-3)^{k-2}$.  We finish up with
+    \begin{align*}
+        n_j(s) & = n_j(s') + n_j(q) \\
+        & \ge |s'|/m - 2(m-3)^{k-1} + |q|/m - \alpha(m-3)^{k-2} \\
+        & \ge |s|/m - 2(m-3)^{k-1} - \alpha(m-3)^{k-2} \\
+        & = |s|/m - \alpha(m-3)^{k-1}
+    \end{align*}
+    for $\alpha = \tfrac{2(m-3)}{m-4}=2+\tfrac{2}{m-4}$.
+
+    Now we prove (ii). All of the even-indexed blocks in $B_1,\ldots,B_d$ are equal to $S_i^{k-1}$ and none of the odd-indexed blocks are equal to $S_i^{k-1}$.  Therefore, using \cref{counts} we get
+    \begin{align*}
+        n_i(s') & = |s'|/m + \tfrac{\lfloor d/2\rfloor(m-1)}{m}(m-3)^{k-1} - \tfrac{\lceil d/2\rceil}{m}(m-3)^{k-1} \\
+         & = |s'|/m + (\lfloor d/2\rfloor - \tfrac{d}{m})(m-3)^{k-1} \\
+         & \le |s'|/m + (m-2-\tfrac{2m-4}{m})(m-3)^{k-1} & \text{(since $d\le 2m-4$)}\\
+         & = |s'|/m + (m-4+\tfrac{4}{m})(m-3)^{k-1} \enspace .
+    \end{align*}
+    Applying induction on $q$ we get $n_i(q) = |q|/m + \beta(m-3)^{k-1}$.
+    Putting it all together, we get
+    \begin{align*}
+        n_i(s) & = n_i(s')+n_i(q) \\
+               & \le |s|/m + (m-4+\tfrac{4}{m})(m-3)^{k-1} + \beta(m-3)^{k-1} \\
+        & \le |s|/m + \beta(m-3)^{k}
+    \end{align*}
+    for $\beta = 1+\tfrac{4}{m(m-4)}$.
+
+    Finally, we prove (iii).  Since $j\neq i'$, at most one of $B_1,\ldots,B_d$ is equal to $S_j^{k-1}$.  Using \cref{counts} again, we get
+    \begin{align*}
+        n_j(s') & \le |s'|/m + \tfrac{m-1}{m}(m-3)^{k-1} - \tfrac{d-1}{m}(m-3)^{k-1} \\
+        & = |s'|/m + \tfrac{m-d}{m}(m-3)^{k-1} \\
+        & \le |s'|/m + (m-3)^{k-1} \\
+    \end{align*}
+    Again, the block $B_{d+1}=S_{q}^{k-1}$ for some $q$. Possibly $q=j$.  Nevertheless, we apply the inductive hypothesis on $q$, using (ii) and (iii) to conclude that
+    \[  n_j(q) \le |q|/m + \max\{\beta(m-3)^{k-1},(\beta+1)(m-3)^{k-2}\} \le |q|/m + \beta(m-3)^{k-1} \]
+    for any $\beta\ge 1/(m-4)$.  In particular, for any $m\ge 5$, this condition is satisfied for any $\beta \ge 1$.
+    We finish with
+    \begin{align*}
+      n_j(s) & = n_j(s')+n_j(q) \\
+         & \le |s|/m + (m-3)^{k-1} + |q|/m + \beta(m-3)^{k-1} \\
+         & = |s|/m + (m-3)^{k-1} + \beta(m-3)^{k-1} \\
+         & = |s|/m + (\beta+1)\cdot(m-3)^{k-1} \enspace . \qedhere
+    \end{align*}
+\end{proof}
+
+
+\begin{cor}\label{substring_bounds}
+Let $s$ be a substring $S_i^k$ and let $\alpha$ and $\beta$ be defined as in \cref{prefix_bounds}.  Then
+\begin{compactenum}[(i)]
+    \item for each $j\in\{1,\ldots,m\}$, $n_j(s)\ge |s|/m - \alpha(1+\tfrac{2\alpha}{m-3})(m-3)^{k-1}$;
+    \item $n_{i}(s) \le |s|/m+(1+\tfrac{2\beta}{m-3})(m-3)^k$; and
+    \item for each $j\in\{1,\ldots,m\}\setminus\{i'\}$, $n_j(s) \le |s|/m+ (1+\tfrac{2(\beta+1)}{m-3})(m-3)^{k-1}$.
+\end{compactenum}
+\end{cor}
+
+\begin{proof}
+    The string $s$ consists of a (possibly empty) prefix $p$ and suffix $q$ each of length less than $(2m-3)^{k-1}$ and a (possibly empty) portion $s'$ between $p$ and $q$ that consists of a sequence of $d$ blocks $B_1,\ldots,B_d$ each of length $(2m-3)^{k-1}$ and in which each block $B_r=S_{i_r}^{k-1}$ for some $i_r\in\{1,\ldots,m\}$.
+
+    The prefix $p$ is a suffix of some block $B_0$ that immediately precedes $B_1$ on which we can apply \cref{prefix_bounds} with the value $k-1$.  The suffix $q$ is a prefix of some block $B_{d+1}$ on which we can apply \cref{prefix_bounds} with the value $k-1$ to obtain
+    \begin{compactenum}[(i)]
+        \item for each $j\in\{1,\ldots,m\}$, $n_j(pq) \ge |pq|/m - 2\alpha(m-3)^{k-2}$;
+        \item $n_i(pq) \le |pq|/m + 2\beta(m-3)^{k-1}$; and
+        \item for each $j\in\{1,\ldots,m\}\setminus\{i\}$, $n_j(pq)\le |pq|/m + 2(\beta+1)(m-3)^{k-2}$.
+    \end{compactenum}
+
+    For the string $s'$ we use exactly the same arguments used in the proof of \cref{prefix_bounds} to show that
+
+    \begin{compactenum}[(i)]
+        \item for each $j\in\{1,\ldots,m\}$, $n_j(s')\ge |s'|/m - 2(m-3)^{k-1}$;
+        \item $n_{i}(s) \le |s'|/m+(m-3)^{k}$;\footnote{For the upper bound on $n_i(s')$ the roles of $\lceil d/2\rceil$ and $\lfloor d/2\rfloor$ are reversed. This changes nothing very little except that the relevant expression is maximized when $d=2m-5$ and we obtain the bound $s_i(s')\le |s'|/m+(m-4+\tfrac{5}{m})(m-3)^{k-1} \le|s'|/m + (m-3)^k$ used here.}
+        \item for each $j\in\{1,\ldots,m\}\setminus\{i\}$, $n_j(s) \le |s|/m+ (m-3)^{k-1}$.
+    \end{compactenum}
+    Combining the corresponding bounds gives the results stated in the lemma.
+\end{proof}
+
+\subsection{Another Warm Up}
+
+\begin{clm}
+    For sufficiently large $m$, $S_i^k$ is anagram-free.
+\end{clm}
+
+\begin{proof}
+    Let $s$ be a substring of $S_i^k$ and let $\ell:=\lceil \log_{2m-3} |s|\rceil$.  Note that this implies that $(2m-3)^{\ell-1} < |s| \le (2m-3)^\ell$.   Let $p$ and $q$ denote the first and second half of $s$, respectively.  Then there are two cases to consider:
+    \begin{enumerate}
+        \item $s$ is a substring of $S_{i'}^\ell$ for some $i'in\{1,\ldots,m\}$.  We split this into two subcases:
+        \begin{enumerate}
+            \item $s$ is contained in a sequence of $B_0,\ldots,B_a$ of $a+1$ consecutive blocks and contains a sequence $B_1,\ldots,B_{a-1}$ of $a-1$ consecutive blocks, each of size $(2m-3)^{\ell-1}$, for $a\ge 5$. Without loss of generality, we may assume that $B_1$ and $B_2$ are both contained in $p$ (the first half of $s$).  Then one of $B_1$ or $B_2$ is unique among $B_0,\ldots,B_{a+1}$ in the sense that $B_1$ (say) is $S_{i'}^{\ell-1}$ and none of $B_0,B_2,\ldots,B_{a+1}$ is $S_{i'}^{\ell-1}$.
+
+            Now, $p$ consists of a suffix of $B_0$, a sequence of at most $a/2$ consecutive blocks including $B_1,B_2$ and a prefix of some block $B_r$.  By \cref{counts,substring_bounds},
+            \[
+                    n_{i'}(p) \ge |p|/m + (1-\tfrac{a}{2m})(m-3)^{\ell-1} - 2\alpha(m-3)^{\ell-2} \enspace .
+            \]
+            On the other hand, $q$ consists of a suffix of $B_r$, a sequence of at least $a/2-1$ blocks, and a prefix of $B_{a+1}$.  By \cref{counts,substring_bounds},
+            \[
+                n_{i'}(q) \le |q|/m - \tfrac{a}{2m} +\tfrac{1}{m} + 2(\beta+1)(m-3)^{\ell-2} \enspace .
+            \]
+            Therefore
+            \[
+                n_{i'}(p)-n_{i'}(q) \ge (m-3)^{\ell-1} -(1+2(\alpha+\beta+1))(m-3)^{\ell-2} > 0 \enspace ,
+            \]
+            for sufficiently large $m$.  Therefore $s$ is not an anagram.
+        \end{enumerate}
+
+        \item $s$ is a substring of $S_{i'}^\ell S_{i''}^\ell$ for some $i'\neq i''$.  We also split this into two subcases:
+        \begin{enumerate}
+            \item $|s|\ge 6(2m-3^{\ell-1})$
+            \item $|s|< 6(2m-3)^{\ell-1}$.
+        \end{enumerate}
+    \end{enumerate}
+\end{proof}
+
+
+
+
+\begin{clm}
+     Let $s$ be a prefix of $S_i^k$ of length $n=a(2m-3)^{k-1} + r$ for some integer $4\le a< 2m-3$ and $r< (2m-3)^{k-1}$.  Then $s$ is not an anagram.
+\end{clm}
+
+\begin{proof}
+    Observe that $S_i^k$ can be obtained from $\Sigma_i$ by replacing each occurence of $\sigma_j$ with $\S_j^{k-1}$ for each $j\in\{1,\ldots,m\}$.
+    Thus $s$ consists of $a$ \emph{blocks} $B_1,\ldots,B_a$ each of length $(2m-3)^{k-1}$ followed by a partial block $B_{a+1}$ of length $r$.
+
+    Let $x=\lfloor a/2\rfloor$.  If
+    If $a$ is odd, then the first half of $s$ contains blocks $B_1,\ldots,B_{x}$ and the second half of $s$ contains blocks $B_{x+2},\ldots,B_a$.
+
+    Now perform a matching between $B_1,\ldots,B_{x}$ and $B_{x+2},\ldots,B_a$ as follows:  First perform a maximum matching on equal blocks (these are all equal to $S_i^{k-1}$) and eliminate the at most $x/2$ pairs of blocks used in this matching.  Next perform an arbitrary perfect matching on the remaining pairs.  Perform cancellation on pairs of matched blocks.  After doing this, each block is reduced to $(m-3)^{k-1}$ occurrences of a single letter.  Indeed, if $S_{j}^{k-1}$ is cancelled with $S_{j'}^{k-1}$ for $j\neq j'$, then the cancellation reduces $S_j$ to $(m-3)^{k-1}$ occurrences of $\sigma_j$ and reduces $S_{j'}$ to $(m-3)^{k-1}$ occurrences of $\sigma_{j'}$.
+
+    Now, the first half of $s$ contains a prefix of $B_{x+1}$ of length $\ell:=((2m-3)^{k-1} + r)/2$.  The second half of $s$ contains the rest of $B_{x+1}$ and a length-$r$ prefix of $B_{a+1}$. Now, perform cancellation among these two sets. By \cref{bounds}, the number of occurrences of $\sigma_j$ after cancellation is at most $X+Y < (m-3)^{k-1}$.  Therefore, after these cancellations, the number of occurrences of $\sigma_j$ in the first half is less than the number of occurrences of $\sigma_j$ in the second half, for some $j$\ldots\todo{finish up after figuring out $X$ and $Y$.}
+\end{proof}
+
+
+
+
+%
+%
+% In the following, we will prove some lemmas that involve substrings of $S_i^k$ that are ``nicely aligned'' for various definition of nicely aligned.  We will then construct a subgraph
+%
+% \begin{clm}
+%     Let $s$ be a prefix of $S_i^k$ of length $|s|=n$ and, for each $j\in\{1,\ldots,m\}$, let $n_j$ be the number of occurrences of $\sigma_j$ in $s$, define $b:=2m-3$, and $\ell=\lfloor\log_b n\rfloor.  Then
+%     \begin{compactenum}[(i)]
+%         \item $n_i \ge n/m +  \log_b n$
+% \end{clm}
+
+
+
+
+%
+%  actually proves something stronger
+
+
+
+
+
+
+
+\end{document}
+
+\begin{clm}
+    Let $w$, $b$, $x$, $y$, $r$, and $s_0,\ldots,s_{b-1}$ be defined as above, with the additional condition that $b=kc$ for some positive integers $k$ and $c$. For each $i\in\{0,\ldots,k-1\}$, let $t_i=\sum_{j=0}^{w} i\cdot k^j$.
+
+
+      Then there exists some $j\in\{0,\ldots,b-1\}$ such that
+    \begin{compactenum}
+        \item $\lfloor (x+s_j)/b^r\rfloor = \lfloor (y+s_j)/b^r\rfloor$;
+        \item $\lfloor(y+s_j)/b^{r-1}\rfloor-\lfloor(x+s_j)/b^{r-1}\rfloor\ge b/c$;
+    \end{compactenum}
+    or there exists some $j\in\{0,\ldots,b/c-1\}$ such that
+\end{clm}
+
+
+
+
+For each $i\in\{0,\ldots,10\}$, let $t_i=\sum_{j=0}^w i\cdot 11^j$.
+
+
+
+
+
+
+
+\section{A Lemma}
+
+Let $S$ be an anagram-free string over some alphabet $\Sigma$ and, for each $x\in\Sigma$ and $j\in\{0,\ldots,r\}$, let $x_j=(x,j)$. In this way, $\bigcup_{x\in \Sigma}\bigcup_{j=0}^r x_j=\Sigma\times\{0,\ldots,r\}$ is a set of $k(r+1)$ distinct symbols.  For each $i\in\{1,\ldots,k\}$, define the string $T_x:=x_{0}x_{1}x_{2}\cdots x_{r}$.  Now derive the length-$((r+1)|S|)$ string $S^+$ by replacing each occurrence of $x$ in $S$ with the string $T_x$, for each $x\in\Sigma$.
+
+
+\begin{lem}
+    $S^+$ is anagram-free.
+\end{lem}
+
+\begin{proof}
+    The string $S^+$ consists of a sequence of length-$2r$ \emph{blocks} $B_1,\ldots,B_{|S|}$ where each $B_i=T_x$ for some $x\in\Sigma$. Let $s=s_1s_2$ be a substring of $S^+$ where $s_1$ and $s_2$ each have length $k\ge 1$.  We must show that $s_1$ is not an anagram of $s_2$.
+
+    We exhaustively perform the following \emph{cancellation} operation.  If $s_1$ contains a block $B_x$, $s_2$ contains a block $B_y$, and $B_x=B_y$, then we remove $B_x$ from $s_1$ and remove $B_y$ from $s_2$. Observe that $s_1$ is an anagram of $s_2$ before performing this operation if and only if $s_1$ is an anagram of $s_2$ after performing this operation.  Furthermore, since $S$ is anagram-free, this cancellation operation cannot reduce the lengths of $s_1$ and $s_2$ to $0$.
+
+    Assume, for the sake of contradiction, that the strings $s_1$ and $s_2$ are anagrams of each other.  We will distinguish between two cases, with the simpler case first:
+    \begin{enumerate}
+        \item The last character of $s_1$ is the last character of a block (so the first character of $s_2$ is the first character of the next block).  After performing the cancellation operation, there exists sequences $X_1$ and $X_2$ of equal length whose elements come from $\{T_x:x\in\Sigma\}$ and there exists $a,b\in[k]$ and $t\in\{0,\ldots,r\}$ such that
+        \begin{compactenum}
+            \item $s_1$ contains a length-$t$ suffix of $T_a$ followed by the blocks in $X_1$; and
+            \item $s_2$ contains the blocks in $X_2$ followed by the length-$t$ prefix of $T_b$.
+        \end{compactenum}
+        Since cancellation is performed exhaustively, $X_1$ and $X_2$ have no blocks in common.  Furthermore, since $S$ is anagram-free, $X_1$ and $X_2$ are non-empty.   Therefore $s_1$ contains a block $T_x$ that contains $(x,r)$.  The symbol $(x,r)$ does not appear in any block of $X_2$ and it does not appear in Saman Bazarghanithe length-$t$ prefix of $B_m$ since $t\le r-1$ and $(x,r)$ appears only as the last element in $T_x$.  Therefore $(x,r)$ is in $s_1$ but does not appear in $s_2$, so $s_1$ is not an anagram of $s_2$.  (Note that a similar argument shows that there exists some $y\in\Sigma$ such that $(y,0)$ appears in $s_2$ but not in $s_1$.)
+
+        [Actually, we can do way better than this, and show that there is an entire block $T_x$ in $s_1$ or an entire block $T_y$ in $s_2$ such that $T_x$ appears twice in $s_1$ or no symbol in $T_x$ appears in $s_2$ or $T_y$ appears twice in $s_2$ or no symbol in $T_y$ appears in $s_1$.]
+
+        \item Not case 1. The last character of $s_1$ is not the last character of any block.  In this case, there is a block $B_m=T_x$ that contains the last character of $s_1$ and the first character of $s_2$.  The string $s_1$ consists of a length-$u$ (possibly empty, not necessarily proper) suffix of some block $B_a$ followed by zero or more complete blocks $B_{a+1},\ldots,B_{m-1}$ followed by a length-$t$ proper prefix $s_1'$ of $B_m$.  The string $s_2$ begins with a length-$(r+1-t)$ suffix $s_2'$ of $B_m$.
+
+        We claim that none of the blocks $B_{a+1},\ldots,B_{m-1}$ is equal to $T_x$.  Indeed, if $B_i=T_x$ for some $i\in\{a+1,\ldots,m-1\}$ then the string $s_1'$ appears at least two times in $s_1$: once in $B_m$ and once in $B_i$.  Since $s$ is an anagram, this implies that $s_1'$ appears twice in $s_2$.  This is not possible, since at least one of those occurrences is in a complete block $B_j$ and cancellation would remove $B_i$ and $B_j$.
+
+        Since $s$ is an anagram, $s_2'$ must appear in $s_1$.  Since none of $B_{a+1},\ldots,B_{m-1}$ is equal to $T_x$ and $s_2'$ does not appear in the length-$t$ prefix of $B_m$, the only remaining possibility is that $s_2'$ appears in $B_a$, so $B_a=T_x=B_m$.
+        The characters in $s_1'$ do not appear in $s_2'$ so $s_2$ must contain a prefix of some block $B_b=T_x$ of length at least $t$.  In $s_1$, each character of $s_2'$ appears in $B_a$ and nowhere else.  Therefore each character of $s_2'$ appears at most once in $s_1$.  Therefore, $s_2$ must contain a prefix of $B_b$ of length exactly $t < r+1$.
+
+        Therefore, $B_b$ contains the last character of $s_2$.  Therefore, if $c$ is the number of full blocks in $s_2$ then the length of $s_2$ is
+        \[
+            |s_2|=  |s_2'| + c(r+1) + t = r+1-t + c(r+1) + t = (c+1)(r+1)
+        \]
+        Recall that $t<r+1$, so $2r+1 \ge u+t=|s_1|=|s_2|$, so we conclude that $c=0$ and $s_2$ contains no complete blocks. Therefore the sequence of blocks that contain $s_1$ and $s_2$ (after cancellation) is $B_a,B_m,B_b$ = $T_x,T_x,T_x$.  This is a contradiction, since it implies that $B_a,\ldots,B_{b-1}$ determines an anagram $S_a,\ldots,S_{b-1}$ in $S$ (and so does $S_{a+1},\ldots,S_b$).\todo{This is sloppy, it's mixing indices before and after cancellation.}
+    \end{enumerate}
+\end{proof}
+
+\end{document}
