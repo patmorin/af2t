@@ -99,7 +99,7 @@ Let $G$ be a graph\footnote{Every graph $G$ that we consider is \emph{simple}: u
 
 Let $W:=v_0,\ldots,v_{r}$ be a walk\footnote{A \emph{walk} in $G$ is a sequence of vertices $W:=w_0,\ldots,w_m$ such that $w_{i-1}w_i\in E(G)$ for each $i\in\{1,\ldots,m\}$. If $w_{m}v_0\in E(G)$ then $W$ is \emph{closed}.  If there are no distinct $i,j\in\{1,\ldots,m\}$ such that $\{w_{i-1}w_i\}=\{w_{j-1},w_j\}$, then $W$ is a \emph{trail}.  If there are no distinct $i,j\in\{0,\ldots,m\}$ such that $w_i=w_j$, then $W$ is a \emph{path}.  If $W$ is a closed path then $W$ is a \emph{cycle}.} in $G$ and, for each $i\in\{1,\ldots,r\}$, let $e_i=v_{i-1}v_i$ be the $i$-th edge of $W$. We say that $W$ is \emph{repetitive} under $\varphi$ if $\varphi(e_1),\ldots,\varphi(e_\lfloor r/2\rfloor)$ is a permutation of $\varphi(e_{\lfloor r/2\rfloor+1}),\ldots,\varphi(e_{r})$.  When $\varphi$ and $G$ are understood from context and $W$ is repetitive under $\varphi$ we say simply that $W$ is a \emph{repetitive walk}.  If $W$ is a cycle, we say that $W$ is a \emph{repetitive cycle} if the walk $\overline{W}:=v_0,\ldots,v_r,v_0$ is a repetitive walk.
 
-Note that repetitive walks are unavoidable since, for any colouring $\varphi$ and any walk $W:=v_0,\ldots,v_r$, the walk $W\overleftarrow{W}:=v_0,\ldots,v_r,v_{r-1},\ldots,v_0$ is repetitive.  However, repetitive trails, paths, and cycles can be avoided by, for example, assigning each edge of $G$ a distinct colour.
+Note that repetitive walks are unavoidable since, for any colouring $\varphi$ and any walk $W:=v_0,\ldots,v_r$, the walk $\overleftrightarrow{W}:=v_0,\ldots,v_r,v_{r-1},\ldots,v_0$ is repetitive.  However, repetitive trails, paths, and cycles can be avoided by, for example, assigning each edge of $G$ a distinct colour.
 
 In this paper we give a number of lower bounds and upper bounds on the number of colours needed to avoid various types of repetitive walks. Observe that, if $G$ has a vertex $v$ of degree $\Delta$ then every edge incident to $v$ must be assigned a different colour, otherwise we obtain a repetitive path of length $2$. Thus, the maximum degree, $\Delta$, is a lower bound on the number of colours needed to avoid repetitive paths.
 
@@ -117,7 +117,7 @@ Our main upper bound is the following generalization of \cref{ww_trees} to $2$-t
 
 The second half of \cref{ww_trees} shows that the dependence of \cref{main} on the pathwidth of $G$ is asymptotically optimal, even for trees.  We give the following lower bounds which show that \cref{ww_trees} cannot be strengthened further.
 
-\begin{thm}\label{lower-bounds}
+\begin{thm}\label{lower_bounds}
     For any positive integer $c$, there exists
     \begin{compactenum}[(a)]
         \item a graph $G$ of pathwidth $2$ such that any $c$-colouring of $G$ has a repetitive trail; and \label{trail_lower_bound}
@@ -125,12 +125,12 @@ The second half of \cref{ww_trees} shows that the dependence of \cref{main} on t
     \end{compactenum}
 \end{thm}
 
-\cref{lower-bounds}(\ref{trail_lower_bound}) shows that \cref{main} can not be strengthened to avoid repetitive trails.  \cref{lower-bounds}(\ref{lower_bound}) shows that \cref{main} can not be strengthened from $2$-trees to $3$-trees.
+\cref{lower_bounds}(\ref{trail_lower_bound}) shows that \cref{main} cannot be strengthened to avoid repetitive trails. \cref{lower_bounds}(\ref{lower_bound}) shows that \cref{main} can not be strengthened from $2$-trees to $3$-trees.
 
 \subsection{Previous Work}
 \label{previous_work}
 
-The origins of this work are in the study of anagram-free sequences.  A sequence $s_1,\ldots,s_n$ is \emph{anagram-free} if, it has not subsequence $s_{i+1,\ldots,s_{i+2r}}$ such that $s_{i+1},\ldots,s_{i+r}$ is a permutation of $s_{i+r+1},\ldots,s_{r}$.  Anagram-free sequences are also called \emph{strongly non-repetitive}, \emph{strongly square-free}, or \emph{abelian square-free} sequences.  It is not \emph{apriori} obvious that there exists a constant $c$ such that there anagram-free sequences over $\{1,\ldots,c\}$ of arbitrary length.  Indeed, this was first posed as a problem by So and So \citet{so.so:huh} that was resoved by \citet{x.y.X} with the value $c=25$. This was later improved by \cite{pleasants:X} to $c=5$ and then finally by \citet{karkainnen:X} to $c=4$, which is optimal.
+The origins of this work are in the study of anagram-free sequences.  A sequence $s_1,\ldots,s_n$ is \emph{anagram-free} if, it has not subsequence $s_{i+1,\ldots,s_{i+2r}}$ such that $s_{i+1},\ldots,s_{i+r}$ is a permutation of $s_{i+r+1},\ldots,s_{r}$.  Anagram-free sequences are also called \emph{strongly non-repetitive}, \emph{strongly square-free}, or \emph{abelian square-free} sequences.  It is not \emph{apriori} obvious that there exists any constant $c$ such that there anagram-free sequences over $\{1,\ldots,c\}$ of arbitrary length.  Indeed, this was first posed as a problem by So and So \citet{so.so:huh} that was resoved by \citet{x.y.X} with the value $c=25$. This was later improved by \cite{pleasants:X} to $c=5$ and then finally by \citet{karkainnen:X} to $c=4$, which is optimal.
 
 Note that the existence of anagram-free sequences over $\{1,\ldots,c\}$ of arbitrary length is equivalent to asking if every path has an edge $c$-colouring with no repetitive path.  The idea of considering this question (and related questions) in the graph colouring setting seems to have been introduced by \cite{alon.ea}.
 
@@ -170,9 +170,22 @@ In this section we describe graphs of small pathwidth such that, for any $c$, th
 
 \subsection{Trails}
 
-For each positive integer $n$, let $S_n$ be the graph with vertex set $V(S_n):=z_0\cup\{x_i,y_i,z_i:i\in\{1,\ldots,n\}\}$ and whose edge set consists of the 4-cycle $C_i:=z_{i-1}x_i,z_i,y_i$ for each $i\in\{1,\ldots,n\}$.  The graph $S_n$ is outerplanar and therefore has treewidth 2.
+In this section, we describe a family of outerplanar graphs for which any edge colouring with a constant number of colours results in repetitive trails. This proof is based on the lower bound of \citet{carmi.dujmovic.ea:anagram-free} for vertex-colouring a family of graphs like those shown at the top of \cref{lower_bound_figs}.  \citet{carmi.dujmovic.ea:anagram-free} prove their lower bound by showing the existence of a repetitively coloured \emph{back and forth path} whose first half visits vertices left to right and whose second half visits vertices from right to left, like the orange/green path shown in the figure.  One consequence of this is that the same lower bound applies effortlessly to edge-colouring the multigraph shown in the second part \cref{lower_bound_figs} in order to avoid repetitive trails. This follows from the fact that there is a mapping from vertices in the first graph to edges in the second graph such that each back and forth path in the first graph corresponds to a trail in the second graph.  This is what motivates the following construction.
 
-\begin{lem}
+\begin{figure}
+    \begin{center}
+        \includegraphics[scale=2]{figs/lower-bounds-1} \\
+        \includegraphics[scale=2]{figs/lower-bounds-2} \\
+        \includegraphics[scale=2]{figs/lower-bounds-3} \\[2ex]
+        \includegraphics[scale=2]{figs/lower-bounds-4}
+    \end{center}
+    \caption{Graphs used in lower bounds.}
+    \label{lower_bound_figs}
+\end{figure}
+
+For each positive integer $n$, let $S_n$ be the graph with vertex set $V(S_n):=z_0\cup\{x_i,y_i,z_i:i\in\{1,\ldots,n\}\}$ and whose edge set consists of the 4-cycle $C_i:=z_{i-1}x_i,z_i,y_i$ for each $i\in\{1,\ldots,n\}$.  This graph is illustrated in the third part of \cref{lower_bound_figs}. The graph $S_n$ is outerplanar and therefore has treewidth 2.  The following lemma establishes \cref{lower_bounds}(\ref{trail_lower_bound})
+
+\begin{lem}\label{trail_lower_bound_lemma}
     For any $c\in\N$ and any integer $n\ge 2^{c^4}$, any edge $c$-colouring of $S_n$ contains a repetitive trail.
 \end{lem}
 
@@ -192,53 +205,88 @@ For each positive integer $n$, let $S_n$ be the graph with vertex set $V(S_n):=z
      Define the path $P_1$ that begins at $z_j$, ends at $z_i$, and contains $e_af_a$ for each $a\in W$ and $g_ah_a$ for each $a\in\overline{W}$.  Next form the path $P_2$ that begins at $z_i$, ends at $z_j$ and contains $g_ah_a$ for each $a\in W$ and $e_af_a$ for each $a\in\overline{W}$.  Then the trail obtained by concatenating $P_1$ and $P_2$ is repetitive under $\varphi$.
 \end{proof}
 
+We remark that \cref{trail_lower_bound_lemma} could be strengthened slightly at the cost of a longer proof.  The preceding proof shows that $S_n$ requires $\Omega((\log n)^{1/4})$ colours.  This can be increased to $\Omega((\log n)^{1/2})$ using the same matching argument used by \citet{carmi.dujmovic.ea:anagram-free}. We have presented the simpler proof because it more closely mirrors the (considerably more complicated) proof in the next section.
+
 \subsection{Cycles}
 
 For each positive integer $n$, let $Q_n$ be the graph with vertex set $V(Q_n):=\{(x_1,y_1),\ldots,x_n,y_n\}$ and edge set
 \[
     E(Q_n) = \bigcup_{i=1}^{n-1} \{x_ix_{i+1}, x_iy_{i+1}, y_{i}x_{i+1}, y_{i}y_{i+1}\} \enspace .
 \]
+This graph is illustrated in the fourth part of \cref{lower_bound_figs}.
 We will show that, for any integer $c$, there exists an $n$ such that $\ci(Q_n)>c$.  We will prove this by contradiction, so throughout the rest of this section, $\varphi$ will always refer to some hypothetical anagram-free $c$-colouring of $Q_n$.
 
-For each $i\in\{1,\ldots,n-k+1\}$, the \emph{$(i,k)$-block} of $Q_n$ is the induced subgraph $B_{i,k}:=Q_n[\bigcup_{j=0}^{k-1}\{x_{i+j},y_{i+j}]$. Observe that $B_{i,k}$ is isomorphic to $Q_k$ with the isomorphism from $Q_k$ into $B_{i,k}$ given by $\rho_{i}:V(Q_k)\to V(B_{i,k})$ where $\rho_{i}(x_{j}):= x_{i+j-1}$ and $\rho_i(y_j):= y_{i+j-1}$.
+For each $i\in\{1,\ldots,n-k+1\}$, the \emph{$(i,k)$-block} of $Q_n$ is the induced subgraph $B_{i,k}:=Q_n[\bigcup_{j=0}^{k-1}\{x_{i+j},y_{i+j}]$. Observe that $B_{i,k}$ is isomorphic to $Q_k$ with the isomorphism from $Q_k$ into $B_{i,k}$ given by $\rho_{i}:V(Q_k)\to V(B_{i,k})$ where $\rho_{i}(x_{j}):= x_{i+j-1}$ and $\rho_i(y_j):= y_{i+j-1}$.  In this way, the colouring $\varphi$ of $Q_n$ gives a colouring $\varphi_{i,k}:V(Q_k)\to\{1,\ldots,c\}$ defined as $\varphi_{i,k}(vw) = \varphi(\rho(v)\rho(w))$.  We say that blocks $B_{i,k}$ and $B_{j,k}$ are $\varphi$-similar if $\varphi_{i,k}=\varphi_{j,k}$.
 
-In this way, the colouring $\varphi$ of $Q_n$ gives a colouring $\varphi_{i,k}:V(Q_k)\to\{1,\ldots,c\}$ defined as $\varphi_{i,k}(vw) = \varphi(\rho(v)\rho(w))$.  We say that blocks $B_{i,k}$ and $B_{j,k}$ are $\varphi$-similar if $\rho_{i,k}=\rho_{j,k}$.
 
+Our next lemma shows that, for any fixed edge colouring $\varphi^*$ of the four vertex graph $Q_2$, the gaps between appearances of $\varphi^*$ within the colouring $\varphi$ are bounded.  We will use each such occurrence of $\varphi^*$ to simulate one of the degree-$4$ vertices from the graph $S_n$ used in previous section.
 
 \begin{lem}\label{periodicity}
-    There exists an integer $k:=k(c)$ such that, if $\max\{\ci(Q_n): n\in\N\} \le c\}$ then, for every integer $n$ there exists an anagram-free $c$-edge colouring $\varphi$ of $Q_{n}$ such that, for each integer $i\in[1, n-k]$ there exists an integer $j\in\{ i+1,\ldots,i+k]$ such that $\rho_{i,2}=\rho_{j,2}$.
+    Suppose that, there exits a positive integer $c$ such that, for every $n\in\N$, $Q_n$ has an edge $c$-colouring with no repetitive cycle.  Then there exists a constant $k:=k(c)$ such that, for each $n\in\N$ there exists an edge $c$-colouring $\varphi$ of $Q_{n}$ with no repetitive cycle and such that, for each integer $i\in[1, n-k]$ there exists an integer $j\in\{ i+1,\ldots,i+k]$ with $\varphi_{i,2}=\varphi_{j,2}$.
 \end{lem}
 
 \begin{proof}
-    For a colouring $\varphi$ of $Q_n$, let $X(\varphi):=\bigcup_{i=1}^{n-1} \varphi_{i,2}$.  That is, $X(\varphi)$ is the set of colourings of $Q_2$ that appear in $\varphi$.  Let $X$ be a minimal set such that, for each integer $n$, $Q_n$ has an anagram-free edge $c$-colouring $\varphi_n$ such that $X(\varphi_n)\subseteq X$. Such an $X$ exists because we can always take a set $X^+$ containing all $4^c$ functions from $V(Q_2)$ onto $\{1,\ldots,c\}$.  By definition, $X(\varphi)\subseteq X^+$ for any edge $c$-colouring $\varphi$.  The set $X^+$ is not necessarily minimal, but it is finite, so it has minimal subset $X\subseteq X^+$ with the desired property.
+    For a colouring $\varphi$ of $Q_n$, let $X(\varphi):=\bigcup_{i=1}^{n-1} \varphi_{i,2}$.  That is, $X(\varphi)$ is the set of colourings of $Q_2$ that appear in $\varphi$.  Let $X$ be a minimal set such that, for each integer $n\in\N$, $Q_n$ has an anagram-free edge $c$-colouring $\varphi_n$ such that $X(\varphi_n)\subseteq X$. Such an $X$ exists because we can always take a set $X^+$ containing all $4^c$ functions from $V(Q_2)$ onto $\{1,\ldots,c\}$.  By definition, $X(\varphi)\subseteq X^+$ for any edge $c$-colouring $\varphi$.  The set $X^+$ is not necessarily minimal, but it is finite, so it has minimal subset $X\subseteq X^+$ with the desired property.
 
-    By definition, for every strict subset $X'\subset X$, there exists an integer $n_0:=n_0(X')$, such that $Q_{n_0}$ has no anagram-free edge $c$-colouring $\varphi$ with $X(\varphi)\subseteq X$. We now let $k:=1+\max\{n_0(X'):X'\subseteq X\}$ and take an anagram-free edge $c$-colouring $\varphi$ of $Q_k$ with $X(\varphi)\subseteq X$.  Now observe that, for any $i\in\{1,\ldots,n-k\}$, $\rho_{i,2}\in X$ and $\varphi$ is an anagram-free edge $c$-colouring of $B_{i+1,k}$ so $\bigcup_{j=i+1}^{i+k}\rho_{j,2}=X$.  In particular, $\rho_{i,2}=\rho_{j,2}$ for some $j\in\{i+1,\ldots,i+k\}$.
+    By definition, for every strict subset $X'\subset X$, there exists an integer $n_0:=n_0(X')$, such that any edge $c$-colouring $\varphi$ of $Q_{n_0}$ with $X(\varphi)\subseteq X'$ has a repetitive path. Now let $k:=1+\max\{n_0(X'):X'\subseteq X\}$ and take an edge $c$-colouring $\varphi$ of $Q_k$ with $X(\varphi)\subseteq X$ that has no repetitive path.  Observe that, for any $i\in\{1,\ldots,n-k\}$, $\rho_{i,2}\in X$ and $\varphi$ and $\bigcup_{j=i+1}^{i+k}\rho_{j,2}=X$.  In particular, $\rho_{i,2}=\rho_{j,2}$ for some $j\in\{i+1,\ldots,i+k\}$.
 \end{proof}
 
 
-\begin{thm}
-    For every integer $c$, there exists an $n:=n(c)$ such that $\ci(Q_n)> c$.
-\end{thm}
+\begin{lem}\label{cycle_lower_bound}
+    For each $c\in\N$, there exists an integer $n:=n(c)$ such that any edge $c$-colouring $\varphi$ of $Q_n$ contains a repetitive cycle.
+\end{lem}
 
 \begin{proof}
-    Let $k$ be chosen as in \cref{periodicity} and let $n\ge k\cdot 2^{(c+1)^{4k}}+1$.  Let $\varphi$ be any $c$-edge colouring of $Q_n$.  Let $I:=\{i\in\{1,\ldots,n\}:\varphi_{i,2}=\varphi_{1,2}\}$ and label the elements of $I$ so that $i_0<i_2<\ldots,i_m$ and let $k_a:=i_{a+1}-i_a-1$ for each $a\in\{1,\ldots,m\}$.  By \cref{periodicity}, $k_a\le k$.
+    Suppose for the sake of contradiction that, for each $n\in\N$, $Q_n$ has an edge $c$-colouring with no repetitive cycle.  Then take an edge $c$-colouring $\varphi$ of $Q_n$ that satisfies the conditions of \cref{periodicity} with some integer $k$ depending only on $c$.  Refer to \cref{i_and_k}.  Let $I:=\{i\in\{1,\ldots,n-1\}:\varphi_{i,2}=\varphi_{1,2}\}$.  Let $m:=|I|-1$, let $i_0<i_1<\cdots< i_m$ be the elements of $I$, and let $k_a:=i_{a+1}-i_a-1$ for each $a\in\{1,\ldots,m\}$.  By \cref{periodicity}, $k_a\le k$, for each $a\in\{1,\ldots,m\}$.
 
-    Let $P$ be a partition of $I$ in which $i_a$ and $i_b$ are in the same part if and only if $\varphi_{i_a,k_a}=\varphi_{i_b,k_b}$.\todo{We can make this tighter.}  Observe that the partitions $P$ contains at most $(c+1)^{4k}$ parts.  For each $a\in\{0,\ldots,m\}$, let $V$ the binary vector indexed by the parts in $P$ where $V_p := |\{i_{a'}\in p: a'\le a\}|\bmod 2$.  The number of distinct such vectors is not more than
+    \begin{figure}
+        \begin{center}
+            \includegraphics{figs/cool-lower-bound}
+        \end{center}
+        \caption{The set $I=\{i_1,\ldots,i_m\}$.}
+        \label{i_and_k}
+    \end{figure}
+
+    Let $P$ be a partition of $\{0,\ldots,m-1\}$ such that $a$ and $a'$ are in the same part if and only if $\varphi_{i_a,k_a}=\varphi_{i_{a'},k_{a'}}$.  For any $a\in\{0,\ldots,m-1\}$, $B_{i_a+1,k_a}$ has $4(k_a-1)$ edges and therefore has $c^{4(k'-1)}$ edge $c$-colourings.  Therefore $P$ has $|P|\le \sum_{k'=2}^{k-1} c^{4(k'-1)} \le c^{4k}$ parts.  For each $a\in\{0,\ldots,m\}$, let $V^{(a)}$ be the binary vector indexed by the parts in $P$ where $V^{(a)}_p := |p\cap\{0,\ldots,a\}|\bmod 2$.
+
+    The number of binary vectors of length $|P|$ is $2^{|P|}\le 2^{c^{4k}}$.  On the other hand, $m \ge n/k > 2^{c^{4k}}$.  Therefore, there exists distinct $a,b\in\{0,\ldots,m-1\}$ such that $V^{(a)}=V^{(b)}$.  Now let $W\subseteq\{a+1,\ldots,b\}$ be chosen so that, for each $p\in P$,
     \[
-        2^{|P|} \le 2^{(c+1)^{4k}} \enspace .
+        |\{a'\in W:i_{a'}\in p\}|
+        = |\{a'\in \{a+1,\ldots,b\}\setminus W: i_{a'}\in p\}|
     \]
-    On the other hand, $m \ge n/k > 2^{(c+1)^{4k}}$.  Therefore, there exists distinct $a,b\in\{1,\ldots,m\}$ such that $V_a=V_b$.  This means that the subgraph $B_{a,b-a+1}$ is broken up into some number $r$ of \emph{blocks}, that are partitioned into $|P|$ sets, each of whose size is an even number.  Note that, if $\varphi_{i_a,k_a}=\varphi_{i_b,k_b}$ and we construct a path whose first half contains $x_{i_{a}+1},\ldots,x_{i_{a}+k_a}$ and $y_{i_{b+1}},\ldots,y_{i_{b}+k_b}$ and whose second half contains $x_{i_{b}+1},\ldots,x_{i_{b}+k_b}$ and $y_{i_{a+1}},\ldots,y_{i_{a}+k_a}$, then these two parts of the first and second half will cancel each other out.  All that remains is to show that this is indeed possible and that the other parts of these paths, the edges from copies $Q_2$ also cancel each other out.
+    Such a $W$ exists since, for each $p\in P$,
+    \[
+        |p\cap\{a+1,\ldots,b\}|=|p\cap\{0,\ldots,b\}|-|p\cap\{0,\ldots,a\}| \equiv 0 \pmod{2} \enspace .
+    \]
+    Let $\overline{W}:=\{a+1,\ldots,a_m\}\setminus W$.
+    Define the path $P_1$ that contains $x_{i_{a'}+1},\ldots,x_{i_{a'+1}}$ iff $a'\in W$ and contains $y_{i_{a'}+1},\ldots,y_{i_{a'+1}}$ iff $a'\in\overline{W}$.  Define the complementary path $P_2$ that contains $x_{i_{a'}+1},\ldots,x_{i_{a'+1}}$ iff $a'\in\overline{W}$ and contains $y_{i_{a'}+1},\ldots,y_{i_{a'+1}}$ iff $a'\in W$.  Clearly $P_1$ and $P_2$ are disjoint.
 
-    The easiest way to do this is to use the necklace problem, which states that there exists $a_1,\ldots,a_{|P|}$ such that, for each $p\in P$, the number of $p$-blocks in $\bigcup_{j=0}^{j<|P|/2} B_{i_{a_{2j}+1},i_{a_{2(n-1)}}}$ is the same as in BLAH....
+    % The paths $P_1$ and $P_2$ partition $\{1,\ldots,m-1\}$ into two sets $M^\times$ and $M^=$ as follows:  $M^\times$ contains each $a\in\{0,\ldots,m-1\}$ such that $P_1$ and $P_2$ use the edges $x_{i_a}y_{i_a+1}$ and $y_{i_a}x_{i_a+1}$.  This means that $M^=$ contains each $a\in\{1,\ldots,m-1\}$ such that $P_1$ and $P_2$ use the edges $x_{i_a}x_{i_a+1}$ and $y_{i_a}y_{i_a+1}$.
 
-    CAREFUL.  Two issues:
-    \begin{compactenum}[(i)]
-        \item Gotta worry about the parity of $|P|$, though we can split a part to change the parity (unless all parts have size $2$, but I guess we can handle that by just using a larger value of $m$.)
-        \item When $|P|$ is odd, this is giving us a cycle that is an anagram, not a simple path.  Annoying!
+    Without loss of generality we may assume that $P_1$ contains $x_{i_a+1}$ and that \[
+        (\varphi(x_1x_2),\varphi(y_1y_2),\varphi(x_1y_2),\varphi(y_1x_2))=(1,2,3,4) \enspace .
+    \]
+    For each $i\in\{1,\ldots,c\}$ and each $j\in\{1,2\}$, let $n_i(P_j)$ be the number of $e$ of $P_j$ with $\varphi(e)=i$.  There are two cases to consider (see \cref{cases}):
+    \begin{figure}
+        \begin{center}
+            \includegraphics{figs/twocases-1} \\
+            \includegraphics{figs/twocases-2} \\
+            Case 1 \\[2em]
+            \includegraphics{figs/twocases-3} \\
+            \includegraphics{figs/twocases-4} \\
+            Case 2
+        \end{center}
+        \caption{The two cases in the proof of \cref{cycle_lower_bound}}
+        \label{cases}
+    \end{figure}
+    \begin{compactenum}
+        \item $P_1$ contains $x_{i_b}$ (and $P_2$ contains $y_{i_b}$):  In this case $n_1(P_1)=n_1(P_2)+1$, $n_2(P_2)=n_2(P_1)+1$, and $n_i(P_1)=n_i(P_2)$ for each $i\in\{3,\ldots,c\}$.  Prepend the path $y_{i_a+1}x_{i_a}x_{i_a+1}$ to $P_1$ to obtain a path $P_1'$.  Append the path $x_{i_b}y_{i_b+1}y_{i_b}$ to $P_2$ to obtain a path $P_2'$.  The union of $P_1'$ and $P_2'$ is a cycle $C$ and $n_i(P_1')=n_i(P_2')$ for each $i\in\{1,\ldots,c\}$. Thus, $C$ is a repetitive cycle.
+
+        \item $P_1$ contains $y_{i_b}$ (and $P_2$ contains $x_{i_b}$): In this case $n_3(P_1)=n_3(P_2)+1$, $n_4(P_2)=n_4(P_1)+1$, and $n_i(P_1)=n_i(P_2)$ for each $i\in\{1,2,4,5,6,\ldots,m-1\}$.  We append the path $y_{i_b}x_{i_b+1}x_{i_b}$ to $P_1$ to obtain a path $P_1'$.  We preprend the path $x_{i_a+1}x_{i_a}y_{i_a+1}$ to $P_2$ to obtain a path $P_2'$.  The union of $P_1'$ and $P_2'$ is a cycle $C$ and $n_i(P_1')=n_i(P_2')$ for each $i\in\{1,\ldots,c\}$.  Thus, $C$ is a repetitive cycle. \qedhere
     \end{compactenum}
 \end{proof}
 
-
+\todo[inline]{It would be nice if we could get a repetitive path in $Q_n$ as well.  Oddly I have no idea how to do this, even with a graph of pathwidth $10$.}
 
 
 
