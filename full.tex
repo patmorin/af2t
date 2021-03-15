@@ -67,6 +67,9 @@
 
 \DeclareMathOperator{\x}{x}
 \DeclareMathOperator{\depth}{d}
+\DeclareMathOperator{\sh}{cbt}
+\DeclareMathOperator{\cbt}{cbt}
+\DeclareMathOperator{\dc}{dc}
 
 \newcommand{\ellt}{{\lfloor\ell/2\rfloor}}
 
@@ -336,33 +339,33 @@ We are now ready to prove the following result, which establishes \cref{lower_bo
 
 In this section we show that every $2$-tree $G$ of maximum degree $\Delta$ and pathwidth $p$ has an edge $O(p\Delta)$-colouring with no repetitive path.  Our strategy for proving this is similar to that used by \citet{wilson.wood:anagram-free} to show that every tree $T$ has anagram-free chromatic number at most $4\pw(T)+1$.  Specifically, we find a path-like subgraph $H$ of $G$ whose removal disconnects $G$ into components of pathwidth less than $p$.  We colour $H$ with $c\Delta$ colours $\{(p-1)c\Delta+1,\ldots,pc\Delta\}$ and then inductively colour each component of $G-H$ using the colours $\{1,\ldots,(p-1)c\}$.
 
-The main technical challenge comes from the fact that the graph $H$ is considerably more complicated than a path, and thus, there are no existing tools available for colouring $H$.  In particular, $H$ is a \emph{serpentine triangulation}, an edge-maximal outerplanar graph in which each inner (triangular) face shares at most two of its edges with other faces. Most of this section is devoted to proving that serpentine triangulations have edge $O(1)$-colourings with no repetitive path (\cref{serpentine}).  For now, we will establish \cref{main} assuming this is the case.
+The main technical challenge comes from the fact that the graph $H$ is considerably more complicated than a path, and thus, there are no existing tools available for colouring $H$.  In particular, $H$ is a \emph{serpentine triangulation}, an edge-maximal outerplanar graph in which each inner (triangular) face shares at most two of its edges with other inner faces. Most of this section is devoted to proving that serpentine triangulations have edge $O(1)$-colourings with no repetitive path (\cref{serpentine}).  For now, we will establish \cref{main} assuming this is the case.
 
-The \emph{dual tree} $G^\star$ of a $2$-tree $G$ is the tree whose vertices are the $3$-cliques of $G$ and which two vertices are adjacent if and only if the corresponding $3$-cliques have two vertices in common.
 
-For a rooted tree $T$, let $b(T)$ be the maximum integer $h$ such that $T$ contains a subdivision $X$ of a complete rooted binary tree of height $h$.  Specifically, we require that the rooting of $X$ and $T$ are consistent so that a node $x$ is an $X$-ancestor of a node $y$ if and only if it is $x$ is a $T$-ancestor of $y$.  It is known that $b(T)$ approximates $\pw(T)$, in the following sense \cite{X}:
 
-\begin{lem}\label{b_approx}
-    For any rooted tree $T$, $\ceil{\tfrac{1}{2}b(T)} \le \pw(T) \le b(T)+1$.
-\end{lem}
 
-\begin{proof}
-    Let $h:=b(T)$ and let $r$ denote the root of $T$.  The lower bound is well-known.
 
-    For the upper bound we will construct a path decomposition of $G^\star$ using induction on the pair $(h, |V(T)|)$.  In particular, we will construct a path decomposition $(B_x:x\in V(P))$ of $T$ that has width at most $h+1$ in which the bag $B_{x_0}$ indexed by the first node $x_0$ of $P$ contains $r$.
+ %
+ %
+ %
+ % tree whose vertices are the $3$-cliques of $G$ and two vertices of $G^\star$ are adjacent which two vertices are adjacent if and only if the corresponding $3$-cliques have exactly two vertices in common.
+% When $G$ is rooted at a $3$-clique $r$, we treat $G^\star$ as a rooted tree with root $r$.
+It is straightforward to check that a $2$-tree is a serpentine triangulation if and only if its dual tree is a path.
+% \footnote{This definition is equivalent to the definition of serpentine triangulation given in the preceding paragraph.}
 
-    In the base case $h=0$.  Observe that a path of length $2$ is a complete binary tree of height $1$. Therefore, if $h=0$ then $T$ does not contain a path of length $2$.  Therefore $T$ is either an isolated vertex or a single edge, and therefore has a path decomposition with one bag $x_0$ that contains each of the (at most 2) vertices of $G^\star$, including $r$.  The width of this decomposition is at most $2-1=1=h+1$.
 
-    Next we consider the case $h\ge 1$.
-    The graph $T-\{r\}$ is a forest of rooted trees $T_1,\ldots,T_d$ with roots $r_1,\ldots,r_d$ and at most one of these trees, say $T_1$, contains a subdivision of a complete binary tree of height $h$.  By the inductive hypothesis, each of $T_2,\ldots, T_d$ has pathwidth at most $h$, so the forest $T_2\cup\cdots\cup T_d$ has a path decomposition $(B_x:x\in V(P))$ of width at most $h$. Adding $r$ to each bag of this decomposition increases the width to at most $h+1$.  Now we append one node $y$ to $P$ with bag $B_y:=\{r,r_1\}$, which does not increase the width of the path decomposition.  Finally apply induction to $T_1$ to obtain a path decomposition $(B_x:x\in V(P'))$ of width at most $h+1$ in which $r_1\in B_{x_0'}$ where $x_0'$ is the first node of $P'$.  Appending $P'$ to $P$ then gives a path decomposition $(B_x:x\in P\mathbin{\circ}P')$ of width at most $h+1$ in which $r\in B_{x_0}$.\todo{Ask Vida if she knows a reference so we can skip this proof.}
-\end{proof}
+\subsection{A Proxy for Pathwidth}
+
+As a first step, we define an approximation of $\pw(G)$ on which we can apply induction.
+
+For any $2$-tree $G$ and any $k\in\{1,\ldots,3\}$, let $V_i(G)$ denote the set of $k$-cliques in $G$.  The \emph{dual tree} $G^\star$ of a $2$-tree $G$ is the bipartite graph $(V_3(G),V_2(G),E)$ that contains an edge between $\{x,y,z\}\in K_3(G)$ and $\{v,w\}\in K_2(G)$ if and only if $\{v,w\}\subseteq\{x,y,z\}$.  Since $G$ is a $2$-tree, it follows that $G^\star$ is a tree, all nodes in $V_3(G)$ have degree $3$ in $G^\star$, and all leaves of $G^\star$ are in $V_2(G)$.  The following lemma shows that $\pw(G^\star)$ is an approximation of $\pw(G)$.
 
 \begin{lem}\label{dual_approx}
     For any $2$-tree $G$ with dual tree $G^\star$, $\pw(G^\star) \le \pw(G) \le 3\pw(G^\star)) + 2$.
 \end{lem}
 
 \begin{proof}[Proof sketch]
-    For the upper bound, consider any width-$\pw(G^\star)$ path decomposition $(A_x:x\in V(P))$ of $G^\star$. Each bag $A_x$ in this path decomposition is a set of 3-cliques of $G$.  For each $x\in V(P)$, let $B_x:=\bigcup{uvw\in A_x}\{u,v,w\}$.  Clearly, $(B_x:x\in V(P))$ is a path decomposition of $G$ and it has width $3\max\{|A_x|:x\in V(P)\}-1=3(\pw^\star(G))+1)-1=3\pw^\star(G)) + 2$.
+    For the upper bound, consider any width-$\pw(G^\star)$ path decomposition $(A_x:x\in V(P))$ of $G^\star$. Each bag $A_x$ in this path decomposition contains 2 or 3-element subsets of $V(G)$, each of which forms a clique in $G$.  For each $x\in V(P)$, let $B_x:=\bigcup{K\in A_x}K$.  Clearly, $(B_x:x\in V(P))$ is a path decomposition of $G$ and it has width at most $3\max\{|A_x|:x\in V(P)\}-1=3(\pw^\star(G))+1)-1=3\pw^\star(G)) + 2$.
 
     \todo[inline]{Now prove the lower bound. (Maybe argue that $G$ contains a $G^\star$-minor.)}
     % For the lower bound, start with a width-$\pw(G)$ path decomposition $(A_x:x\in V(P))$ of $G$. By a standard normalizing reduction, we may assume that $|A_x|=\pw(G)+1$ for each $x\in V(P)$ and that $|A_x\cap A_y|=\pw(G)$ for each edge $xy$ of $P$. By Helly's Theorem, for each $3$-clique $uvw$ in $G$, there exists a maximal subpath $P_{uvw}$ of $P$ that is non-empty such that $\{u,v,w\}\subseteq A_x$ for each $x\in V(P_{uvw})$.  If we let $K$ denote the set of $3$-cliques in $G$, then we set $B_x:=\{uvw\in K:\{u,v,w\}\subseteq A_x\}$.
@@ -373,55 +376,130 @@ For a rooted tree $T$, let $b(T)$ be the maximum integer $h$ such that $T$ conta
     % $3$-clique $uvw$ of $G$, replace every occurrence of $u$, $v$, or $w$ the path decomposition with $uvw$.
 \end{proof}
 
-Together \cref{b_approx,dual_approx} show that $b(G^\star)$ is a good approximation of $\pw(G)$.
+For a tree $T$, let $\sh(T)$ be the maximum integer $h$ such that $T$ contains a subdivision of a complete rooted binary tree of height $h$.
+%
+% Specifically, we require that the rooting of $X$ and $T$ are consistent so that a node $x$ is an $X$-ancestor of a node $y$ if and only if it is $x$ is a $T$-ancestor of $y$.
+%
+The following lemma shows that $\sh(T)$ is an approximation of $\pw(T)$.
 
-Let $G$ be a $2$-tree with $n\ge 4$ vertices and let $H\subseteq G$ be an induced serpentine triangulation in $G$.  For each component $C$ of $G-H$ there is exactly one edge $vw$ of $H$ such that $C$ contains a vertex $x$ and $vwx$ is a $3$-clique in $G$.  Indeed $G[\{v,w\}\cup V(C)]$ is a 2-tree and we say that $C$ is \emph{attached to} $vw$.  In the other direction, for each edge $vw$ in $H$, there are zero or more components $C_1,\ldots,C_r$ of $G-H$ that are attached to $vw$ and $G_{H,vw}:=G[\{v,w\}\cup \bigcup_{i=1}^r V(C_i)\{v,w\}]$ is a $2$-tree.
-
-\begin{lem}\label{serpentine_separator}
-    For any edge $vw$ of any $2$-tree $G$, there exists a subgraph $H$ of $G$ such that
-    \begin{compactenum}[(i)]
-        \item $H$ contains the edge $vw$;
-        \item $H$ is a serpentine triangulation;
-        \item For any edge $e\in E(H)$, $b(G^\star_{H,e})<b(G^\star)$.\todo{This isn't quite true, but we can finesse this later with a better definition of $b$.}
-    \end{compactenum}
+\begin{lem}\label{b_approx}
+    For any non-empty tree $T$, $\ceil{\tfrac{1}{2}\sh(T)} \le \pw(T) \le \sh(T)+1$.
 \end{lem}
 
+\begin{proof}
+    The lower bound is well-known.  For the upper bound, let $h:=\sh(T)$ and root $T$ at an arbitrary node $r\in V(T)$.  We will construct a path decomposition of $G^\star$ using induction on the pair $(h, |V(T)|)$.  In particular, we will construct a path decomposition $(B_x:x\in V(P))$ of $T$ that has width at most $h+1$ in which the bag $B_{x_0}$ indexed by the first node $x_0$ of $P$ contains $r$.
+
+    In the base case $h=0$.  Observe that a path of length $2$ is a complete binary tree of height $1$. Therefore, if $h=0$ then $T$ does not contain a path of length $2$.  Therefore $T$ is either an isolated vertex or a single edge, and therefore has a path decomposition with one bag $x_0$ that contains each of the (at most 2) vertices of $G^\star$, including $r$.  The width of this decomposition is at most $2-1=1=h+1$.
+
+    Next we consider the case $h\ge 1$. The graph $T-\{r\}$ is a forest of rooted trees $T_1,\ldots,T_d$ with roots $r_1,\ldots,r_d$ and at most one of these trees, say $T_1$, contains a subdivision of a complete binary tree of height $h$.  By the inductive hypothesis, each of $T_2,\ldots, T_d$ has pathwidth at most $h$, so the forest $T_2\cup\cdots\cup T_d$ has a path decomposition $(B_x:x\in V(P))$ of width at most $h$. Adding $r$ to each bag of this decomposition increases the width to at most $h+1$.  Now we append one node $y$ to $P$ with bag $B_y:=\{r,r_1\}$, which does not increase the width of the path decomposition.  Finally apply induction to $T_1$ to obtain a path decomposition $(B_x:x\in V(P'))$ of width at most $h+1$ in which $r_1\in B_{x_0'}$ where $x_0'$ is the first node of $P'$.  Appending $P'$ to $P$ then gives a path decomposition $(B_x:x\in P\mathbin{\circ}P')$ of width at most $h+1$ in which $r\in B_{x_0}$.\todo{Ask Vida if she knows a reference so we can skip this proof.}
+\end{proof}
+
+Together \cref{b_approx,dual_approx} show that $\sh(G^\star)$ is a good approximation of $\pw(G)$.
+
+% However, we still require a slightly more refined parameter.  For a tree $T$, let $\dc(T)$ be the maximum integer $d$ such that $T$ contains $d$ vertex-disjoint subdivisions of a complete binary tree of height $\sh(T)$.
+%
+% \begin{lem}\label{dc}
+%     For any non-empty rooted tree $T$, $\dc(T)\in\{1,2\}$.
+% \end{lem}
 %
 % \begin{proof}
-%     Let $T:=G^\star$, $h:=b(G^\star)$ and root $T$ at an arbitrary vertex $r_0$.  Then $r_0$ has at most one child $r_1$ such that the subtree $T_{r_1}$ rooted at $r_1$ has $b(r_1)=h$.  A similar statement holds for the subtree $T_1$.  In this way we can construct a path $r_0,\ldots,r_d$ such
+%     By definition, $T$ contains a subdivision of a completely binary tree of height $\sh(T)$, so $\dc(T)\ge 1$. On the other hand, if $T$ contains three vertex disjoint subdivisions $T_1,T_2,T_3\subseteq T$ with roots $r_1,r_2,r_3\in V(T)$ of a complete binary tree of height $\sh(T)$, then at least one of $r_1r_2$, $r_2r_3$ or $r_3r_1$ is not an edge of $T$.  Without loss of generality, assume $r_1r_2\not\in E(T)$.  Then the path in $T$ from $r_1$ to $r_2$ plus the two subgraphs $T_1$ and $T_2$ are a subdivision of a complete binary tree of height $\sh(T)+1$, contradicting the definition of $\sh(T)$.
+% \end{proof}
+%
+% Finally, we define $b(T):= 2\cdot\sh(T)+\dc(T)-1$. \cref{b_approx,dual_approx,b_approx} imply the following corollary, which allows use to use $b(G^\star)$ as a proxy for $\pw(G)$:
+%
+% \begin{cor}
+%     For any $2$-tree $T$ with $n\ge 3$ vertices, $2b(G^\star)-1\le \pw(G)\le 6b(G^\star)+5$.
+% \end{cor}
+
+\subsection{Serpentine Pathwidth-Reducing Separators}
+
+
+Let $G$ be a $2$-tree with $n\ge 4$ vertices, let $P$ be a path in $G^\star$ of length at least $1$ whose first and last nodes are in $V_3(G)$ and let $H:=G[\bigcup_{K\in V(P)} K]$ be the resulting induced serpentine triangulation of $G$.  Then $G^\star-P$ is a forest.  If a component of $G^\star-P$ has a single node we call it \emph{trivial} otherwise we call it non-trivial. Each non-trivial component $C$ is a subtree of $G^\star$ that contains at least one node in $V_3(G)$ and whose leaves are all nodes in $V_2(G)$. In this case $G_C:=G[\bigcup_{K\in V(C)}]$ is a $2$-tree that has exactly two vertices and one edge in common with $H$.
+
+\begin{lem}
+    For any non-empty tree $T$ and any node $v\in V(T)$, there exists a path $P$ beginning at $v$ such that $\cbt(T-P)<\cbt(T)$.
+\end{lem}
+
+\begin{proof}
+    The proof is by induction on $|V(T)|$.  If $|V(T)|=1$ then the result is trivial, by taking $P=v$.  Otherwise, $v$ has $d\ge 1$ neighbours $v_1,\ldots,v_d$ and $T-\{v\}$ is a forest of trees $T_1,\ldots,T_d$, where $T_i$ contains $v_i$ for each $i\in\{1,\ldots,d\}$.  If there is no $i\in\{1,\ldots,d\}$ with $\cbt(T_i)=\cbt(T)$ then we take $P=v$ and we are also done.
+
+    Otherwise, exactly one subtree, say $T_i$, has $\cbt(T_1)=\cbt(T)$.  In this case we use the path $P$ that begins at $v$ and is followed by the path obtained by applying induction on $T_i$ with special vertex $v_i$.  Then $\cbt(T-P) = \max\{\cbt(T_j-P): j\in\{1,\ldots,d\}\} < \cbt(T)$, where the inequality is obtained either by induction (when $i=j$) or by definition when $i\neq j$.
+\end{proof}
+
+\begin{lem}\label{serpentine_separator}
+    For any $2$-tree $G$ and any edge $vw$ of $G$, there exists a path $P=K_0,\ldots,K_r$ in $G^\star$ with $K_0,K_r\in V_3(G)$, $\{v,w\}\subset K_0$ and such that $\cbt(C)<\cbt(G^{\star})$ for each non-trivial component $C$ of $T-P$.
+\end{lem}
+
+% \begin{proof}
+%     Let $T:=G^\star$, $h:=b(G^\star)$ and root $T$ at some arbitrary vertex $r_0$ such that $vw\in r_0$ (recall that the vertices of $T$ are $3$-cliques in $G$).  We will construct a path $P$ beginning at $r_0$ such that $\cbt(T-P)< \cbt(T)$.  If $\cbt(T-\{r_0\}) < \cbt(T)$ then $P:=r_0$ and we are done.  Otherwise, $r_0$ has at most one child $r_1$ such that the subtree $T_{r_1}$ rooted at $r_1$ has $\cbt(r_1)=\cbt(T)$. In this case $P$ is the path that begins with $r_0$ followed by the path obtained by applying this construction recursively from $T_{r_1}$.
+%
+%     We let $H=G[\bigcup_{x\in V(P)} x]$.  Then, clearly $H$ satisfies (i) and (ii). All that remains is to show that $H$ satisfies (iii). To see why this is the case, consider some edge $vw$ of $H$.  Then $G_{H,vw}$ is attached to $vw$ and $H$ contains a unique $3$-clique $uvw$.  There are two cases to consider:
+%
+%     \begin{compactenum}
+%         \item $\cbt(G_{H,vw}) < \cbt(G)$. In this case, by \cref{dc}, $b(G_{H,vw})=2\cbt(G_{H,vw})+\dc(G_{H,vw})\le 2\cbt(G_{H,vw})+1< 2\cbt(G)$.
+%
+%         \item $\cbt(G_{H,vw}) = \cbt(G)$.
+%         $\dc(G)=1$, so $b(G)=2h$.  In this case, $\cbt(G_{H},vw)\le h-1$
+%         \item $\dc(G)=2$, so $b(G)=2h+1$.
+%     \end{compactenum}
+%
+%
+%
 %
 %     Every non-empty tree $T$ contains a path $P$ such that $\pw(T-P) < \pw(T)$ .  Applying this to the dual tree $G^\star$ gives a path in $P$ in $G^\star$ consisting of a sequence of $3$-cliques that form a serpentine triangulation $H$.  By definition $H$ is a subgraph of $G$.  Each component $X$ of $G-H$ is either a single vertex or is a $2$-tree whose dual tree $X^\star$ is a subtree of $G^\star$, so $\pw^\star(X)=\pw(X^\star)<\pw(G^\star)=\pw^\star(G)$.
 % \end{proof}
+%
 
-For an edge $e\in E(G)$, an $e$-rooted XXXX $\{(H_x,G_x):x\in V(T)\}$ of a 2-tree $G$ is a collection of pairs of subgraphs of $G$ indexed by the nodes of a rooted tree $T$.  If $|V(G)|=3$ then $T$ has a single node $r$ and $H_r:=G_r:=G$.  If $|V(G)|>3$ The root $r$ of $T$ has $G_r:=G$, and $H_r$ is an $e$-rooted serpentine triangulation obtained by applying \cref{serpentine_separator} to $G=G_r$.  For each edge $e'\in E(H)$ for which $G_{H,vw}$ is non-empty, $r$ has a child whose root is the root of the tree obtained by making an $e'$-rooted XXXX of $G_{H,vw}$.
+For an edge $e\in E(G)$, an $e$-rooted XXXX $\{(H_x,G_x):x\in V(T)\}$ of a 2-tree $G$ is a collection of pairs of subgraphs of $G$ indexed by the nodes of a rooted tree $T$.  If $|V(G)|=3$ then $T$ has a single node $r$ and $H_r:=G_r:=G$.  If $|V(G)|>3$ The root $r$ of $T$ has $G_r:=G$, and $H_r:=G[\bigcup_{K\in V(P_r)}]$ is a serpentine triangulation obtained by applying \cref{serpentine_separator} to $G=G_r$ to obtain a path $P_r$ in $G^\star$.  Next, for each non-trivial component $C$ of $G^\star-P_r$, $r$ has a child whose root is the root of the tree obtained by making an $e'$-rooted XXXX of $G_C$, where $e'$ is the unique edge that appears in $H_r$ and $G_C$.
 
 Assuming \cref{spine_colouring}, we are now ready to prove \cref{main}.
 
 \begin{proof}[Proof of \cref{main} assuming \cref{spine_colouring}]
-    By \cref{b_approx,dual_approx} it is sufficient to show that any $2$-tree $G$ has an edge $O(b(G^\star)\Delta\log\Delta)$-colouring with no repetitive path.  Let $e$ be an arbitrary edge of $G$ and let $\{(H_x,G_x): x\in V(T)\}$ be an $e$-rooted XXXX of $G$.
+    By \cref{b_approx,dual_approx} it is sufficient to show that any $2$-tree $G$ has an edge $O(b(G^\star)\Delta\log\Delta)$-colouring with no repetitive path.  For ease of notation, let $\Delta:=\max\{c,\Delta(G)\}$.  Let $e$ be an arbitrary edge of $G$ and let
+    $\{(H_x,G_x): x\in V(T)\}$ be an $e$-rooted XXXX of $G$.
 
-    For each $x\in V(T)$, let $\varphi_x$ the colouring of $\hat{H}_x$ given by \cref{spine_colouring}.  For each edge $e\in E(G)$, let $T[e]:=T[\{x\in V(T):e\in E(H_x)\}]$.  Observe that $T[e]$ is a vertical path in $T$.  We denote by $\x(e)$ the minimum-depth node of $T[e]$ and let $\depth(e)$ denote the depth of $\x(e)$ in $T$.  For a vertex $v$ of $G$ we let $\x(v)$ denote the minimum-depth node $x$ in $T$ such that $v\in V(H_x)$ and $\depth(v)$ denotes the depth of $\x(v)$.
+    For each $x\in V(T)$, let $\varphi_x$ the colouring of $\hat{H}_x$ given by \cref{spine_colouring}. For $x\in V(T)$, $\depth(x)$ is the depth of $x$ in $T$, i.e., the length of the path from $r$ to $x$.  For each edge $e\in E(G)$, let $T[e]:=T[\{x\in V(T):e\in E(H_x)\}]$.  Observe that $T[e]$ is a vertical path in $T$.  We denote by $\x(e)$ the minimum-depth node of $T[e]$ and let $\depth(e)$ denote the depth of $\x(e)$ in $T$.  For a vertex $v$ of $G$ we let $\x(v)$ denote the minimum-depth node $x$ in $T$ such that $v\in V(H_x)$ and $\depth(v)$ denotes the depth of $\x(v)$.
 
-    We will start by defining an edge colouring $\varphi_1$ does not have the properties we want (in fact it is not even a proper colouring).
-    For any $e\in E(G)$ such that  $e\in \hat{H}_{\x(e)}$, we define
-    $\varphi_1(e):=\varphi_{\x(e)}(e)$.  In words, the first time $e$ appears in some spine $H_x$, it is assigned a colour if $e$ is in the skeleton of $H_x$ or $e$ is never assigned any colour.  We now define a greedy edge $O(\Delta)$-colouring of the edges that are not coloured by $\varphi_1$.
+    We will start by defining an edge colouring $\varphi_1$ that does not have all the properties we want (in fact $\varphi_1$ is not even a proper edge colouring).  We distinguish between three kinds of edges: A \emph{skeleton edge} $e$ is contained in $E(\hat{H}_{\x(e)})$.  A \emph{flat edge} $e$ is contained in $E(H_{\x(e)})\setminus E(\hat{H}_{\x(e)})$. Any edge of $G$ that is not a skeleton edge or flat edge is a \emph{vertical edge}.
 
-    We consider each node $x$ of $T$ in depth first order and, before considering the next node we will have coloured all the edges of $H_x$.  This implies that, when we begin considering node $x$, all edges of $\hat{H}_x$ have already been assigned colours but none of the edges in  $E(H_x)\setminus E(\hat{H}_x)$ have been assigned colours.  These uncoloured edges can be partitioned into groups $E_1,\ldots,E_k$ where all the edges in each $E_i$ have a common endpoint $v_i$ and no two edges in different groups have a common endpoint (see \figref{partition}).  The edges $e_1,\ldots,e_k$ in $E_i$ are then ordered in non-decreasing order of the degree of $v_i$ in the graph $(G_x)_{H_x,e_i}$.  With this ordering we set $\varphi_1(e_i)=c+i$ for each $i\in\{1,\ldots,k\}$.
+    For each skeleton edge $e$, we define $\varphi_1(e):=\varphi_{\x(e)}(e)$.
+
+    Next, we consider each node $x$ of $T$ in depth first order and, before considering the next node we will have coloured all the edges of $H_x$.  This implies that, when we begin considering node $x$, all edges of $\hat{H}_x$ have already been assigned colours, either because they are skeleton edges or because they were assigned a colour when processing some $T$-ancestor of $x$.  However, none of the edges in $E(H_x)\setminus E(\hat{H}_x)$ have been assigned colours.
+
+    These uncoloured edges of $\hat{H}_x$ can be partitioned into groups $E_1,\ldots,E_k$ where all the edges in each $E_i$ have a common endpoint $v_i$ and no two edges in different groups have a common endpoint (see \figref{partition}).  The edges $v_iw_1,\ldots,v_iw_k$ in $E_i$ are then ordered so that the degree of $v_i$ in the graph $G_{v_iw_j}$ is not less than the degree of $v_i$ in the graph $G_{v_iw_{j+1}}$ for each $j\in\{1,\ldots,k-1\}$.  With this ordering we set $\varphi_1(e_i)=i$ for each $i\in\{1,\ldots,k\}$.
+
+    Finally, we colour the remaining (vertical) edges of $G$ greedily in any order.  When colouring some edge $vw$ with $\depth(v)<\depth(w)$ we use the smallest colour that is not already used by some vertical edge incident to $v$.
 
     We now define several additional edge colourings whose product makes up our final edge colouring.
     \begin{compactenum}[$\varphi_1$:]
-    \item This is the colouring $\varphi_1:E(G)\to\{1,\ldots,c+\Delta\}$ defined above.
-    \item This is the colouring $\varphi_2:E(G)\to\{1,\ldots,b(G)\}$ given by $\varphi_2(e):=\depth(e)$.
-    \item This is the colouring $\varphi_3:E(G)\to\{0,1,\ldots,c+\Delta\}$ that is defined specifically to deal with for some edges $vw$ such that $x:=\depth(v) < \depth(w)$.  For each such edge, consider the unique edge $uv\in H_x$ such that $vw\in (G_x)_{H_x,uv}$.  If $\deg_G(v)\ge\deg_G(u)$ then $\varphi_3(vw):=\varphi_1(uv)$.  In any other case, $\varphi_3(vw):=0$.
+        \item This is the colouring $\varphi_1:E(G)\to\{1,\ldots,\Delta\}$ defined above.
+        \item This is the colouring $\varphi_2:E(G)\to\{1,\ldots,b(G)\}$ given by $\varphi_2(e):=\depth(e)$.
+        \item This is the colouring $\varphi_3:E(G)\to\{1,2,3\}$ where $\varphi(e)$ is a value that indicates whether $e$ is a skeleton edge, a flat edge, or a vertical edge.
+        \item This is the colouring $\varphi_3:E(G)\to\{-\Delta,\ldots,\Delta\}$ that is defined specifically to deal with vertical edges.  For each flat edge $e=xy$ of $G$, arbitrarily choose one of $x$ or $y$ as designated for $e$.  For each vertical edge $vw$ with $\depth(v)<\depth(w)$, let $uv$ be the projection of $vw$ onto $H_{\x(v)}$.\todo{Move definition of project earlier}.  If $v$ is the designated vertex of the edge $uv$ then $\varphi_1(vw):=(\varphi_3(uv),\varphi_1(uv))$.\todo{Reverse roles of $u$ and $w$ here (and later).} Otherwise, $\varphi_1(vw)=(\varphi_3(uv),-\varphi_1(uv))$.
     \end{compactenum}
-    The overall edge-colouring we use is then the product colouring in which each edge $e$ of $G$ is assigned the triple $\varphi(e):=(\varphi_1(e),\varphi_2(e),\varphi_3(e))$.  On the surface, this looks like a colouring that uses $(c+\Delta)(b(G))(c+\Delta+1)=\Theta(\Delta^2\cdot\pw(G))$ colours.  We now argue that this $\Delta^2$ is an overestimate and that this colouring uses only $O(\Delta\log\Delta)$ colours.
+    The overall edge-colouring we use is then the product colouring in which each edge $e$ of $G$ is assigned the triple $\varphi(e):=(\varphi_1(e),\varphi_2(e),\varphi_3(e))$.  On the surface, this looks like a colouring that uses $\Delta\cdot b(G)\cdot 2\Delta=\Theta(\Delta^2\cdot\pw(G))$ colours.  We now argue that this $\Delta^2$ is an overestimate and that this colouring uses only $O(\Delta\log\Delta)$ colours.
 
-    To see why this is so, suppose that some edge $vw$ is assigned $\sigma_1(vw)=i$ and $\sigma_3(vw)=c+j$.  This can only happen if, in the graph $(G_x)_{H_x,uw}$, $v$ or $w$ has degree at least $j$.  If $v$ has degree at least $j$ then $(i-1)\cdot j \le \Delta$.  If $w$ has degree $j>3$ then $vw$ is an edge of the spine $\hat{H}_{\x(vw)}$, in which case it receives a colour of at most $c$.  Thus, we obtain obtain pairs of colours $(i,c+j)$ such that $i\in\{1,\ldots,\Delta\}$, $j\in\{-c,\ldots,\Delta\}$ and $(i-1)\cdot j\le\Delta$.  The total number of such pairs is at most
+    To see why this is so, suppose that some edge $vw$ is assigned $\varphi_1(vw)=i$ and $\varphi_4(vw)=j$.  This can only happen if $i\le c$ or $vw$ is a flat edge and there are at least $i-1$ edges $vw_1,\ldots,w_{i-1}$ such that the degree of $v$ in $G_{vw_i}$ is at least equal to the degree of $v$ in $G_{vw}$.\footnote{Define $G_{vw}$ notation.}  Since $v$ has degree at most $\Delta$, this implies that $(i-1)|j|\le \Delta$.
+    Thus, we obtain obtain pairs of colours $(i,j):=(\varphi_1(v),\varphi_4(w))\in\{1,\ldots,\Delta\}\times\{-\Delta,\ldots,\Delta\}$ such that $i\le c$ or $(i-1)\cdot |j|\le\Delta$.  The total number of such pairs is at most
     \[
-        c+\Delta + \sum_{i=2}^\Delta(c + \Delta/(i-1)) = O(c\Delta + \Delta\log\Delta) \enspace .
+        c\Delta + \sum_{i=c+2}^\Delta(2\Delta/(i-1)) = O(\Delta\log\Delta) \enspace .
     \]
-    All that remains is to show that $G$, with the colouring $\varphi$ does have an repetitive paths. We do this by induction on $b(G)$.
-    \todo[inline]{continue}
+    All that remains is to show that $G$, with the colouring $\varphi$ does not have any repetitive paths.
+
+    Consider some path $P$ in $G$.  There exists some node $x\in V(T)$ of maximum depth such that $P$ is entirely contained in $G_x$.  We say that an edge $e$ of $P$ projects onto an edge $e'$ in $H_x$ if $e=e'$ or $e$ is contained in $G_y$ for some child $y$ of $x$ for which $G_y$ is attaches to $e'$. We let $P':=e_0,\ldots,e_r$ be the path in $H_x$ obtained by projecting each edge of $P$ onto its corresponding edge in $H_x$ and then removing duplicates. Observe that, if $P$ is repetitive then one of the four paths $e_0,\ldots,e_{r-1}$, $e_0,\ldots,e_r$, $e_1,\ldots,e_{r-1}$, or $e_1,\ldots,e_r$ must be repetitive.\todo{Explain this.}  But \cref{serpentine_degree4} ensures that $H_x$ has no non-trivial repetitive path.
+
+    Therefore, the only possibility is that $r=1$ and $e_1,\ldots,e_{r-1}$ is the (trivial) repetitive path.  But in this case, $P$ contains two consecutive edges $uvw$ with $\depth(uv)=\depth(vw)=\depth_T(x)$ and these are the only two edges of $P$ having this depth.  In this case $P$ is not repetitive because $\varphi_1(uv)\neq\varphi_1(vw)$ and therefore $\varphi(uv)$ and $\varphi(uw)$ have colours that are unique in $P$.
+    %
+    % But this is not possible since \cref{serpentine_degree4} ensures that the colouring of $H_x$ has no repetitive path.
+    %
+    % \begin{compactenum}
+    %     \item If $k=1$ then $P$ contains the edges $e_0:=v_{i_1-1}v_{i_1}$ and $e_1:=v_{i_1}v_{i_1+1}$.  These are are the only two edges in $P$ of depth $0$.  These two edges have a vertex in common so, since $\varphi_1$ is a proper edge-colouring of $G$\todo{I hope we don't need this}, the colours $\varphi(e_0)$ and $\varphi(e_1)$ are each unique in $P$, so $P$ is certainly non repetitive.
+    %
+    %     \item If $k\ge 2$, then $P':=v_{i_1},\ldots,v_{i_k}$ is a path in $H_r$.
+    %
+    %     The edges of $P'$ that are also in $P$ are the only edges $e$ of $P$ for which $\varphi_2(e)=0$ and $\varphi_3(e)=0$.  For every edge $v_{i_j}v_{i_{j+1}}$ of $P'$ not in $P$, $P$ contains the pair of edges $\{e,f\}:=\{v_{i_j}v_{{i_j}+1}, v_{i_{j+1}-1}v_{i_{j+1}}\}$.  Exactly one of these two edges, say $e$, has $\varphi_1(e)=\varphi_1(v_{i_j}v_{i_{j+1}})$.  Additionally, there are two other potential edges $e_{0}:=v_{i_1}-1v_{i_1}$ and $e_{k}:=v_{k}v_{k+1}$ that are in the same category.  All this say that, if $P$ is repetitive, then one of the four paths in $H_x$ determined by $e_0,\ldtos,e_k$, $e_1,\ldots,e_k$, $e_1,\ldots,e_{k-1}$ or $e_0,\ldots,e_{k-1}$ is also repetitive.
+    % \end{compactenum}
 \end{proof}
 
 
@@ -438,7 +516,7 @@ Every serpentine triangulation is an edge-maximal outerplanar graph and has a un
 With \cref{serpentine_degree4}, we can prove the following lemma:
 
 \begin{lem}\label{spine_colouring}
-    There exists an integer $c$ such that for any integer $n\ge 4$, any $n$-vertex serpentine triangulation $H$ with  has an edge colouring $\varphi:E(\hat{H})\to\{1,\ldots,2c\}$ of its spine with no repetitive path.
+    There exists an integer $c$ such that for any integer $n\ge 4$, any $n$-vertex serpentine triangulation $H$ with has an edge colouring $\varphi:E(\hat{H})\to\{1,\ldots,2c\}$ of its spine such that every proper completion $\varphi:E(H)\setminus E(\hat{H})\to\{c+1,\ldots,c+k\}$ of $\varphi$ has no repetitive path.
 \end{lem}
 
 \begin{proof}
