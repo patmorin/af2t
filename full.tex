@@ -376,111 +376,109 @@ For any $2$-tree $G$ and any $k\in\{1,\ldots,3\}$, let $V_i(G)$ denote the set o
     % $3$-clique $uvw$ of $G$, replace every occurrence of $u$, $v$, or $w$ the path decomposition with $uvw$.
 \end{proof}
 
-For a tree $T$, let $\sh(T)$ be the maximum integer $h$ such that $T$ contains a subdivision of a complete rooted binary tree of height $h$.
-%
-% Specifically, we require that the rooting of $X$ and $T$ are consistent so that a node $x$ is an $X$-ancestor of a node $y$ if and only if it is $x$ is a $T$-ancestor of $y$.
-%
-The following lemma shows that $\sh(T)$ is an approximation of $\pw(T)$.
+A \emph{complete binary tree} of height $h$ is a rooted tree in which every internal node has exactly two children all leaves have distance $h$ from the root.  For a forest $T$, let $\cbt(T)$ be the maximum integer $h$ such that $T$ contains a subdivision of a complete binary tree of height $h$.  The following lemma shows that, for forests, $\sh(T)$ is an approximation of $\pw(T)$.
 
 \begin{lem}\label{b_approx}
     For any non-empty tree $T$, $\ceil{\tfrac{1}{2}\sh(T)} \le \pw(T) \le \sh(T)+1$.
 \end{lem}
 
 \begin{proof}
-    The lower bound is well-known.  For the upper bound, let $h:=\sh(T)$ and root $T$ at an arbitrary node $r\in V(T)$.  We will construct a path decomposition of $G^\star$ using induction on the pair $(h, |V(T)|)$.  In particular, we will construct a path decomposition $(B_x:x\in V(P))$ of $T$ that has width at most $h+1$ in which the bag $B_{x_0}$ indexed by the first node $x_0$ of $P$ contains $r$.
+    The lower bound is well-known \cite{X}.  For the upper bound, let $h:=\sh(T)$ and root $T$ at an arbitrary node $r\in V(T)$.  We will construct a path decomposition of $G^\star$ using induction on the pair $(h, |V(T)|)$.  In particular, we will construct a path decomposition $(B_x:x\in V(P))$ of $T$ that has width at most $h+1$ in which the bag $B_{x_0}$ indexed by the first node $x_0$ of $P$ contains $r$.
 
     In the base case $h=0$.  Observe that a path of length $2$ is a complete binary tree of height $1$. Therefore, if $h=0$ then $T$ does not contain a path of length $2$.  Therefore $T$ is either an isolated vertex or a single edge, and therefore has a path decomposition with one bag $x_0$ that contains each of the (at most 2) vertices of $G^\star$, including $r$.  The width of this decomposition is at most $2-1=1=h+1$.
 
     Next we consider the case $h\ge 1$. The graph $T-\{r\}$ is a forest of rooted trees $T_1,\ldots,T_d$ with roots $r_1,\ldots,r_d$ and at most one of these trees, say $T_1$, contains a subdivision of a complete binary tree of height $h$.  By the inductive hypothesis, each of $T_2,\ldots, T_d$ has pathwidth at most $h$, so the forest $T_2\cup\cdots\cup T_d$ has a path decomposition $(B_x:x\in V(P))$ of width at most $h$. Adding $r$ to each bag of this decomposition increases the width to at most $h+1$.  Now we append one node $y$ to $P$ with bag $B_y:=\{r,r_1\}$, which does not increase the width of the path decomposition.  Finally apply induction to $T_1$ to obtain a path decomposition $(B_x:x\in V(P'))$ of width at most $h+1$ in which $r_1\in B_{x_0'}$ where $x_0'$ is the first node of $P'$.  Appending $P'$ to $P$ then gives a path decomposition $(B_x:x\in P\mathbin{\circ}P')$ of width at most $h+1$ in which $r\in B_{x_0}$.\todo{Ask Vida if she knows a reference so we can skip this proof.}
 \end{proof}
 
-Together \cref{b_approx,dual_approx} show that $\sh(G^\star)$ is a good approximation of $\pw(G)$.
+Together \cref{b_approx,dual_approx} show that $\sh(G^\star)$ is a good approximation of $\pw(G)$.  We will make use of the following separator lemma in order to apply induction on $\cbt(G^\star)$.
 
-% However, we still require a slightly more refined parameter.  For a tree $T$, let $\dc(T)$ be the maximum integer $d$ such that $T$ contains $d$ vertex-disjoint subdivisions of a complete binary tree of height $\sh(T)$.
-%
-% \begin{lem}\label{dc}
-%     For any non-empty rooted tree $T$, $\dc(T)\in\{1,2\}$.
-% \end{lem}
-%
-% \begin{proof}
-%     By definition, $T$ contains a subdivision of a completely binary tree of height $\sh(T)$, so $\dc(T)\ge 1$. On the other hand, if $T$ contains three vertex disjoint subdivisions $T_1,T_2,T_3\subseteq T$ with roots $r_1,r_2,r_3\in V(T)$ of a complete binary tree of height $\sh(T)$, then at least one of $r_1r_2$, $r_2r_3$ or $r_3r_1$ is not an edge of $T$.  Without loss of generality, assume $r_1r_2\not\in E(T)$.  Then the path in $T$ from $r_1$ to $r_2$ plus the two subgraphs $T_1$ and $T_2$ are a subdivision of a complete binary tree of height $\sh(T)+1$, contradicting the definition of $\sh(T)$.
-% \end{proof}
-%
-% Finally, we define $b(T):= 2\cdot\sh(T)+\dc(T)-1$. \cref{b_approx,dual_approx,b_approx} imply the following corollary, which allows use to use $b(G^\star)$ as a proxy for $\pw(G)$:
-%
-% \begin{cor}
-%     For any $2$-tree $T$ with $n\ge 3$ vertices, $2b(G^\star)-1\le \pw(G)\le 6b(G^\star)+5$.
-% \end{cor}
-
-\subsection{Serpentine Pathwidth-Reducing Separators}
-
-
-Let $G$ be a $2$-tree with $n\ge 4$ vertices, let $P$ be a path in $G^\star$ of length at least $1$ whose first and last nodes are in $V_3(G)$ and let $H:=G[\bigcup_{K\in V(P)} K]$ be the resulting induced serpentine triangulation of $G$.  Then $G^\star-P$ is a forest.  If a component of $G^\star-P$ has a single node we call it \emph{trivial} otherwise we call it non-trivial. Each non-trivial component $C$ is a subtree of $G^\star$ that contains at least one node in $V_3(G)$ and whose leaves are all nodes in $V_2(G)$. In this case $G_C:=G[\bigcup_{K\in V(C)}]$ is a $2$-tree that has exactly two vertices and one edge in common with $H$.
-
-\begin{lem}
+\begin{lem}\label{tree_cbt_separator}
     For any non-empty tree $T$ and any node $v\in V(T)$, there exists a path $P$ beginning at $v$ such that $\cbt(T-P)<\cbt(T)$.
 \end{lem}
 
 \begin{proof}
     The proof is by induction on $|V(T)|$.  If $|V(T)|=1$ then the result is trivial, by taking $P=v$.  Otherwise, $v$ has $d\ge 1$ neighbours $v_1,\ldots,v_d$ and $T-\{v\}$ is a forest of trees $T_1,\ldots,T_d$, where $T_i$ contains $v_i$ for each $i\in\{1,\ldots,d\}$.  If there is no $i\in\{1,\ldots,d\}$ with $\cbt(T_i)=\cbt(T)$ then we take $P=v$ and we are also done.
 
-    Otherwise, exactly one subtree, say $T_i$, has $\cbt(T_1)=\cbt(T)$.  In this case we use the path $P$ that begins at $v$ and is followed by the path obtained by applying induction on $T_i$ with special vertex $v_i$.  Then $\cbt(T-P) = \max\{\cbt(T_j-P): j\in\{1,\ldots,d\}\} < \cbt(T)$, where the inequality is obtained either by induction (when $i=j$) or by definition when $i\neq j$.
+    Otherwise, exactly one subtree, say $T_i$, has $\cbt(T_1)=\cbt(T)$.  Apply the inductive hypothesis on $T_i$ to obtain a path $P'$ beginning at $v_i$ such that $\cbt(T_i-P')<\cbt(T_i)=\cbt(T)$.  Let $P$ be the path obtained by prepending $v$ to $P'$.  Then $\cbt(T-P)\le \max( \{\cbt(T_i-P')\}\cup\{\cbt(T_j):j\in\{1,\ldots,d\}\setminus\{i\}\})<\cbt(T)$.
 \end{proof}
+
+
+
+
+\subsection{Serpentine Pathwidth-Reducing Separators in $2$-Trees}
+
+Let $G$ be a $2$-tree with $n\ge 4$ vertices, let $P$ be a path in $G^\star$ of length at least $1$ whose first and last nodes are in $V_3(G)$.  Then the induced subgraph $H:=G[\bigcup_{K\in V(P)} K]$ is a serpentine triangulation.
+The graph $G^\star-P$ is a forest.  If a component of $G^\star-P$ has a single node we call it \emph{trivial} otherwise we call it non-trivial. Each non-trivial component $C$ of $G^\star-P$ is a tree contains at least one node in $V_3(G)$ and whose leaves are all nodes in $V_2(G)$. In this case $G_C:=G[\bigcup_{K\in V(C)}]$ is a $2$-tree that has exactly two vertices $u$ and $v$ and one edge $e:=uv$ in common with $H$.  We say that $G_C$ \emph{attaches} to $H$ using $e$.
+
+Translating \cref{tree_cbt_separator} into the language of dual trees immediately gives the following corollary:
 
 \begin{lem}\label{serpentine_separator}
     For any $2$-tree $G$ and any edge $vw$ of $G$, there exists a path $P=K_0,\ldots,K_r$ in $G^\star$ with $K_0,K_r\in V_3(G)$, $\{v,w\}\subset K_0$ and such that $\cbt(C)<\cbt(G^{\star})$ for each non-trivial component $C$ of $T-P$.
 \end{lem}
 
-% \begin{proof}
-%     Let $T:=G^\star$, $h:=b(G^\star)$ and root $T$ at some arbitrary vertex $r_0$ such that $vw\in r_0$ (recall that the vertices of $T$ are $3$-cliques in $G$).  We will construct a path $P$ beginning at $r_0$ such that $\cbt(T-P)< \cbt(T)$.  If $\cbt(T-\{r_0\}) < \cbt(T)$ then $P:=r_0$ and we are done.  Otherwise, $r_0$ has at most one child $r_1$ such that the subtree $T_{r_1}$ rooted at $r_1$ has $\cbt(r_1)=\cbt(T)$. In this case $P$ is the path that begins with $r_0$ followed by the path obtained by applying this construction recursively from $T_{r_1}$.
-%
-%     We let $H=G[\bigcup_{x\in V(P)} x]$.  Then, clearly $H$ satisfies (i) and (ii). All that remains is to show that $H$ satisfies (iii). To see why this is the case, consider some edge $vw$ of $H$.  Then $G_{H,vw}$ is attached to $vw$ and $H$ contains a unique $3$-clique $uvw$.  There are two cases to consider:
-%
-%     \begin{compactenum}
-%         \item $\cbt(G_{H,vw}) < \cbt(G)$. In this case, by \cref{dc}, $b(G_{H,vw})=2\cbt(G_{H,vw})+\dc(G_{H,vw})\le 2\cbt(G_{H,vw})+1< 2\cbt(G)$.
-%
-%         \item $\cbt(G_{H,vw}) = \cbt(G)$.
-%         $\dc(G)=1$, so $b(G)=2h$.  In this case, $\cbt(G_{H},vw)\le h-1$
-%         \item $\dc(G)=2$, so $b(G)=2h+1$.
-%     \end{compactenum}
-%
-%
-%
-%
-%     Every non-empty tree $T$ contains a path $P$ such that $\pw(T-P) < \pw(T)$ .  Applying this to the dual tree $G^\star$ gives a path in $P$ in $G^\star$ consisting of a sequence of $3$-cliques that form a serpentine triangulation $H$.  By definition $H$ is a subgraph of $G$.  Each component $X$ of $G-H$ is either a single vertex or is a $2$-tree whose dual tree $X^\star$ is a subtree of $G^\star$, so $\pw^\star(X)=\pw(X^\star)<\pw(G^\star)=\pw^\star(G)$.
-% \end{proof}
-%
+\subsection{Hierarchical Skeleton Decompositions}
 
-For an edge $e\in E(G)$, an $e$-rooted XXXX $\{(H_x,G_x):x\in V(T)\}$ of a 2-tree $G$ is a collection of pairs of subgraphs of $G$ indexed by the nodes of a rooted tree $T$.  If $|V(G)|=3$ then $T$ has a single node $r$ and $H_r:=G_r:=G$.  If $|V(G)|>3$ The root $r$ of $T$ has $G_r:=G$, and $H_r:=G[\bigcup_{K\in V(P_r)}]$ is a serpentine triangulation obtained by applying \cref{serpentine_separator} to $G=G_r$ to obtain a path $P_r$ in $G^\star$.  Next, for each non-trivial component $C$ of $G^\star-P_r$, $r$ has a child whose root is the root of the tree obtained by making an $e'$-rooted XXXX of $G_C$, where $e'$ is the unique edge that appears in $H_r$ and $G_C$.
+For a $2$-tree $G$ and an edge $e\in E(G)$, an $e$-rooted skeleton decomposition $\{(G_x,H_x):x\in V(T)\}$ is a collection of pairs of subgraphs of $G$ indexed by the nodes of a rooted tree $T$ that is defined inductively as follows:
+\begin{compactenum}
+    \item The root $x$ of $T$ has $G_x:=G$.  The graph $H_x:=G[\bigcup_{K\in V(P)}]$ is a serpentine triangulation obtained by applying \cref{serpentine_separator} to $G_x$ to obtain a path $P:=K_0,\ldots,K_r$ in $G^\star$ with $e\subset K_0$.  The serpentine triangulation $H_x$ is called the \emph{skeleton} of $G_x$.
+    \item For each non-trivial component $C$ of $G^\star-P_r$, the root $x$ of $T$ has a child that is the root of the tree $T_C$ obtained by making an $e'$-rooted XXXX of $G_C$, where $e'$ is the edge by which $G_C$ is attached to $H_x$.
+\end{compactenum}
 
-Assuming \cref{spine_colouring}, we are now ready to prove \cref{main}.
+\Cref{spine_colouring}, below, shows that any serpentine triangulation $H$ has a spanning subgraph $\hat{H}$ has an edge $c$-colouring $\varphi$ with no repetitive paths.  Furthermore, extending $\varphi$ using any proper colouring of the edges in $E(H)\setminus E(\hat{H})$ gives a colouring $H$ with no repetitive paths. Assuming \cref{spine_colouring}, we are now ready to prove \cref{main}.
+
+\begin{thm}
+    Every $2$-tree $G$ with maximum degree $\Delta$ has an edge colouring that uses $O(\pw(G)\cdot\Delta\log\Delta)$ colours and has no repetitive path.
+\end{thm}
 
 \begin{proof}[Proof of \cref{main} assuming \cref{spine_colouring}]
-    By \cref{b_approx,dual_approx} it is sufficient to show that any $2$-tree $G$ has an edge $O(b(G^\star)\Delta\log\Delta)$-colouring with no repetitive path.  For ease of notation, let $\Delta:=\max\{c,\Delta(G)\}$.  Let $e$ be an arbitrary edge of $G$ and let
-    $\{(H_x,G_x): x\in V(T)\}$ be an $e$-rooted XXXX of $G$.
+    By \cref{b_approx,dual_approx} it is sufficient to give an edge colouring of $G$ that uses $O(\cbt(G^\star)\cdot\Delta\log\Delta)$-colours.  For ease of notation, let $\Delta:=\max\{c,\Delta(G)\}$, where $c$ is the constant that appears in \cref{spine_colouring}.
 
-    For each $x\in V(T)$, let $\varphi_x$ the colouring of $\hat{H}_x$ given by \cref{spine_colouring}. For $x\in V(T)$, $\depth(x)$ is the depth of $x$ in $T$, i.e., the length of the path from $r$ to $x$.  For each edge $e\in E(G)$, let $T[e]:=T[\{x\in V(T):e\in E(H_x)\}]$.  Observe that $T[e]$ is a vertical path in $T$.  We denote by $\x(e)$ the minimum-depth node of $T[e]$ and let $\depth(e)$ denote the depth of $\x(e)$ in $T$.  For a vertex $v$ of $G$ we let $\x(v)$ denote the minimum-depth node $x$ in $T$ such that $v\in V(H_x)$ and $\depth(v)$ denotes the depth of $\x(v)$.
+    Let $e$ be an arbitrary edge of $G$ and let
+    $\{(G_x,H_x): x\in V(T)\}$ be an $e$-rooted hierarchical skeleton decomposition of $G$.  The root $r$ of $T$, define $e_r:=e$. For any node $x$ of $T$ with parent $y$, let $e_x$ be the edge by which $G_x$ attaches to $H_y$.  For each $x\in V(T)$, let $\varphi_x$ a colouring of $\hat{H}_x$ given by \cref{spine_colouring}.
 
-    We will start by defining an edge colouring $\varphi_1$ that does not have all the properties we want (in fact $\varphi_1$ is not even a proper edge colouring).  We distinguish between three kinds of edges: A \emph{skeleton edge} $e$ is contained in $E(\hat{H}_{\x(e)})$.  A \emph{flat edge} $e$ is contained in $E(H_{\x(e)})\setminus E(\hat{H}_{\x(e)})$. Any edge of $G$ that is not a skeleton edge or flat edge is a \emph{vertical edge}.
+    For $x\in V(T)$, $\depth(x)$ is the depth of $x$ in $T$, i.e., the length of the path from $r$ to $x$. Observe that, for any $k\in\{1,2,3\}$ and any $k$-clique $K$ in $G$, the graph $T[K]:=T[\{x\in V(T):K\in H_x\}]$ is a connected subtree of $T$.  (When $|K|=1$, $T[K]$ is a subtree, when $|K|=2$, $T[K]$ is a vertical path,\footnote{A \emph{vertical path} in a tree $T$ is a path in which no two nodes have the same depth.} and when $|K|=3$, $T[K]$ contains a single vertex.)  We let $\x(K)$ denote the minimum depth node of $T[K]$ and $\depth(K)$ is the depth of $\x(K)$. We abuse notation slightly when $K$ is a $1$ or $2$-clique:  For a vertex $v$ and edge $vw$ we use $\x(v)$ as shorthand for $\x(\{v\})$ and $\x(vw)$ as shorthand for $\x(\{v,w\})$.
 
-    For each skeleton edge $e$, we define $\varphi_1(e):=\varphi_{\x(e)}(e)$.
+    As noted above $T[vw]$ is a vertical path $x_0,\ldots,x_t$ that starts at $x_0=\x(vw)$.  If $t>0$, then we let $G_{vw}:=G_{x_1}$.  If $t=0$, then $G_{vw}$ denote the empty graph.  Thus, $G_{vw}$ attaches to $H_{x_0}$ using the edge $vw$.
 
-    Next, we consider each node $x$ of $T$ in depth first order and, before considering the next node we will have coloured all the edges of $H_x$.  This implies that, when we begin considering node $x$, all edges of $\hat{H}_x$ have already been assigned colours, either because they are skeleton edges or because they were assigned a colour when processing some $T$-ancestor of $x$.  However, none of the edges in $E(H_x)\setminus E(\hat{H}_x)$ have been assigned colours.
+    We distinguish between three kinds of edges in $G$: A $c$-edge $e$ is contained in $E(\hat{H}_{\x(e)})$.  A \emph{flat $\Delta$-edge} $e$ is contained in $E(H_{\x(e)})\setminus E(\hat{H}_{\x(e)})$. Any edge of $G$ that is not a $c$-edge or a flat $\Delta$-edge is a \emph{vertical edge}.  Each vertical edge $vw$ has $\depth(v)\neq\depth(w)$. If $\depth(v)<\depth(w)$ then we call $v$ the \emph{upper endpoint} of $vw$ and $w$ is the \emph{lower endpoint} of $vw$.
 
-    These uncoloured edges of $\hat{H}_x$ can be partitioned into groups $E_1,\ldots,E_k$ where all the edges in each $E_i$ have a common endpoint $v_i$ and no two edges in different groups have a common endpoint (see \figref{partition}).  The edges $v_iw_1,\ldots,v_iw_k$ in $E_i$ are then ordered so that the degree of $v_i$ in the graph $G_{v_iw_j}$ is not less than the degree of $v_i$ in the graph $G_{v_iw_{j+1}}$ for each $j\in\{1,\ldots,k-1\}$.  With this ordering we set $\varphi_1(e_i)=i$ for each $i\in\{1,\ldots,k\}$.
+    We will start by defining an edge colouring $\varphi_1$ that does not have all the properties we want (in fact $\varphi_1$ is not even a proper edge colouring).  We will later use a product colouring with $\varphi_1$ as one of its parts.
 
-    Finally, we colour the remaining (vertical) edges of $G$ greedily in any order.  When colouring some edge $vw$ with $\depth(v)<\depth(w)$ we use the smallest colour that is not already used by some vertical edge incident to $v$.
+    For each $c$-edge $e$, we define $\varphi_1(e):=\varphi_{\x(e)}(e)$. In this way, every $c$-edge receives a colour in $\{1,\ldots,c\}$.
 
-    We now define several additional edge colourings whose product makes up our final edge colouring.
+    Next, we colour the flat $\Delta$-edges and vertical edges of $G$. In order to achieve an $O(\Delta\log\Delta)$ factor in the number of colours, we have to take some extra care.  (An $O(\Delta^2)$ bound is easy, we could just do any proper edge $\Delta$-colouring of these edges.)  We process the nodes of $T$ in depth first order.  By the time we are done processing a node $x$, we will have coloured all the flat $\Delta$-edges in $H_x$.  Since the $c$-edges of $H_x$ are already coloured, this means that, by the time we are done processing $x$, all edges of $H_x$ will have been assigned a colour.  This processing order also implies that, when we begin processing a node $x$, none of the flat $\Delta$-edges in $H_x$ have been assigned colours.
+
+    When we process a node $x$ we partition the flat $\Delta$-edges of $H_x$ into groups $E_1,\ldots,E_k$ where all the edges in each $E_i$ have a common endpoint $v_i$ and no two edges in different groups have a common endpoint (see \figref{partition}).  The edges $v_iw_1,\ldots,v_iw_k$ in $E_i$ are then ordered so that the degree of $v_i$ in the graph $G_{v_iw_j}$ is not less than the degree of $v_i$ in the graph $G_{v_iw_{j+1}}$ for each $j\in\{1,\ldots,k-1\}$.  With this ordering we set $\varphi_1(e_i)=i$ for each $i\in\{1,\ldots,k\}$.  The justification for this particular ordering is that it implies that
+    \begin{equation}
+      \Delta\ge \deg_G(v_i)\ge j\cdot\deg_{G_{v_iw_j}}(v_i) \enspace ,
+      \label{harmonic_bounder}
+    \end{equation}
+    which will be used below to bound the number number of colours that appear in our product colouring.
+
+    Finally, we colour the vertical edges of $G$ whose upper endpoint is contained in $H_x$.  To do this, we consider each edge $vw$ of $H_x$.  Let $uu_1,\ldots,uu_s$ be the edges of $G_{uv}$, other than $uv$ incident to $u$. Each of these edges is a vertical edge and we colour them with the colours $\{1,\ldots,s\}$ using, for example, $\varphi_1(uu_i):=i$.  Similarly, we colour the vertical edges in $G_{uv}$ with upper endpoint $v$ using the colours $\{1,\ldots,\deg_{G_{uv}}(v)-1\}$.  This completes the description of the edge colouring $\varphi_1:E(G)\to\{1,\ldots,\Delta\}$.
+
+    We now define several additional edge colourings whose product makes up our final edge colouring. First we need a definition.  For any edge $e$ of $G$ and any edge $e'$ of $G_e$, we call $e$ the \emph{projection} of $e'$ onto $H_{\x(e)}$.  Note that, if $e:=vw$ is a vertical edge with $\depth(v)<\depth(w)$, then the projection of $e'$
+
+
+
+    Our product colouring has the following four parts:
     \begin{compactenum}[$\varphi_1$:]
         \item This is the colouring $\varphi_1:E(G)\to\{1,\ldots,\Delta\}$ defined above.
         \item This is the colouring $\varphi_2:E(G)\to\{1,\ldots,b(G)\}$ given by $\varphi_2(e):=\depth(e)$.
-        \item This is the colouring $\varphi_3:E(G)\to\{1,2,3\}$ where $\varphi(e)$ is a value that indicates whether $e$ is a skeleton edge, a flat edge, or a vertical edge.
-        \item This is the colouring $\varphi_3:E(G)\to\{-\Delta,\ldots,\Delta\}$ that is defined specifically to deal with vertical edges.  For each flat edge $e=xy$ of $G$, arbitrarily choose one of $x$ or $y$ as designated for $e$.  For each vertical edge $vw$ with $\depth(v)<\depth(w)$, let $uv$ be the projection of $vw$ onto $H_{\x(v)}$.\todo{Move definition of project earlier}.  If $v$ is the designated vertex of the edge $uv$ then $\varphi_1(vw):=(\varphi_3(uv),\varphi_1(uv))$.\todo{Reverse roles of $u$ and $w$ here (and later).} Otherwise, $\varphi_1(vw)=(\varphi_3(uv),-\varphi_1(uv))$.
+        \item This is the colouring $\varphi_3:E(G)\to\{1,2,3\}$ where $\varphi(e)$ is a value that indicates whether $e$ is a $c$-edge, a flat $\Delta$-edge, or a vertical edge.
+        \item This is a colouring $\varphi_3:E(G)\to\{-\Delta,\ldots,\Delta\}$ that is defined specifically to deal with vertical edges.  For each flat edge $xy$ of $G$, arbitrarily choose one of $x$ or $y$ as the \emph{positive endpoint} of the edge $xy$.  For each vertical edge $vw$ with $\depth(v)<\depth(w)$, let $uv$ be the projection of $vw$ onto $H_{\x(v)}$.  If $v$ is the positive vertex of the edge $uv$ then $\varphi_4(vw):=(\varphi_3(uv),\varphi_1(uv))$.\todo{Reverse roles of $u$ and $w$ here (and later)?} Otherwise, $\varphi_4(vw)=(\varphi_3(uv),-\varphi_1(uv))$.
     \end{compactenum}
-    The overall edge-colouring we use is then the product colouring in which each edge $e$ of $G$ is assigned the triple $\varphi(e):=(\varphi_1(e),\varphi_2(e),\varphi_3(e))$.  On the surface, this looks like a colouring that uses $\Delta\cdot b(G)\cdot 2\Delta=\Theta(\Delta^2\cdot\pw(G))$ colours.  We now argue that this $\Delta^2$ is an overestimate and that this colouring uses only $O(\Delta\log\Delta)$ colours.
+    The overall edge-colouring we use is then the product colouring in which each edge $e$ of $G$ is assigned the triple $\varphi(e):=(\varphi_1(e),\varphi_2(e),\varphi_3(e),\varphi_4(e))$.  On the surface, this looks like a colouring that uses $\Delta\cdot b(G)\cdot 2\Delta=\Theta(\Delta^2\cdot\pw(G))$ colours.  We now argue that this $\Delta^2$ is an overestimate and that this colouring uses only $O(\Delta\log\Delta)$ colours.
 
-    To see why this is so, suppose that some edge $vw$ is assigned $\varphi_1(vw)=i$ and $\varphi_4(vw)=j$.  This can only happen if $i\le c$ or $vw$ is a flat edge and there are at least $i-1$ edges $vw_1,\ldots,w_{i-1}$ such that the degree of $v$ in $G_{vw_i}$ is at least equal to the degree of $v$ in $G_{vw}$.\footnote{Define $G_{vw}$ notation.}  Since $v$ has degree at most $\Delta$, this implies that $(i-1)|j|\le \Delta$.
+    Suppose that some vertical edge $vw$ with $\depth(v)<\depth(w)$ is coloured so that $\varphi_1(vw)=\ell$ and $|\varphi_4(vw)|=j$. Then $|\varphi_4(vw)|=\varphi_1(uv)$ where $uv$ is the projection of $vw$ onto $H_{\x(v)}$.  If $uv$ is a $c$-edge, then $\varphi_1(uv)\in\{1,\ldots,c\}$, so $(\varphi_1(vw),\varphi_4(vw))\in\{1,\ldots,\Delta\}\times\{-1,1\}\times\{1,\ldots,c\}$, a set of size $2c\Delta$.
+
+    If $uv$ is a flat $\Delta$-edge
+    Furthermore, $\varphi_1(vw)=\ell$ implies that $\deg_{G_{uv}}(v)\ge\ell$.  Therefore, by \cref{harmonic_bounder}, $\Delta\ge \deg_G(v)\ge j\ell$.  The number of pairs $j,\ell\in\{1,\ldots,\Delta\}^2$ for which $j\ell\le\Delta$ is at most $\sum_{j=1}^{\Delta}\Delta/j=\Delta H_{\Delta}\le\Delta(1+\ln\Delta)$.
+
+    If $uv$ is a vertical edge.
+
+
+    This can only happen if $i\le c$ or $vw$ is a flat edge and there are at least $i-1$ edges $vw_1,\ldots,w_{i-1}$ such that the degree of $v$ in $G_{vw_i}$ is at least equal to the degree of $v$ in $G_{vw}$.\footnote{Define $G_{vw}$ notation.}  Since $v$ has degree at most $\Delta$, this implies that $(i-1)|j|\le \Delta$.
     Thus, we obtain obtain pairs of colours $(i,j):=(\varphi_1(v),\varphi_4(w))\in\{1,\ldots,\Delta\}\times\{-\Delta,\ldots,\Delta\}$ such that $i\le c$ or $(i-1)\cdot |j|\le\Delta$.  The total number of such pairs is at most
     \[
         c\Delta + \sum_{i=c+2}^\Delta(2\Delta/(i-1)) = O(\Delta\log\Delta) \enspace .
