@@ -69,6 +69,7 @@
 \DeclareMathOperator{\depth}{d}
 \DeclareMathOperator{\sh}{cbt}
 \DeclareMathOperator{\cbt}{cbt}
+\DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\dc}{dc}
 
 \newcommand{\ellt}{{\lfloor\ell/2\rfloor}}
@@ -418,13 +419,16 @@ Translating \cref{tree_cbt_separator} into the language of dual trees immediatel
 
 \subsection{Hierarchical Skeleton Decompositions}
 
-For a $2$-tree $G$ and an edge $e\in E(G)$, an $e$-rooted skeleton decomposition $\{(G_x,H_x):x\in V(T)\}$ is a collection of pairs of subgraphs of $G$ indexed by the nodes of a rooted tree $T$ that is defined inductively as follows:
+For a $2$-tree $G$ and an edge $e\in E(G)$, an $e$-rooted skeleton decomposition $\mathcal{D}:=\{(G_x,H_x):x\in V(T)\}$ is a collection of pairs of subgraphs of $G$ indexed by the nodes of a rooted tree $T$ that is defined inductively as follows:
 \begin{compactenum}
     \item The root $x$ of $T$ has $G_x:=G$.  The graph $H_x:=G[\bigcup_{K\in V(P)}]$ is a serpentine triangulation obtained by applying \cref{serpentine_separator} to $G_x$ to obtain a path $P:=K_0,\ldots,K_r$ in $G^\star$ with $e\subset K_0$.  The serpentine triangulation $H_x$ is called the \emph{skeleton} of $G_x$.
     \item For each non-trivial component $C$ of $G^\star-P_r$, the root $x$ of $T$ has a child that is the root of the tree $T_C$ obtained by making an $e'$-rooted XXXX of $G_C$, where $e'$ is the edge by which $G_C$ is attached to $H_x$.
 \end{compactenum}
+For $x\in V(T)$, $\depth(x)$ is the depth of $x$ in $T$, i.e., the length of the path from $r$ to $x$. Observe that $\max\{x\in V(T):\depth(x)\}$ of $T$ is at most $\cbt(G^\star)$.
 
-\Cref{spine_colouring}, below, shows that any serpentine triangulation $H$ has a spanning subgraph $\hat{H}$ has an edge $c$-colouring $\varphi$ with no repetitive paths.  Furthermore, extending $\varphi$ using any proper colouring of the edges in $E(H)\setminus E(\hat{H})$ gives a colouring $H$ with no repetitive paths. Assuming \cref{spine_colouring}, we are now ready to prove \cref{main}.
+For any $k\in\{1,2,3\}$ and any $k$-clique $K$ in $G$, the graph $T[K]:=T[\{x\in V(T):K\in H_x\}]$ is a connected subtree of $T$.  When $|K|=1$, $T[K]$ is a subtree.  When $|K|=2$, $T[K]$ is a vertical path,\footnote{A \emph{vertical path} in a tree $T$ is a path in which no two nodes have the same depth.}.  When $|K|=3$, $T[K]$ contains a single node.  We let $\x(K)$ denote the minimum depth node of $T[K]$ and $\depth(K)$ is the depth of $\x(K)$. We abuse notation slightly when $K$ is a $1$ or $2$-clique:  For a vertex $v$ and edge $vw$ we use the shorthands $\x(v):=\x(\{v\})$ and $\x(vw):=\x(\{v,w\})$.
+
+\Cref{spine_colouring}, below, shows that any serpentine triangulation $H$ has a spanning subgraph $\hat{H}$ that has an edge $c$-colouring $\varphi$ with no repetitive paths.  Furthermore, extending $\varphi$ using any proper colouring of the edges in $E(H)\setminus E(\hat{H})$ gives a colouring $H$ with no repetitive paths. Assuming \cref{spine_colouring}, we are now ready to prove \cref{main}.
 
 \begin{thm}
     Every $2$-tree $G$ with maximum degree $\Delta$ has an edge colouring that uses $O(\pw(G)\cdot\Delta\log\Delta)$ colours and has no repetitive path.
@@ -434,70 +438,70 @@ For a $2$-tree $G$ and an edge $e\in E(G)$, an $e$-rooted skeleton decomposition
     By \cref{b_approx,dual_approx} it is sufficient to give an edge colouring of $G$ that uses $O(\cbt(G^\star)\cdot\Delta\log\Delta)$-colours.  For ease of notation, let $\Delta:=\max\{c,\Delta(G)\}$, where $c$ is the constant that appears in \cref{spine_colouring}.
 
     Let $e$ be an arbitrary edge of $G$ and let
-    $\{(G_x,H_x): x\in V(T)\}$ be an $e$-rooted hierarchical skeleton decomposition of $G$.  The root $r$ of $T$, define $e_r:=e$. For any node $x$ of $T$ with parent $y$, let $e_x$ be the edge by which $G_x$ attaches to $H_y$.  For each $x\in V(T)$, let $\varphi_x$ a colouring of $\hat{H}_x$ given by \cref{spine_colouring}.
+    $\{(G_x,H_x): x\in V(T)\}$ be an $e$-rooted hierarchical skeleton decomposition of $G$.  The root $r$ of $T$, define $e_r:=e$.
 
-    For $x\in V(T)$, $\depth(x)$ is the depth of $x$ in $T$, i.e., the length of the path from $r$ to $x$. Observe that, for any $k\in\{1,2,3\}$ and any $k$-clique $K$ in $G$, the graph $T[K]:=T[\{x\in V(T):K\in H_x\}]$ is a connected subtree of $T$.  (When $|K|=1$, $T[K]$ is a subtree, when $|K|=2$, $T[K]$ is a vertical path,\footnote{A \emph{vertical path} in a tree $T$ is a path in which no two nodes have the same depth.} and when $|K|=3$, $T[K]$ contains a single vertex.)  We let $\x(K)$ denote the minimum depth node of $T[K]$ and $\depth(K)$ is the depth of $\x(K)$. We abuse notation slightly when $K$ is a $1$ or $2$-clique:  For a vertex $v$ and edge $vw$ we use $\x(v)$ as shorthand for $\x(\{v\})$ and $\x(vw)$ as shorthand for $\x(\{v,w\})$.
+    % For any node $x$ of $T$ with parent $y$, let $e_x$ be the edge by which $G_x$ attaches to $H_y$.  For each $x\in V(T)$, let $\varphi_x$ a colouring of $\hat{H}_x$ given by \cref{spine_colouring}.
 
-    As noted above $T[vw]$ is a vertical path $x_0,\ldots,x_t$ that starts at $x_0=\x(vw)$.  If $t>0$, then we let $G_{vw}:=G_{x_1}$.  If $t=0$, then $G_{vw}$ denote the empty graph.  Thus, $G_{vw}$ attaches to $H_{x_0}$ using the edge $vw$.
+    As noted above $T[vw]$ is a vertical path $x_0,\ldots,x_t$ that begins at $x_0=\x(vw)$.  If $t>0$, then we let $G_{vw}:=G_{x_1}$.  If $t=0$, then $G_{vw}$ denotes the empty graph.  Thus, $G_{vw}$ attaches to $H_{x_0}$ using the edge $vw$.
 
-    We distinguish between three kinds of edges in $G$: A $c$-edge $e$ is contained in $E(\hat{H}_{\x(e)})$.  A \emph{flat $\Delta$-edge} $e$ is contained in $E(H_{\x(e)})\setminus E(\hat{H}_{\x(e)})$. Any edge of $G$ that is not a $c$-edge or a flat $\Delta$-edge is a \emph{vertical edge}.  Each vertical edge $vw$ has $\depth(v)\neq\depth(w)$. If $\depth(v)<\depth(w)$ then we call $v$ the \emph{upper endpoint} of $vw$ and $w$ is the \emph{lower endpoint} of $vw$.
+    We distinguish between two kinds of edges in $G$: A $c$-edge $e$ is contained in $E(\hat{H}_{\x(e)})$.  A \emph{$\Delta$-edge} $e$ is contained in $E(H_{\x(e)})\setminus E(\hat{H}_{\x(e)})$.  Every $\Delta$-edge $vu$ has a \emph{dull endpoint} $u$ with $\deg_{H_{\x(xy)}}(u)=3$ and a \emph{sharp endpoint} $v$ with $\deg_{H_{\x(xy)}}(x)\ge 5$.  Note that each vertex $u$ is the dull endpoint of at most one edge in $H_x$ for any $x\in V(T)$.
+
+    Our colouring will make use of a function $\sgn:V(G)^2:\to\{+1,0,-1\}$.  For any $\Delta$-edge, $xy$ with sharp endpoint $x$ and dull endpoint $y$, $\sgn(x,y)={+1}$ and $\sgn(y,x)=0$.  For any $c$-edge $xy$, $\sgn(x,y)=-\sgn(y,x)\in\{{+1},{-1}\}$.
+
+    An edge $vw$ of $G$ is \emph{flat} if $\depth(v)=\depth(w)$ and $vw$ is \emph{vertical} otherwise. For a vertical edge with $\depth(v)<\depth(w)$ we call $v$ the \emph{upper endpoint} of $vw$ and $w$ is the \emph{lower endpoint} of $vw$.
 
     We will start by defining an edge colouring $\varphi_1$ that does not have all the properties we want (in fact $\varphi_1$ is not even a proper edge colouring).  We will later use a product colouring with $\varphi_1$ as one of its parts.
 
-    For each $c$-edge $e$, we define $\varphi_1(e):=\varphi_{\x(e)}(e)$. In this way, every $c$-edge receives a colour in $\{1,\ldots,c\}$.
+    For each $c$-edge $e$ of $G$, we define $\varphi_1(e):=\varphi_{\x(e)}(e)$. In this way, every edge receives a colour in $\{1,\ldots,c\}$.
 
-    Next, we colour the flat $\Delta$-edges and vertical edges of $G$. In order to achieve an $O(\Delta\log\Delta)$ factor in the number of colours, we have to take some extra care.  (An $O(\Delta^2)$ bound is easy, we could just do any proper edge $\Delta$-colouring of these edges.)  We process the nodes of $T$ in depth first order.  By the time we are done processing a node $x$, we will have coloured all the flat $\Delta$-edges in $H_x$.  Since the $c$-edges of $H_x$ are already coloured, this means that, by the time we are done processing $x$, all edges of $H_x$ will have been assigned a colour.  This processing order also implies that, when we begin processing a node $x$, none of the flat $\Delta$-edges in $H_x$ have been assigned colours.
+    Next, we colour the $\Delta$-edges of $G$. In order to achieve an $O(\Delta\log\Delta)$ factor in the number of colours, we have to take some extra care.  (An $O(\Delta^2)$ bound is easy, we could just do any proper edge $\Delta$-colouring of these edges.)  We process the nodes of $T$ in depth first order.  By the time we are done processing a node $x$, we will have coloured all the flat $\Delta$-edges in $H_x$.  Since the $c$-edges of $H_x$ are already coloured, this means that, by the time we are done processing $x$, all edges of $H_x$ will have been assigned a colour.  This processing order also implies that, when we begin processing a node $x$, none of the flat $\Delta$-edges in $H_x$ have been assigned colours.
 
     When we process a node $x$ we partition the flat $\Delta$-edges of $H_x$ into groups $E_1,\ldots,E_k$ where all the edges in each $E_i$ have a common endpoint $v_i$ and no two edges in different groups have a common endpoint (see \figref{partition}).  The edges $v_iw_1,\ldots,v_iw_k$ in $E_i$ are then ordered so that the degree of $v_i$ in the graph $G_{v_iw_j}$ is not less than the degree of $v_i$ in the graph $G_{v_iw_{j+1}}$ for each $j\in\{1,\ldots,k-1\}$.  With this ordering we set $\varphi_1(e_i)=i$ for each $i\in\{1,\ldots,k\}$.  The justification for this particular ordering is that it implies that
     \begin{equation}
-      \Delta\ge \deg_G(v_i)\ge j\cdot\deg_{G_{v_iw_j}}(v_i) \enspace ,
+      \Delta\ge \deg_G(v_i)\ge \sum_{k=1}^j \deg_{G_{v_iw_k}}(v_i)\ge  j\cdot\deg_{G_{v_iw_j}}(v_i) \enspace ,
       \label{harmonic_bounder}
     \end{equation}
     which will be used below to bound the number number of colours that appear in our product colouring.
 
+    Note, also that the colouring $\varphi_1$ has the property that, for any edge $vw$, $\varphi_1(vw) \le \max\{c, \deg_{H_{e}}(v), \deg_{H_e}(w)\}$.
+
     Finally, we colour the vertical edges of $G$ whose upper endpoint is contained in $H_x$.  To do this, we consider each edge $vw$ of $H_x$.  Let $uu_1,\ldots,uu_s$ be the edges of $G_{uv}$, other than $uv$ incident to $u$. Each of these edges is a vertical edge and we colour them with the colours $\{1,\ldots,s\}$ using, for example, $\varphi_1(uu_i):=i$.  Similarly, we colour the vertical edges in $G_{uv}$ with upper endpoint $v$ using the colours $\{1,\ldots,\deg_{G_{uv}}(v)-1\}$.  This completes the description of the edge colouring $\varphi_1:E(G)\to\{1,\ldots,\Delta\}$.
 
-    We now define several additional edge colourings whose product makes up our final edge colouring. First we need a definition.  For any edge $e$ of $G$ and any edge $e'$ of $G_e$, we call $e$ the \emph{projection} of $e'$ onto $H_{\x(e)}$.  Note that, if $e:=vw$ is a vertical edge with $\depth(v)<\depth(w)$, then the projection of $e'$
-
-
-
-    Our product colouring has the following four parts:
+    We now define several additional edge colourings of $G$ whose product makes up our final edge colouring. First we need a definition.  For any edge $e$ of $G$ and any edge $e'$ of $G_e$, we call $e$ the \emph{projection} of $e'$ onto $H_{\x(e)}$.  Our product colouring has the following four parts:
     \begin{compactenum}[$\varphi_1$:]
         \item This is the colouring $\varphi_1:E(G)\to\{1,\ldots,\Delta\}$ defined above.
-        \item This is the colouring $\varphi_2:E(G)\to\{1,\ldots,b(G)\}$ given by $\varphi_2(e):=\depth(e)$.
+        \item This is the colouring $\varphi_2:E(G)\to\{1,\ldots,\cbt(G)\}$ given by $\varphi_2(vw):=\min\{\depth(v),\depth(w)\}$.
         \item This is the colouring $\varphi_3:E(G)\to\{1,2,3\}$ where $\varphi(e)$ is a value that indicates whether $e$ is a $c$-edge, a flat $\Delta$-edge, or a vertical edge.
-        \item This is a colouring $\varphi_3:E(G)\to\{-\Delta,\ldots,\Delta\}$ that is defined specifically to deal with vertical edges.  For each flat edge $xy$ of $G$, arbitrarily choose one of $x$ or $y$ as the \emph{positive endpoint} of the edge $xy$.  For each vertical edge $vw$ with $\depth(v)<\depth(w)$, let $uv$ be the projection of $vw$ onto $H_{\x(v)}$.  If $v$ is the positive vertex of the edge $uv$ then $\varphi_4(vw):=(\varphi_3(uv),\varphi_1(uv))$.\todo{Reverse roles of $u$ and $w$ here (and later)?} Otherwise, $\varphi_4(vw)=(\varphi_3(uv),-\varphi_1(uv))$.
+        \item This is a colouring $\varphi_3:E(G)\to\{-\Delta,\ldots,\Delta\}$ that is defined specifically to deal with certain vertical edges. For any non-vertical edge $vw$, $\varphi_4(vw)=\varphi_1(vw)$.
+        For each vertical edge $vw$ with $\depth(v)<\depth(w)$, let $vu$ be the projection of $vw$ onto $H_{\x(v)}$. Then we set  $\varphi_4(vw):=\sgn(u,v)\cdot\varphi_1(uv)$.
     \end{compactenum}
-    The overall edge-colouring we use is then the product colouring in which each edge $e$ of $G$ is assigned the triple $\varphi(e):=(\varphi_1(e),\varphi_2(e),\varphi_3(e),\varphi_4(e))$.  On the surface, this looks like a colouring that uses $\Delta\cdot b(G)\cdot 2\Delta=\Theta(\Delta^2\cdot\pw(G))$ colours.  We now argue that this $\Delta^2$ is an overestimate and that this colouring uses only $O(\Delta\log\Delta)$ colours.
+    The overall edge-colouring we use is then the product colouring in which each edge $e$ of $G$ is assigned the triple $\varphi(e):=(\varphi_1(e),\varphi_2(e),\varphi_3(e),\varphi_4(e))$.  On the surface, this looks like a colouring that uses $\Delta\cdot \cbt(G)\cdot 3(2\Delta+1)=\Theta(\pw(G)\cdot\Delta^2)$ colours.  We now argue that this $\Delta^2$ is an overestimate and that this colouring uses only $O(\pw(G)\cdot\Delta\log\Delta)$ colours.  In particular, the set $\{(\varphi_1(e),\varphi_4(e):e\in E(G)\}$ has size $O(\Delta c + \Delta\log\Delta)$.
 
-    Suppose that some vertical edge $vw$ with $\depth(v)<\depth(w)$ is coloured so that $\varphi_1(vw)=\ell$ and $|\varphi_4(vw)|=j$. Then $|\varphi_4(vw)|=\varphi_1(uv)$ where $uv$ is the projection of $vw$ onto $H_{\x(v)}$.  If $uv$ is a $c$-edge, then $\varphi_1(uv)\in\{1,\ldots,c\}$, so $(\varphi_1(vw),\varphi_4(vw))\in\{1,\ldots,\Delta\}\times\{-1,1\}\times\{1,\ldots,c\}$, a set of size $2c\Delta$.
+    \begin{compactenum}
+        \item If $\varphi_4(vw)=0$, then $(\varphi_1(vw),\varphi_4(vw))\in\{1,\ldots,\Delta\}\times\times\{0\}$, a set of size $\Delta$.
 
-    If $uv$ is a flat $\Delta$-edge
-    Furthermore, $\varphi_1(vw)=\ell$ implies that $\deg_{G_{uv}}(v)\ge\ell$.  Therefore, by \cref{harmonic_bounder}, $\Delta\ge \deg_G(v)\ge j\ell$.  The number of pairs $j,\ell\in\{1,\ldots,\Delta\}^2$ for which $j\ell\le\Delta$ is at most $\sum_{j=1}^{\Delta}\Delta/j=\Delta H_{\Delta}\le\Delta(1+\ln\Delta)$.
+        \item If $\varphi_4(vw)\neq 0$, then $vw$ is a vertical edge, $\varphi_1(vw)\neq 0$ and, without loss of generality $\depth(v)<\depth(w)$. Let $uv$ be the projection of $vw$ onto $H_{\x(v)}$.  Since $\varphi_4(vw)\neq 0$, $\deg_{H_{\x(v)}}(v)\neq 3$ and $|\varphi_4(vw)|=\varphi_1(uv)$.
+        \begin{compactenum}
+            \item If $uv$ is a $c$-edge, then $\varphi_1(uv)\in\{1,\ldots,c\}$, so $(\varphi_1(vw),\varphi_4(vw))\in\{1,\ldots,\Delta\}\times\{-1,1\}\times\{1,\ldots,c\}$, a set of size $2c\Delta$.
+            \item Otherwise, let $\ell:=\varphi_1(vw)$ and $j:=|\varphi_4(vw)|$. The fact that $\varphi_1(vw)=\ell$ implies that $\deg_{G_{uv}}(v)\ge\ell$.  Therefore, by \cref{harmonic_bounder}, $\Delta\ge \deg_G(v)\ge j\ell$.  The number of pairs $j,\ell\in\{1,\ldots,\Delta\}^2$ for which $j\ell\le\Delta$ is at most $\sum_{j=1}^{\Delta}\Delta/j=\Delta H_{\Delta}\le\Delta(1+\ln\Delta)$.
+        \end{compactenum}
+    \end{compactenum}
+    In all cases, $(\varphi_1(vw),\varphi_4(vw))$ takes on values in a set of size $O(\Delta\log\Delta)$.  Thus, $\varphi$ is an edge colouring of $G$ that uses $O(\pw(G)\cdot\Delta\log\Delta)$ colours.  All that remains is to show that $G$, with the colouring $\varphi$ does not have any repetitive paths.
 
-    If $uv$ is a vertical edge.
+    Consider some path $P$ in $G$.  There exists some node $x\in V(T)$ of maximum depth such that $P$ is entirely contained in $G_x$.  Since $x$ has maximal depth, $P$ contains at least one vertex of $H_x$ and is not contained in $H_e$ for any $e\in E(H_x)$.
+
+    Partition $P$ into subpaths $P_0,\ldots,P_r$ by placing two edges of $P$ in the same subpath if they project onto the same edge of $H_x$.  Since $P$ is not contained in $G_e$ for any single edge $e\in H_x$, this partition has at least two parts, i.e., $r\ge 1$.  The partition $P_0,\ldots,P_r$ defines a path $P':=e_0,\ldots,e_r$ in $H_x$ in which, all edges in $P_i$ project onto $e_i$, for each $i\in\{0,\ldots,r\}$. (That each $P_i$ is a single path and that $P'$ is a path in $H_x$ follows from the fact that each edge $e_i$ is a cutset that separates $G_{e_i}-e_i$ from $H_x-e_i$.)
+
+    By \cref{spine_colouring}, the sequence $\varphi_1(e_0),\ldots,\varphi_1(e_r)$ is anagram-free.  We will now show that this implies that the sequence $\langle \varphi(e):e\in V(P)\rangle$ is not an anagram.  For simplicity, suppose that $P_{0}$ contains only one endpoint of $e_0$ and $P_r$ contains only one endpoint of $e_r$ (other cases are handled similarly).
+
+    For each $i\in\{1,\ldots,d-1\}$, the first edge $e_{i,0}$ and the last edge $e_{i,1}$ of $P_i$ have $\varphi_2(e_{i,0})=\varphi_2(e_{i,1})=\depth(x)$. (Note that the possibility that $e_{i,0}=e_{i,1}=e_i$ is also covered by this discussion.) Exactly one of these edges has $\varphi_4(e_{i,b})=\varphi_1(e_i)$.  The last edge $e_{0,1}$ of $P_{0}$ has $\varphi_2(e_{0,1})=\depth(x)$ and $\varphi_4(e_{0,1})=\varphi_1(e_0)$ or $\varphi_4(e_{0,1})\le 0$.  Similarly, the first edge $e_{r,0}$ of $P_r$ has $\varphi_2(e_{r,0})=\depth(x)$ and $\varphi_4(e_{r,0})=\varphi_1(e_r)$ or $\varphi_4(e_{r,0})\le 0$.
+
+    Therefore, if we consider the subsequence of edges $f_0,\ldots,f_s$ in $P$ consisting only of the edges $e$ for which $\varphi_2(e)=\depth(x)$ and $\varphi_4(e)>0$, then the colour sequence $\varphi_4(f_0),\ldots,\varphi_4(f_s)$ is a contiguous subsequence of $\varphi_1(e_0),\ldots,\varphi_1(e_r)$.  Since $\varphi_1(e_0),\ldots,\varphi_1(e_r)$ is anagram-free, the sequence $\varphi_4(f_0),\ldots,\varphi_4(f_s)$ is not an anagram.  If $r\ge 2$, then $s\ge 0$, and this implies that $\langle \varphi(e):e\in V(P)\rangle$ is not an anagram, so $P$ is not a repetitive path.
+
+    To finish the proof we need only handle the case $r=1$.  The upper endpoint $u$ of $e_{0,1}$ is also the upper endpoint of $u_{1,0}$.  Since $e_{0,1}$ and $e_{1,0}$ are the only edges of $P$ with $\varphi_2(e_{0,1})=\varphi_2(e_{1,0})=\depth(x)$, we only need to show that $\varphi_4(e_{0,1})\neq\varphi_4(e_{1,0})$.  If $\varphi_4(e_{0,1})\neq 0$ or $\varphi_4(e_{1,0})\neq 0$ then this follows from the fact that $\varphi_1$ is a proper edge-colouring of $H_x$ that uses colours $\{1,\ldots,\Delta\}$ (which implies that $|\varphi_4(e_{0,1})|\neq|\varphi_4(e_{1,0})|$.
 
 
-    This can only happen if $i\le c$ or $vw$ is a flat edge and there are at least $i-1$ edges $vw_1,\ldots,w_{i-1}$ such that the degree of $v$ in $G_{vw_i}$ is at least equal to the degree of $v$ in $G_{vw}$.\footnote{Define $G_{vw}$ notation.}  Since $v$ has degree at most $\Delta$, this implies that $(i-1)|j|\le \Delta$.
-    Thus, we obtain obtain pairs of colours $(i,j):=(\varphi_1(v),\varphi_4(w))\in\{1,\ldots,\Delta\}\times\{-\Delta,\ldots,\Delta\}$ such that $i\le c$ or $(i-1)\cdot |j|\le\Delta$.  The total number of such pairs is at most
-    \[
-        c\Delta + \sum_{i=c+2}^\Delta(2\Delta/(i-1)) = O(\Delta\log\Delta) \enspace .
-    \]
-    All that remains is to show that $G$, with the colouring $\varphi$ does not have any repetitive paths.
-
-    Consider some path $P$ in $G$.  There exists some node $x\in V(T)$ of maximum depth such that $P$ is entirely contained in $G_x$.  We say that an edge $e$ of $P$ projects onto an edge $e'$ in $H_x$ if $e=e'$ or $e$ is contained in $G_y$ for some child $y$ of $x$ for which $G_y$ is attaches to $e'$. We let $P':=e_0,\ldots,e_r$ be the path in $H_x$ obtained by projecting each edge of $P$ onto its corresponding edge in $H_x$ and then removing duplicates. Observe that, if $P$ is repetitive then one of the four paths $e_0,\ldots,e_{r-1}$, $e_0,\ldots,e_r$, $e_1,\ldots,e_{r-1}$, or $e_1,\ldots,e_r$ must be repetitive.\todo{Explain this.}  But \cref{serpentine_degree4} ensures that $H_x$ has no non-trivial repetitive path.
-
-    Therefore, the only possibility is that $r=1$ and $e_1,\ldots,e_{r-1}$ is the (trivial) repetitive path.  But in this case, $P$ contains two consecutive edges $uvw$ with $\depth(uv)=\depth(vw)=\depth_T(x)$ and these are the only two edges of $P$ having this depth.  In this case $P$ is not repetitive because $\varphi_1(uv)\neq\varphi_1(vw)$ and therefore $\varphi(uv)$ and $\varphi(uw)$ have colours that are unique in $P$.
-    %
-    % But this is not possible since \cref{serpentine_degree4} ensures that the colouring of $H_x$ has no repetitive path.
-    %
-    % \begin{compactenum}
-    %     \item If $k=1$ then $P$ contains the edges $e_0:=v_{i_1-1}v_{i_1}$ and $e_1:=v_{i_1}v_{i_1+1}$.  These are are the only two edges in $P$ of depth $0$.  These two edges have a vertex in common so, since $\varphi_1$ is a proper edge-colouring of $G$\todo{I hope we don't need this}, the colours $\varphi(e_0)$ and $\varphi(e_1)$ are each unique in $P$, so $P$ is certainly non repetitive.
-    %
-    %     \item If $k\ge 2$, then $P':=v_{i_1},\ldots,v_{i_k}$ is a path in $H_r$.
-    %
-    %     The edges of $P'$ that are also in $P$ are the only edges $e$ of $P$ for which $\varphi_2(e)=0$ and $\varphi_3(e)=0$.  For every edge $v_{i_j}v_{i_{j+1}}$ of $P'$ not in $P$, $P$ contains the pair of edges $\{e,f\}:=\{v_{i_j}v_{{i_j}+1}, v_{i_{j+1}-1}v_{i_{j+1}}\}$.  Exactly one of these two edges, say $e$, has $\varphi_1(e)=\varphi_1(v_{i_j}v_{i_{j+1}})$.  Additionally, there are two other potential edges $e_{0}:=v_{i_1}-1v_{i_1}$ and $e_{k}:=v_{k}v_{k+1}$ that are in the same category.  All this say that, if $P$ is repetitive, then one of the four paths in $H_x$ determined by $e_0,\ldtos,e_k$, $e_1,\ldots,e_k$, $e_1,\ldots,e_{k-1}$ or $e_0,\ldots,e_{k-1}$ is also repetitive.
-    % \end{compactenum}
+    The only other possibility is that $\varphi_4(e_{0,1})=\varphi_4(e_{1,0})=0$.  This implies is that $u$ is the dull endpoint of some edge $vu$ in $H_x$ and that $e_{0,1}$ and $e_{1,0}$ are both contained in $G_{vu}$. (Recall that $u$ is the dull endpoint of at most one edge in $H_x$.)  Since $P$ contains only $r=1$ vertices of $H_x$, this implies that the entire path $P$ is contained in $G_{vu}$.  The definition of hierarchical skeleton decomposition implies that $x$ has a child $x'$ such that $P$ is contained in $G_{x'}=G_{vu}$.  This is not possible, since $x$ is defined as the node of maximum depth such that $G_x$ contains $P$.
 \end{proof}
 
 
