@@ -119,7 +119,7 @@ Our starting point is the following result, which follows from previous work \ci
 Our main upper bound is the following generalization of \cref{ww_trees} to $2$-trees:
 
 \begin{thm}\label{main}
-    Every $2$-tree $G$ of maximum-degree $\Delta$ and pathwidth $p$ has an edge $O(p\Delta)$-colouring $\varphi$ with no repetitive path.
+    Every $2$-tree $G$ with maximum degree $\Delta$ has an edge colouring that uses $O(\pw(G)\cdot\Delta\log\Delta)$ colours and has no repetitive path.
 \end{thm}
 
 The second half of \cref{ww_trees} shows that the dependence of \cref{main} on the pathwidth of $G$ is asymptotically optimal, even for trees.  We give the following lower bounds which show that \cref{ww_trees} cannot be strengthened further.
@@ -430,7 +430,7 @@ For any $k\in\{1,2,3\}$ and any $k$-clique $K$ in $G$, the graph $T[K]:=T[\{x\in
 
 \Cref{spine_colouring}, below, shows that any serpentine triangulation $H$ has a spanning subgraph $\hat{H}$ that has an edge $c$-colouring $\varphi$ with no repetitive paths.  Furthermore, extending $\varphi$ using any proper colouring of the edges in $E(H)\setminus E(\hat{H})$ gives a colouring $H$ with no repetitive paths. Assuming \cref{spine_colouring}, we are now ready to prove \cref{main}.
 
-\begin{thm}
+\begin{thm}\label{main}
     Every $2$-tree $G$ with maximum degree $\Delta$ has an edge colouring that uses $O(\pw(G)\cdot\Delta\log\Delta)$ colours and has no repetitive path.
 \end{thm}
 
