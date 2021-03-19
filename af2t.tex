@@ -1,4 +1,4 @@
-\documentclass[kpfonts]{patmorin}
+\documentclass{patmorin}
 \listfiles
 \usepackage{pat}
 \usepackage{paralist}
@@ -53,8 +53,6 @@
 
 \setlength{\parskip}{1ex}
 
-\title{\MakeUppercase{(Layered) Partitions versus Decompositions}}
-\author{}
 
 \DeclareMathOperator{\diam}{diam}
 \DeclareMathOperator{\tw}{tw}
@@ -74,7 +72,7 @@
 
 \newcommand{\ellt}{{\lfloor\ell/2\rfloor}}
 
-\title{\MakeUppercase{Anagram-Free Edge-Colouring of 2-Trees}\thanks{This research was partly funded by NSERC.}}
+\title{\MakeUppercase{Pathwidth-$2$ Graphs have Unbounded Anagram-Free Chromatic Number}\thanks{This research was partly funded by NSERC.}}
 \author{Saman Bazarghani%
     \thanks{Department of Computer Science and Electrical Engineering, University of Ottawa}\qquad
     Therese Biedl%
@@ -88,1208 +86,299 @@
 
 \newcommand{\colored}[2]{{\color{#1}#2}}
 
+\usepackage{tabularx}
 
 \DeclareMathOperator{\ci}{\overline{\pi}}
 
-% \pagenumbering{roman}
 \begin{document}
 
+% \begin{titlepage}
 \maketitle
 
 \begin{abstract}
-    We show that the anagram-free chromatic index of $2$-trees is proportional to the maximum of their pathwidth and their maximum degree. This generalizes a result of Wilson and Wood (201?). We then show that this result is tight, in the following sense: there are graphs of pathwidth $3$ and maximum-degree $4$ that have unbounded chromatic index.
+    We show that outerplanar graphs of pathwidth $2$ do do not have anagram-free edge or vertex colourings with a bounded number of colours.
 \end{abstract}
+% \end{titlepage}
+
+% \pagenumbering{roman}
+% \tableofcontents
+%
+% \newpage
+% \pagenumbering{arabic}
+
 
 \section{Introduction}
 
-Let $G$ be a graph\footnote{Every graph $G$ that we consider is \emph{simple}: undirected, with no loops and no multiple edges and has vertex set denoted $V(G)$ and edge set denoted $E(G)$.} and let $\varphi:E(G)\to\{1,\ldots,c\}$ be a function that maps edges of $G$ onto integers.  We call $\varphi$ an \emph{edge $c$-colouring} of $G$.  We say that $\varphi$ is \emph{proper} if, for every length-$2$ path $uvw$ in $G$, $\varphi(uv)\neq\varphi(vw)$.
+Let $s:=s_1,\ldots,s_n$ be a string over an alphabet $A$ and, for each $a\in A$, define $\hist_a(s):=|\{i\in\{1,\ldots,n\}:s_i=a\}$.  The \emph{histogram} of $s$ is the real-valued $|A|$-vector $\hist(s):=(\hist_a(s):a\in A)$ indexed by elements of $A$.  Let $\|\cdot\|_1$ denote the L1 norm.  Note that a string $s_1,\ldots,s_{2r}$ is an anagram if and only if $\hist(s_1,\ldots,s_r)=\hist(s_{r+1},\ldots,s_{2r})$.  Equivalently, $\hist(s_1,\ldots,s_r)-\hist(s_{r+1},\ldots,s_{2r})=\boldsymbol{0}$ or
+$\|\hist(s_1,\ldots,s_r)-\hist(s_{r+1},\ldots,s_{2r})\|_1=0$.
 
-Let $W:=v_0,\ldots,v_{r}$ be a walk\footnote{A \emph{walk} in $G$ is a sequence of vertices $W:=w_0,\ldots,w_m$ such that $w_{i-1}w_i\in E(G)$ for each $i\in\{1,\ldots,m\}$. If $w_{m}v_0\in E(G)$ then $W$ is \emph{closed}.  If there are no distinct $i,j\in\{1,\ldots,m\}$ such that $\{w_{i-1}w_i\}=\{w_{j-1},w_j\}$, then $W$ is a \emph{trail}.  If there are no distinct $i,j\in\{0,\ldots,m\}$ such that $w_i=w_j$, then $W$ is a \emph{path}.  If $W$ is a closed path then $W$ is a \emph{cycle}.} in $G$ and, for each $i\in\{1,\ldots,r\}$, let $e_i=v_{i-1}v_i$ be the $i$-th edge of $W$. We say that $W$ is \emph{repetitive} under $\varphi$ if $\varphi(e_1),\ldots,\varphi(e_\lfloor r/2\rfloor)$ is a permutation of $\varphi(e_{\lfloor r/2\rfloor+1}),\ldots,\varphi(e_{r})$.  When $\varphi$ and $G$ are understood from context and $W$ is repetitive under $\varphi$ we say simply that $W$ is a \emph{repetitive walk}.  If $W$ is a cycle, we say that $W$ is a \emph{repetitive cycle} if the walk $\overline{W}:=v_0,\ldots,v_r,v_0$ is a repetitive walk.
+A string $s\in A^*$ is $\ell$-periodic if each length-$\ell$ substring of $s$ contains every character in $A$.  We make use of the following lemma:
 
-Note that repetitive walks are unavoidable since, for any colouring $\varphi$ and any walk $W:=v_0,\ldots,v_r$, the walk $\overleftrightarrow{W}:=v_0,\ldots,v_r,v_{r-1},\ldots,v_0$ is repetitive.  However, repetitive trails, paths, and cycles can be avoided by, for example, assigning each edge of $G$ a distinct colour.
+\begin{lem}\label{near_anagram_fourier}
+    For each $C,r_0,\ell\in\N$ and each $\epsilon>0$, there exists a positive integer $N$ such that each anagram-free $\ell$-periodic string $s_1,\ldots,s_N\in\{1,\ldots,C\}^N$ contains a substring $s_{i+1},\ldots,s_{i+2r}$ of length $2r \ge 2r_0$ such that $\|\hist(s_{i+1},\ldots,s_{i+r})-\hist(s_{i+r+1},\ldots,s_{i+2r})\|_1 \le \epsilon r$.
+\end{lem}
 
-In this paper we give a number of lower bounds and upper bounds on the number of colours needed to avoid various types of repetitive walks. Observe that, if $G$ has a vertex $v$ of degree $\Delta$ then every edge incident to $v$ must be assigned a different colour, otherwise we obtain a repetitive path of length $2$. Thus, the maximum degree, $\Delta$, is a lower bound on the number of colours needed to avoid repetitive paths.
+The proof of \cref{near_anagram_fourier} is deferred to \cref{near_anagram_section}.  We now give some intuition as to how it is used.  \cref{near_anagram_fourier} tells us that, even though we cannot always find an anagram, we can always find a substring that is $\epsilon$-close to being an anagram.  The process of checking if a string is anagram is often viewed as finding common terms in the first and second halves and crossing them both out.  If this results in a complete cancellation, then the string is an anagram.  \cref{near_anagram_fourier} tells us that we can always find a substring where, after exhaustive cancellation, only an $\epsilon$ fraction of the original terms remain.
 
-Our starting point is the following result, which follows from previous work \cite{wilson.wood:anagram-free,kamcev.luczak.ea:anagram-free}.\footnote{Neither the upper bound nor lower bound in \cref{ww_trees} is stated explicitly in \cite{wilson.wood:anagram-free,kamcev.luczak.ea:anagram-free}.  In \cref{previous_work} we explain how \cref{ww_trees} is easily obtained from the proofs of \cite[Theorems~2 and 13]{wilson.wood:anagram-free} and \cite[Proposition~2.1]{kamcev.luczak.ea:anagram-free}.}
-
-\begin{thm}[\citet{wilson.wood:anagram-free,kamcev.luczak.ea:anagram-free}]\label{ww_trees}
-    Every tree $T$ of pathwidth $p$ and maximum-degree $\Delta$ has an edge $(4p+\Delta-2)$-colouring with no repetitive trail.  For every integer $c$ there exists a binary tree $T$ of pathwidth $O(c)$ such that any edge $c$-colouring of $T$ contains a repetitive path.
-\end{thm}
-
-Our main upper bound is the following generalization of \cref{ww_trees} to $2$-trees:
-
-\begin{thm}\label{main}
-    Every $2$-tree $G$ with maximum degree $\Delta$ has an edge colouring that uses $O(\pw(G)\cdot\Delta\log\Delta)$ colours and has no repetitive path.
-\end{thm}
-
-The second half of \cref{ww_trees} shows that the dependence of \cref{main} on the pathwidth of $G$ is asymptotically optimal, even for trees.  We give the following lower bounds which show that \cref{ww_trees} cannot be strengthened further.
-
-\begin{thm}\label{lower_bounds}
-    For any positive integer $c$, there exists
-    \begin{compactenum}[(a)]
-        \item a graph $G$ of pathwidth $2$ such that any edge $c$-colouring of $G$ has a repetitive trail; and \label{trail_lower_bound}
-        \item a graph $G$ of pathwidth $3$ such that any edge $c$-colouring of $G$ has a repetitive cycle.\label{cycle_lower_bound}\todo{I would love to replace cycle by path!}
-    \end{compactenum}
-\end{thm}
-
-\cref{lower_bounds}(\ref{trail_lower_bound}) shows that \cref{main} cannot be strengthened to avoid repetitive trails. \cref{lower_bounds}(\ref{lower_bound}) shows that \cref{main} can not be strengthened from $2$-trees to $3$-trees.
-
-\subsection{Previous Work}
-\label{previous_work}
-
-The origins of this work are in the study of anagram-free sequences.  A sequence $s_1,\ldots,s_n$ is \emph{anagram-free} if, it has no subsequence $s_{i+1,\ldots,s_{i+2r}}$ such that $s_{i+1},\ldots,s_{i+r}$ is a permutation of $s_{i+r+1},\ldots,s_{r}$.  Anagram-free sequences are also called \emph{strongly non-repetitive}, \emph{strongly square-free}, or \emph{abelian square-free} sequences.  It is not \emph{apriori} obvious that there exists any constant $c$ such that there are anagram-free sequences over $\{1,\ldots,c\}$ of arbitrary length.  \cite{evdokimov:strongly,evdokimov:strongly2} was the first to show that an alphabet of size $c=25$ suffices, \cite{pleasants:non-repetitive} lowered this to $c=5$.  The question of whether $c=4$ symbols is sufficient was a longstanding open problem posed by \citet{erdos:some} and \citet{brown:is} that was finally resolved by \citet{keranen:abelian,keranen:powerful} who showed there are arbitrarily long anagram-free sequences over an alphbet of size $c=4$.  This is optimal; a longest anagram-free sequence on three symbols has length 7 \cite{cummings:strongly}.
-
-Note that asking if there exists arbitraririly long anagram-free sequences over $\{1,\ldots,c\}$ of arbitrary length is equivalent to asking if every path has an edge $c$-colouring with no repetitive path.  The idea of considering this question (and closely related questions) in the graph colouring context seems to have been introduced by \citet{alon.grytczuk:nonrepetitive}.
-
-There are several previous works on \emph{anagram-free vertex colourings} \cite{wilson.wood:anagram-free, kamcev.luczak.ea:anagram-free, carmi.dujmovic.ea:anagram-free, wilson.wood:anagram-free2}.  In these works, the goal is to find a \emph{vertex $c$-colouring} $\phi:V(G)\to\{1,\ldots,c\}$ so that, for any path $v_1,\ldots,v_{2r}$, $\phi(v_1),\ldots,\phi(v_r)$ is not a permutation of $\phi(v_{r+1}),\ldots,\phi(v_{2r})$. Such a colouring is called \emph{anagram-free} and the minimum number of colours required for an anagram-free colouring of a graph $G$ is called the \emph{anagram-free chromatic number} of $G$.  \todo{Make a table of these results.}
-
-\citet{wilson.wood:anagram-free} show that every tree $T$ of pathwidth $p$ has an anagram-free vertex $(4p+1)$-colouring.  Their proof works by finding a path $P$ in $T$ whose removal splits $T$ into a forest $F$ whose trees each have pathwidth at most $p-1$.  The vertices of $P$ are $4$-coloured using an anagram-free sequence on $4p-2,\ldots,4p+1$ and then each tree in $F$ is coloured inductively using colours $1,\ldots,4p-3$.  In the base case $p=0$ and $T$ consists of a single vertex which is coloured using the colour $1$.  It is straightforward to verify that this produces an anagram-free colouring using the fact the intersection between $P$ and any other path $I$ is either empty (and therefore covered by induction) or is a connected subpath $P'$ of $P$. In the latter case, $P'$ is not repetitive and the colours used in $P'$ are not used $I\setminus V(P')$, so $I$ is not repetitive.
-
-This upper bound is easily adapted to produce an edge $p(\Delta+2)$-colouring by $4$-edge colouring the path $P$ at each step and colouring the edges incident to $P$ with an additional $\Delta-2$ colours. The base case $p=0$ requires no additional colours, so all of this can be accomplished with $p(\Delta+2)$ colours.  It is straightforward to verify that this colouring has no repetitive path.  Since every trail in a tree is a path, this establishes the first part of \cref{ww_trees}.
-
-In terms of lower bounds, \citet[Theorem~13]{wilson.wood:anagram-free} show that any edge $c$-colouring of a complete binary tree of height $h$ has a repetitive path, if $h^c < 2^h$.  A slightly more careful counting, as done by \citet[Proposition~2.1]{kamcev.luczak.ea:anagram-free} actually establishes the result when $\binom{h+c-1}{c-1} < 2^h$, which is true for $c < \tfrac{1}{4}\log n$.  Since the pathwidth of a tree of height $h$ is a most $h/2$, this establishes the lower bound in \cref{ww_trees}.\todo{Check both constants}
-
-\todo[inline]{Discuss results in \cite{wilson.wood:anagram-free2}.}
-
-We note that anagram-free colouring is a relaxation of centered colouring, which is itself a relaxation of vertex ranking.  A vertex colouring $\phi:V(G)\to\{1,\ldots,c\}$ is \emph{centered} if, for every connected subgraph $X$ of $G$, there exists a vertex $v\in V(X)$ that receives a unique colour $\phi(v)\not\in\{\phi(w):w\in V(X)\setminus\{v\}\}$. (For vertex ranking, the requirement is that $\phi(v)>\max\{\phi(w):w\in V(X)\setminus\{v\}\}$.)  Clearly any centered colouring is an anagram-free colouring.
-
-It is not hard to see that centered $c$-colouring a path of length $n$ requires $c\in \Omega(\log n)$ colours. On the other hand, every path has an anagram-free colouring with $4$-colours and every tree $T$ has an anagram-free colouring with $O(\pw(T))$ colours. Thus centered colouring and anagram-free colouring behave very different for trees, i.e., graphs of treewidth $1$.
-
-On the other hand, for any $t$, graphs of treewidth $t$ have centered colourings using $O(t\log n)$ colours and the lower bound of \citet{carmi.dujmovic.ea:anagram-free} shows that anagram-free colouring some graphs of pathwidth $p$ requires $\Omega(p\log n)$ colours, for any $p\ge 3$.  Thus, centered colouring and anagram-free colouring behave similarly for graphs of treewidth $t\ge 3$.
-
-The goal of this work, and that of \cite{carmi.dujmovic.ea:anagram-free} is to understand exactly where the behaviour changes, which seems to occur with graphs of treewidth $2$.  We show that graphs of treewidth 2 can be anagram-free edge-coloured using a number of colour proportional to their pathwidth.  \ldots  In his thesis \citet{wilson:thesis} conjectures that the $2\times n$ grid, a graph of pathwidth 2, does not have an anagram-free vertex colouring.  We second this conjecture, for reasons that are discussed more in \secref{X}.
+Our strategy is to use \cref{near_anagram_fourier} to show that, if four terms in one half are allowed to gang up and cancel six terms in the second half (and vice-versa) then (under conditions that we guarantee) we will be able to fully complete the cancellation process.  To achieve this type of four versus six cancellation, we study a small subgraph that has a set of four paths that use every edge exactly twice and also has a set of three paths that use every edge exactly once.  Using the latter set of paths twice gives a collection of six paths that covers every edge twice.  Thus four terms in one half can be used to cancel six terms in the other half.
 
 
+\section{Edge Colouring}
 
-
-
-
-
-
-
-% We say that $\varphi$ is \emph{anagram-free} if, for every positive integer $k$ and every path $v_0,\ldots,v_{2k}$ in $G$, the sequence $\varphi(v_0v_1),\ldots,\varphi(v_{k-1}v_k)$ is not a permutation of $\varphi(v_kv_{k+1}),\ldots,\varphi(v_{2k-1}v_{2k})$.  The \emph{anagram-free} chromatic number of a finite graph $G$, denoted $\ci(G)$ is the minimum value $c$ such that $G$ has an anagram-free edge $c$-colouring.
-
-
-\section{Lower Bounds}
-
-In this section we describe graphs of small pathwidth such that, for any $c$, there are graphs in these families that cannot be $c$-coloured without producing anagram-trails or cycles.
-
-\subsection{Trails}
-
-In this section, we describe a family of outerplanar graphs for which any edge colouring with a constant number of colours results in repetitive trails. This proof is based on the lower bound of \citet{carmi.dujmovic.ea:anagram-free} for vertex-colouring a family of graphs like those shown at the top of \cref{lower_bound_figs}.  \citet{carmi.dujmovic.ea:anagram-free} prove their lower bound by showing the existence of a repetitively coloured \emph{back and forth path} whose first half visits vertices left to right and whose second half visits vertices from right to left, like the orange/green path shown in the figure.  One consequence of this is that the same lower bound applies effortlessly to edge-colouring the multigraph shown in the second part \cref{lower_bound_figs} in order to avoid repetitive trails. This follows from the fact that there is a mapping from vertices in the first graph to edges in the second graph such that each back and forth path in the first graph corresponds to a trail in the second graph.  This is what motivates the following construction.
+For any $n\in N$, let $S_n$ be the graph with vertex set $V(S_n):=\{a_1,\ldots,a_n,b_1,\ldots,b_n\}$ and edge set
+\[
+    E(S_n) := \bigcup_{i=1}^{n-1} \{a_ib_i,a_ia_{i+1},b_ib_{i+1},a_ib_{i+1}\} \cup \{a_nb_n\} \enspace
+\]
+(see \cref{s_n}).
 
 \begin{figure}
     \begin{center}
-        \includegraphics[scale=2]{figs/lower-bounds-1} \\
-        \includegraphics[scale=2]{figs/lower-bounds-2} \\
-        \includegraphics[scale=2]{figs/lower-bounds-3} \\[2ex]
-        \includegraphics[scale=2]{figs/lower-bounds-4}
+        \includegraphics{figs/s_n}
     \end{center}
-    \caption{Graphs used in lower bounds.}
-    \label{lower_bound_figs}
+    \caption{The graph $S_n$}
+    \label{s_n}
 \end{figure}
 
-For each positive integer $n$, let $S_n$ be the graph with vertex set $V(S_n):=z_0\cup\{x_i,y_i,z_i:i\in\{1,\ldots,n\}\}$ and whose edge set consists of the 4-cycle $C_i:=z_{i-1}x_i,z_i,y_i$ for each $i\in\{1,\ldots,n\}$.  This graph is illustrated in the third part of \cref{lower_bound_figs}. The graph $S_n$ is outerplanar and therefore has treewidth 2.  The following lemma establishes \cref{lower_bounds}(\ref{trail_lower_bound}).
+Our first result shows that the anagram-free chromatic index of $S_n$ is unbounded.
 
-\begin{lem}\label{trail_lower_bound_lemma}
-    For any $c\in\N$ and any integer $n\ge 2^{c^4}$, any edge $c$-colouring of $S_n$ contains a repetitive trail.
-\end{lem}
-
-\begin{proof}
-    For each $i\in\{1,\ldots,n\}$, let $e_i,f_i,g_i,h_i$ denote the four edges of $C_i$ and let
-    \[
-        \zeta_i:=\varphi(e_i),\varphi(f_i),\varphi(g_i),\varphi(h_i)
-    \]
-     be the sequence of colours used to colour $C_i$.  Note that $\zeta_i\in\{1,\ldots,c\}^4$.  For each $i\in\{0,\ldots,n\}$ let $V^{(i)}$ be the binary vector indexed by elements in $\{1,\ldots,c\}^4$ where, for each $s\in\{1,\ldots,c\}^4$, $V^{(i)}_s:=|\{j\in\{1,\ldots,i\}:\zeta_i=s\}|\bmod 2$.  That is, $V^{(i)}_s$ gives the parity of the number of occurrences of $s$ in the sequence $\zeta_1,\ldots,\zeta_i$.
-
-     Since there are only $2^{c^4}$ binary vectors of length $c^4$ and $n\ge 2^{c^4}$, there must exist two distinct $i,j\in\{0,\ldots,n\}$, $i<j$ such that $\zeta_i=\zeta_j$.  This implies that, for each $s\in\{1,\ldots,c\}^4$, the number of occurrences of $s$ in the sequence $\zeta_{i+1},\ldots,\zeta_j$ is even.  Thus, we can easily make a set $W\subset\{j+1,\ldots,i\}$ such that, for any $s\in\{1,\ldots,c\}^4$,
-     \[
-        |\{a\in\{j+1,\ldots,i\}: \mbox{$\zeta_a=s$ and $a\in W$}\}| =
-        |\{a\in\{j+1,\ldots,i\}: \mbox{$\zeta_a=s$ and $a\not\in W$}\}|
-     \]
-     Let $\overline{W}:=\{j+1,\ldots,i\}\setminus W$.
-     Define the path $P_1$ that begins at $z_j$, ends at $z_i$, and contains $e_af_a$ for each $a\in W$ and $g_ah_a$ for each $a\in\overline{W}$.  Next form the path $P_2$ that begins at $z_i$, ends at $z_j$ and contains $g_ah_a$ for each $a\in W$ and $e_af_a$ for each $a\in\overline{W}$.  Then the trail obtained by concatenating $P_1$ and $P_2$ is repetitive under $\varphi$.
-\end{proof}
-
-We remark that \cref{trail_lower_bound_lemma} could be strengthened slightly at the cost of a longer proof.  The preceding proof shows that $S_n$ requires $\Omega((\log n)^{1/4})$ colours.  This can be increased to $\Omega((\log n)^{1/2})$ by treating each $C_i$ as two paths of length $2$, each of which is coloured using $\binom{c}{2}$ colours, and then using the same matching argument used by \citet{carmi.dujmovic.ea:anagram-free}. We have presented the simpler proof because it more closely mirrors the (considerably more complicated) proof in the next section.
-
-\subsection{Cycles}
-
-For each positive integer $n$, let $Q_n$ be the graph with vertex set $V(Q_n):=\{(x_1,y_1),\ldots,x_n,y_n\}$ and edge set
-\[
-    E(Q_n) = \bigcup_{i=1}^{n-1} \{x_ix_{i+1}, x_iy_{i+1}, y_{i}x_{i+1}, y_{i}y_{i+1}\} \enspace .
-\]
-This graph is illustrated in the fourth part of \cref{lower_bound_figs}.
-We will show that, for any integer $c$, there exists an $n$ such that $\ci(Q_n)>c$.  We will prove this by contradiction, so throughout the rest of this section, $\varphi$ will always refer to some hypothetical anagram-free $c$-colouring of $Q_n$.
-
-For each $i\in\{1,\ldots,n-k+1\}$, the \emph{$(i,k)$-block} of $Q_n$ is the induced subgraph $B_{i,k}:=Q_n[\bigcup_{j=0}^{k-1}\{x_{i+j},y_{i+j}]$. Observe that $B_{i,k}$ is isomorphic to $Q_k$ with the isomorphism from $Q_k$ into $B_{i,k}$ given by $\rho_{i}:V(Q_k)\to V(B_{i,k})$ where $\rho_{i}(x_{j}):= x_{i+j-1}$ and $\rho_i(y_j):= y_{i+j-1}$.  In this way, the colouring $\varphi$ of $Q_n$ gives a colouring $\varphi_{i,k}:V(Q_k)\to\{1,\ldots,c\}$ defined as $\varphi_{i,k}(vw) = \varphi(\rho(v)\rho(w))$.  We say that blocks $B_{i,k}$ and $B_{j,k}$ are $\varphi$-similar if $\varphi_{i,k}=\varphi_{j,k}$.
-
-
-Our next lemma shows that, for any fixed edge colouring $\varphi^*$ of the four vertex graph $Q_2$, the gaps between appearances of $\varphi^*$ within the colouring $\varphi$ are bounded.  We will use each such occurrence of $\varphi^*$ to simulate one of the degree-$4$ vertices from the graph $S_n$ used in previous section.
-
-\begin{lem}\label{periodicity}
-    Suppose that, there exits a positive integer $c$ such that, for every $n\in\N$, $Q_n$ has an edge $c$-colouring with no repetitive cycle.  Then there exists a constant $k:=k(c)$ such that, for each $n\in\N$ there exists an edge $c$-colouring $\varphi$ of $Q_{n}$ with no repetitive cycle and such that, for each integer $i\in[1, n-k]$ there exists an integer $j\in\{ i+1,\ldots,i+k]$ with $\varphi_{i,2}=\varphi_{j,2}$.
-\end{lem}
-
-\begin{proof}
-    For a colouring $\varphi$ of $Q_n$, let $X(\varphi):=\bigcup_{i=1}^{n-1} \varphi_{i,2}$.  That is, $X(\varphi)$ is the set of colourings of $Q_2$ that appear in $\varphi$.  Let $X$ be a minimal set such that, for each integer $n\in\N$, $Q_n$ has an anagram-free edge $c$-colouring $\varphi_n$ such that $X(\varphi_n)\subseteq X$. Such an $X$ exists because we can always take a set $X^+$ containing all $4^c$ functions from $V(Q_2)$ onto $\{1,\ldots,c\}$.  By definition, $X(\varphi)\subseteq X^+$ for any edge $c$-colouring $\varphi$.  The set $X^+$ is not necessarily minimal, but it is finite, so it has minimal subset $X\subseteq X^+$ with the desired property.
-
-    By definition, for every strict subset $X'\subset X$, there exists an integer $m_0:=m_0(X')$, such that any edge $c$-colouring $\varphi$ of $Q_{m_0}$ with $X(\varphi)\subseteq X'$ has a repetitive path. Now let $k:=1+\max\{m_0(X'):X'\subseteq X\}$ and take an edge $c$-colouring $\varphi$ of $Q_k$ with $X(\varphi)\subseteq X$ that has no repetitive path.  Observe that, for any $i\in\{1,\ldots,n-k\}$, $\rho_{i,2}\in X$ and $\varphi$ and $\bigcup_{j=i+1}^{i+k}\rho_{j,2}=X$.  In particular, $\rho_{i,2}=\rho_{j,2}$ for some $j\in\{i+1,\ldots,i+k\}$.
-\end{proof}
-
-For any any subgraph $X$ of a graph $G$ with an edge colouring $\varphi$, let $m_i(X):=|\{vw\in E(X): \varphi(vw)=i\}$.\todo{Find a better place for this.}
-We are now ready to prove the following result, which establishes \cref{lower_bounds}(\ref{cycle_lower_bound}).
-
-\begin{lem}\label{cycle_lower_bound_lemma}
-    For each $c\in\N$, there exists an integer $n:=n(c)$ such that any edge $c$-colouring $\varphi$ of $Q_n$ contains a repetitive cycle.
-\end{lem}
-
-\begin{proof}
-    Suppose for the sake of contradiction that, for each $n\in\N$, $Q_n$ has an edge $c$-colouring with no repetitive cycle.  Then take an edge $c$-colouring $\varphi$ of $Q_n$ that satisfies the conditions of \cref{periodicity} with some integer $k$ depending only on $c$.  Refer to \cref{i_and_k}.  Let $I:=\{i\in\{1,\ldots,n-1\}:\varphi_{i,2}=\varphi_{1,2}\}$.  Let $m:=|I|-1$, let $i_0<i_1<\cdots< i_m$ be the elements of $I$, and let $k_a:=i_{a+1}-i_a-1$ for each $a\in\{1,\ldots,m\}$.  By \cref{periodicity}, $k_a\le k$, for each $a\in\{1,\ldots,m\}$.
-
-    \begin{figure}
-        \begin{center}
-            \includegraphics{figs/cool-lower-bound}
-        \end{center}
-        \caption{The set $I=\{i_1,\ldots,i_m\}$.}
-        \label{i_and_k}
-    \end{figure}
-
-    Let $P$ be a partition of $\{0,\ldots,m-1\}$ such that $a$ and $a'$ are in the same part if and only if $\varphi_{i_a,k_a}=\varphi_{i_{a'},k_{a'}}$.  For any $a\in\{0,\ldots,m-1\}$, $B_{i_a+1,k_a}$ has $4(k_a-1)$ edges and therefore has $c^{4(k'-1)}$ edge $c$-colourings.  Therefore $P$ has $|P|\le \sum_{k'=2}^{k-1} c^{4(k'-1)} \le c^{4k}$ parts.  For each $a\in\{0,\ldots,m\}$, let $V^{(a)}$ be the binary vector indexed by the parts in $P$ where $V^{(a)}_p := |p\cap\{0,\ldots,a\}|\bmod 2$.
-
-    The number of binary vectors of length $|P|$ is $2^{|P|}\le 2^{c^{4k}}$.  On the other hand, $m \ge n/k > 2^{c^{4k}}$.  Therefore, there exists distinct $a,b\in\{0,\ldots,m-1\}$ such that $V^{(a)}=V^{(b)}$.  Now let $W\subseteq\{a+1,\ldots,b\}$ be chosen so that, for each $p\in P$,
-    \[
-        |\{a'\in W:i_{a'}\in p\}|
-        = |\{a'\in \{a+1,\ldots,b\}\setminus W: i_{a'}\in p\}|
-    \]
-    Such a $W$ exists since, for each $p\in P$,
-    \[
-        |p\cap\{a+1,\ldots,b\}|=|p\cap\{0,\ldots,b\}|-|p\cap\{0,\ldots,a\}| \equiv 0 \pmod{2} \enspace .
-    \]
-    Let $\overline{W}:=\{a+1,\ldots,a_m\}\setminus W$.
-    Define the path $P_1$ that contains $x_{i_{a'}+1},\ldots,x_{i_{a'+1}}$ iff $a'\in W$ and contains $y_{i_{a'}+1},\ldots,y_{i_{a'+1}}$ iff $a'\in\overline{W}$.  Define the complementary path $P_2$ that contains $x_{i_{a'}+1},\ldots,x_{i_{a'+1}}$ iff $a'\in\overline{W}$ and contains $y_{i_{a'}+1},\ldots,y_{i_{a'+1}}$ iff $a'\in W$.  Clearly $P_1$ and $P_2$ are disjoint.
-
-    % The paths $P_1$ and $P_2$ partition $\{1,\ldots,m-1\}$ into two sets $M^\times$ and $M^=$ as follows:  $M^\times$ contains each $a\in\{0,\ldots,m-1\}$ such that $P_1$ and $P_2$ use the edges $x_{i_a}y_{i_a+1}$ and $y_{i_a}x_{i_a+1}$.  This means that $M^=$ contains each $a\in\{1,\ldots,m-1\}$ such that $P_1$ and $P_2$ use the edges $x_{i_a}x_{i_a+1}$ and $y_{i_a}y_{i_a+1}$.
-
-    Without loss of generality we may assume that $P_1$ contains $x_{i_a+1}$.  For convenience, we also fix the colouring of $B_{1,2}$; without loss of generality, assume that
-    \[
-        (\varphi(x_1x_2),\varphi(y_1y_2),\varphi(x_1y_2),\varphi(y_1x_2))=(1,2,3,4) \enspace .
-    \]
-    For each $i\in\{1,\ldots,c\}$ and each $j\in\{1,2\}$, let $m_i(P_j)$ be the number of $e$ of $P_j$ with $\varphi(e)=i$.  There are two cases to consider (see \cref{cases}):
-    \begin{figure}
-        \begin{center}
-            \includegraphics{figs/twocases-1} \\
-            \includegraphics{figs/twocases-2} \\
-            Case 1 \\[2em]
-            \includegraphics{figs/twocases-3} \\
-            \includegraphics{figs/twocases-4} \\
-            Case 2
-        \end{center}
-        \caption{The two cases in the proof of \cref{cycle_lower_bound}}
-        \label{cases}
-    \end{figure}
-    \begin{compactenum}
-        \item $P_1$ contains $x_{i_b}$ (and $P_2$ contains $y_{i_b}$):  In this case $m_1(P_1)=m_1(P_2)+1$, $m_2(P_2)=m_2(P_1)+1$, and $m_i(P_1)=m_i(P_2)$ for each $i\in\{3,\ldots,c\}$.  Prepend the path $y_{i_a+1}x_{i_a}x_{i_a+1}$ to $P_1$ to obtain a path $P_1'$.  Append the path $x_{i_b}y_{i_b+1}y_{i_b}$ to $P_2$ to obtain a path $P_2'$.  The union of $P_1'$ and $P_2'$ is a cycle $C$ and $m_i(P_1')=m_i(P_2')$ for each $i\in\{1,\ldots,c\}$. Thus, $C$ is a repetitive cycle.
-
-        \item $P_1$ contains $y_{i_b}$ (and $P_2$ contains $x_{i_b}$): In this case $m_3(P_1)=m_3(P_2)+1$, $m_4(P_2)=m_4(P_1)+1$, and $m_i(P_1)=m_i(P_2)$ for each $i\in\{1,2,4,5,6,\ldots,m-1\}$.  We append the path $y_{i_b}x_{i_b+1}x_{i_b}$ to $P_1$ to obtain a path $P_1'$.  We preprend the path $x_{i_a+1}x_{i_a}y_{i_a+1}$ to $P_2$ to obtain a path $P_2'$.  The union of $P_1'$ and $P_2'$ is a cycle $C$ and $m_i(P_1')=m_i(P_2')$ for each $i\in\{1,\ldots,c\}$.  Thus, $C$ is a repetitive cycle. \qedhere
-    \end{compactenum}
-\end{proof}
-
-\todo[inline]{It would be nice if we could get a repetitive path in $Q_n$ as well.  Oddly I have no idea how to do this, even with a graph of pathwidth $10$.}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-% \section{Shifting Lemmas}
-%
-% In this section we prove a useful shifting lemma inspired by work on data structures for approximate nearest-neighbour searching \cite{chan:closest-point}.
-%
-% The following lemma says that there are $b$ special shift values such that, for any $x$ and $y$ there exists a shift $s$ so that the radix-$b$ representations of $x+s$ and $y+s$ agree up to the $r$-th significant digit, i.e., $(x+s)\ddiv b^r=(y+s)\ddiv b^r$.
-%
-% \begin{clm}\label{one_bucket}
-%     Let $w$ and $b$ be positive integers, let $0\le x < y < 2^w$ be two integers and let $r=\lceil\log_{b}(y-x+1)\rceil$.  For each $i\in\{0,\ldots,b-1\}$, let $s_i=\sum_{j=0}^w i\cdot b^j$. Then there exists $i\in\{0,\ldots,b-1\}$ such that
-%    $\lfloor (x+s_j)/b^r\rfloor = \lfloor (y+s_j)/b^r\rfloor$; and
-% \end{clm}
-%
-% \begin{proof}
-%     TODO.
-% \end{proof}
-%
-% For example, when $b=10$, $x=98$ and $y=105$, $y-x+1=8$, we have $r=\lceil\log_{10} 8\rceil=1$ and we take $s_j=2222$ so that $x+2222 = 2300$, and $y+2222=2307$.  The next observation just follows from the the fact that, in order to store $n=x-y+1$ objects in blocks of size at most $m=b^{r-1}$ we require at least $\lceil n/m\rceil$ blocks.
-%
-% \begin{obs}\label{big_gap}
-%     The quantities in \cref{one_bucket} satisfy the equation $\lfloor(y+s_j)/b^{r-1}\rfloor-\lfloor(x+s_j)/b^{r-1}\rfloor+1\ge\lceil(y-x+1)/b^{r-1}\rceil\ge 2$.
-% \end{obs}
-
-\section{Edge-Colouring of 2-Trees with No Repetitive Paths}
-
-In this section we show that every $2$-tree $G$ of maximum degree $\Delta$ and pathwidth $p$ has an edge $O(p\Delta)$-colouring with no repetitive path.  Our strategy for proving this is similar to that used by \citet{wilson.wood:anagram-free} to show that every tree $T$ has anagram-free chromatic number at most $4\pw(T)+1$.  Specifically, we find a path-like subgraph $H$ of $G$ whose removal disconnects $G$ into components of pathwidth less than $p$.  We colour $H$ with $c\Delta$ colours $\{(p-1)c\Delta+1,\ldots,pc\Delta\}$ and then inductively colour each component of $G-H$ using the colours $\{1,\ldots,(p-1)c\}$.
-
-The main technical challenge comes from the fact that the graph $H$ is considerably more complicated than a path, and thus, there are no existing tools available for colouring $H$.  In particular, $H$ is a \emph{serpentine triangulation}, an edge-maximal outerplanar graph in which each inner (triangular) face shares at most two of its edges with other inner faces. Most of this section is devoted to proving that serpentine triangulations have edge $O(1)$-colourings with no repetitive path (\cref{serpentine}).  For now, we will establish \cref{main} assuming this is the case.
-
-
-
-
-
- %
- %
- %
- % tree whose vertices are the $3$-cliques of $G$ and two vertices of $G^\star$ are adjacent which two vertices are adjacent if and only if the corresponding $3$-cliques have exactly two vertices in common.
-% When $G$ is rooted at a $3$-clique $r$, we treat $G^\star$ as a rooted tree with root $r$.
-It is straightforward to check that a $2$-tree is a serpentine triangulation if and only if its dual tree is a path.
-% \footnote{This definition is equivalent to the definition of serpentine triangulation given in the preceding paragraph.}
-
-
-\subsection{A Proxy for Pathwidth}
-
-As a first step, we define an approximation of $\pw(G)$ on which we can apply induction.
-
-For any $2$-tree $G$ and any $k\in\{1,\ldots,3\}$, let $V_i(G)$ denote the set of $k$-cliques in $G$.  The \emph{dual tree} $G^\star$ of a $2$-tree $G$ is the bipartite graph $(V_3(G),V_2(G),E)$ that contains an edge between $\{x,y,z\}\in K_3(G)$ and $\{v,w\}\in K_2(G)$ if and only if $\{v,w\}\subseteq\{x,y,z\}$.  Since $G$ is a $2$-tree, it follows that $G^\star$ is a tree, all nodes in $V_3(G)$ have degree $3$ in $G^\star$, and all leaves of $G^\star$ are in $V_2(G)$.  The following lemma shows that $\pw(G^\star)$ is an approximation of $\pw(G)$.
-
-\begin{lem}\label{dual_approx}
-    For any $2$-tree $G$ with dual tree $G^\star$, $\pw(G^\star) \le \pw(G) \le 3\pw(G^\star)) + 2$.
-\end{lem}
-
-\begin{proof}[Proof sketch]
-    For the upper bound, consider any width-$\pw(G^\star)$ path decomposition $(A_x:x\in V(P))$ of $G^\star$. Each bag $A_x$ in this path decomposition contains 2 or 3-element subsets of $V(G)$, each of which forms a clique in $G$.  For each $x\in V(P)$, let $B_x:=\bigcup{K\in A_x}K$.  Clearly, $(B_x:x\in V(P))$ is a path decomposition of $G$ and it has width at most $3\max\{|A_x|:x\in V(P)\}-1=3(\pw^\star(G))+1)-1=3\pw^\star(G)) + 2$.
-
-    \todo[inline]{Now prove the lower bound. (Maybe argue that $G$ contains a $G^\star$-minor.)}
-    % For the lower bound, start with a width-$\pw(G)$ path decomposition $(A_x:x\in V(P))$ of $G$. By a standard normalizing reduction, we may assume that $|A_x|=\pw(G)+1$ for each $x\in V(P)$ and that $|A_x\cap A_y|=\pw(G)$ for each edge $xy$ of $P$. By Helly's Theorem, for each $3$-clique $uvw$ in $G$, there exists a maximal subpath $P_{uvw}$ of $P$ that is non-empty such that $\{u,v,w\}\subseteq A_x$ for each $x\in V(P_{uvw})$.  If we let $K$ denote the set of $3$-cliques in $G$, then we set $B_x:=\{uvw\in K:\{u,v,w\}\subseteq A_x\}$.
-    %
-    % Let $P:=x_0,\ldots,x_r$ and set $C_{x_i}:=B_{x_{i-1}}\cup B_{x_{i}}$ for each $i\in\{1,\ldots,r\}$.  T
-    %
-    %
-    % $3$-clique $uvw$ of $G$, replace every occurrence of $u$, $v$, or $w$ the path decomposition with $uvw$.
-\end{proof}
-
-A \emph{complete binary tree} of height $h$ is a rooted tree in which every internal node has exactly two children all leaves have distance $h$ from the root.  For a forest $T$, let $\cbt(T)$ be the maximum integer $h$ such that $T$ contains a subdivision of a complete binary tree of height $h$.  The following lemma shows that, for forests, $\sh(T)$ is an approximation of $\pw(T)$.
-
-\begin{lem}\label{b_approx}
-    For any non-empty tree $T$, $\ceil{\tfrac{1}{2}\sh(T)} \le \pw(T) \le \sh(T)+1$.
-\end{lem}
-
-\begin{proof}
-    The lower bound is well-known \cite{X}.  For the upper bound, let $h:=\sh(T)$ and root $T$ at an arbitrary node $r\in V(T)$.  We will construct a path decomposition of $G^\star$ using induction on the pair $(h, |V(T)|)$.  In particular, we will construct a path decomposition $(B_x:x\in V(P))$ of $T$ that has width at most $h+1$ in which the bag $B_{x_0}$ indexed by the first node $x_0$ of $P$ contains $r$.
-
-    In the base case $h=0$.  Observe that a path of length $2$ is a complete binary tree of height $1$. Therefore, if $h=0$ then $T$ does not contain a path of length $2$.  Therefore $T$ is either an isolated vertex or a single edge, and therefore has a path decomposition with one bag $x_0$ that contains each of the (at most 2) vertices of $G^\star$, including $r$.  The width of this decomposition is at most $2-1=1=h+1$.
-
-    Next we consider the case $h\ge 1$. The graph $T-\{r\}$ is a forest of rooted trees $T_1,\ldots,T_d$ with roots $r_1,\ldots,r_d$ and at most one of these trees, say $T_1$, contains a subdivision of a complete binary tree of height $h$.  By the inductive hypothesis, each of $T_2,\ldots, T_d$ has pathwidth at most $h$, so the forest $T_2\cup\cdots\cup T_d$ has a path decomposition $(B_x:x\in V(P))$ of width at most $h$. Adding $r$ to each bag of this decomposition increases the width to at most $h+1$.  Now we append one node $y$ to $P$ with bag $B_y:=\{r,r_1\}$, which does not increase the width of the path decomposition.  Finally apply induction to $T_1$ to obtain a path decomposition $(B_x:x\in V(P'))$ of width at most $h+1$ in which $r_1\in B_{x_0'}$ where $x_0'$ is the first node of $P'$.  Appending $P'$ to $P$ then gives a path decomposition $(B_x:x\in P\mathbin{\circ}P')$ of width at most $h+1$ in which $r\in B_{x_0}$.\todo{Ask Vida if she knows a reference so we can skip this proof.}
-\end{proof}
-
-Together \cref{b_approx,dual_approx} show that $\sh(G^\star)$ is a good approximation of $\pw(G)$.  We will make use of the following separator lemma in order to apply induction on $\cbt(G^\star)$.
-
-\begin{lem}\label{tree_cbt_separator}
-    For any non-empty tree $T$ and any node $v\in V(T)$, there exists a path $P$ beginning at $v$ such that $\cbt(T-P)<\cbt(T)$.
-\end{lem}
-
-\begin{proof}
-    The proof is by induction on $|V(T)|$.  If $|V(T)|=1$ then the result is trivial, by taking $P=v$.  Otherwise, $v$ has $d\ge 1$ neighbours $v_1,\ldots,v_d$ and $T-\{v\}$ is a forest of trees $T_1,\ldots,T_d$, where $T_i$ contains $v_i$ for each $i\in\{1,\ldots,d\}$.  If there is no $i\in\{1,\ldots,d\}$ with $\cbt(T_i)=\cbt(T)$ then we take $P=v$ and we are also done.
-
-    Otherwise, exactly one subtree, say $T_i$, has $\cbt(T_1)=\cbt(T)$.  Apply the inductive hypothesis on $T_i$ to obtain a path $P'$ beginning at $v_i$ such that $\cbt(T_i-P')<\cbt(T_i)=\cbt(T)$.  Let $P$ be the path obtained by prepending $v$ to $P'$.  Then $\cbt(T-P)\le \max( \{\cbt(T_i-P')\}\cup\{\cbt(T_j):j\in\{1,\ldots,d\}\setminus\{i\}\})<\cbt(T)$.
-\end{proof}
-
-
-
-
-\subsection{Serpentine Pathwidth-Reducing Separators in $2$-Trees}
-
-Let $G$ be a $2$-tree with $n\ge 4$ vertices, let $P$ be a path in $G^\star$ of length at least $1$ whose first and last nodes are in $V_3(G)$.  Then the induced subgraph $H:=G[\bigcup_{K\in V(P)} K]$ is a serpentine triangulation.
-The graph $G^\star-P$ is a forest.  If a component of $G^\star-P$ has a single node we call it \emph{trivial} otherwise we call it non-trivial. Each non-trivial component $C$ of $G^\star-P$ is a tree contains at least one node in $V_3(G)$ and whose leaves are all nodes in $V_2(G)$. In this case $G_C:=G[\bigcup_{K\in V(C)}]$ is a $2$-tree that has exactly two vertices $u$ and $v$ and one edge $e:=uv$ in common with $H$.  We say that $G_C$ \emph{attaches} to $H$ using $e$.
-
-Translating \cref{tree_cbt_separator} into the language of dual trees immediately gives the following corollary:
-
-\begin{lem}\label{serpentine_separator}
-    For any $2$-tree $G$ and any edge $vw$ of $G$, there exists a path $P=K_0,\ldots,K_r$ in $G^\star$ with $K_0,K_r\in V_3(G)$, $\{v,w\}\subset K_0$ and such that $\cbt(C)<\cbt(G^{\star})$ for each non-trivial component $C$ of $T-P$.
-\end{lem}
-
-\subsection{Hierarchical Skeleton Decompositions}
-
-For a $2$-tree $G$ and an edge $e\in E(G)$, an $e$-rooted skeleton decomposition $\mathcal{D}:=\{(G_x,H_x):x\in V(T)\}$ is a collection of pairs of subgraphs of $G$ indexed by the nodes of a rooted tree $T$ that is defined inductively as follows:
-\begin{compactenum}
-    \item The root $x$ of $T$ has $G_x:=G$.  The graph $H_x:=G[\bigcup_{K\in V(P)}]$ is a serpentine triangulation obtained by applying \cref{serpentine_separator} to $G_x$ to obtain a path $P:=K_0,\ldots,K_r$ in $G^\star$ with $e\subset K_0$.  The serpentine triangulation $H_x$ is called the \emph{skeleton} of $G_x$.
-    \item For each non-trivial component $C$ of $G^\star-P_r$, the root $x$ of $T$ has a child that is the root of the tree $T_C$ obtained by making an $e'$-rooted XXXX of $G_C$, where $e'$ is the edge by which $G_C$ is attached to $H_x$.
-\end{compactenum}
-For $x\in V(T)$, $\depth(x)$ is the depth of $x$ in $T$, i.e., the length of the path from $r$ to $x$. Observe that $\max\{x\in V(T):\depth(x)\}$ of $T$ is at most $\cbt(G^\star)$.
-
-For any $k\in\{1,2,3\}$ and any $k$-clique $K$ in $G$, the graph $T[K]:=T[\{x\in V(T):K\in H_x\}]$ is a connected subtree of $T$.  When $|K|=1$, $T[K]$ is a subtree.  When $|K|=2$, $T[K]$ is a vertical path,\footnote{A \emph{vertical path} in a tree $T$ is a path in which no two nodes have the same depth.}.  When $|K|=3$, $T[K]$ contains a single node.  We let $\x(K)$ denote the minimum depth node of $T[K]$ and $\depth(K)$ is the depth of $\x(K)$. We abuse notation slightly when $K$ is a $1$ or $2$-clique:  For a vertex $v$ and edge $vw$ we use the shorthands $\x(v):=\x(\{v\})$ and $\x(vw):=\x(\{v,w\})$.
-
-\Cref{spine_colouring}, below, shows that any serpentine triangulation $H$ has a spanning subgraph $\hat{H}$ that has an edge $c$-colouring $\varphi$ with no repetitive paths.  Furthermore, extending $\varphi$ using any proper colouring of the edges in $E(H)\setminus E(\hat{H})$ gives a colouring $H$ with no repetitive paths. Assuming \cref{spine_colouring}, we are now ready to prove \cref{main}.
-
-\begin{thm}\label{main}
-    Every $2$-tree $G$ with maximum degree $\Delta$ has an edge colouring that uses $O(\pw(G)\cdot\Delta\log\Delta)$ colours and has no repetitive path.
+\begin{thm}\label{edge_colouring}
+    For any $c\in\N$, there exists $n\in\N$ such that, for any edge $c$-colouring $\varphi:E(S_n)\to\{1,\ldots,c\}$ of $S_n$, there exists a path $v_0,\ldots,v_{2r}$ in $S_n$ such that $\varphi(v_0v_1),\ldots,\varphi(v_{r-1}v_r)$ is a permutation of $\varphi(v_rv_{r+1},\ldots,v_{2r-1}v_{2r})$.
 \end{thm}
 
-\begin{proof}[Proof of \cref{main} assuming \cref{spine_colouring}]
-    By \cref{b_approx,dual_approx} it is sufficient to give an edge colouring of $G$ that uses $O(\cbt(G^\star)\cdot\Delta\log\Delta)$-colours.  For ease of notation, let $\Delta:=\max\{c,\Delta(G)\}$, where $c$ is the constant that appears in \cref{spine_colouring}.
+Let $S_n':=S_n-\{a1b_1,a_nb_n\}$. Before proving \cref{edge_colouring} we need the following easy constructions that allow the kind of four versus six cancellation described earlier.  These three lemmas are illustrated in \cref{good_paths}:\todo{Write these paths down for the visually impaired.}
 
-    Let $e$ be an arbitrary edge of $G$ and let
-    $\{(G_x,H_x): x\in V(T)\}$ be an $e$-rooted hierarchical skeleton decomposition of $G$.  The root $r$ of $T$, define $e_r:=e$.
-
-    % For any node $x$ of $T$ with parent $y$, let $e_x$ be the edge by which $G_x$ attaches to $H_y$.  For each $x\in V(T)$, let $\varphi_x$ a colouring of $\hat{H}_x$ given by \cref{spine_colouring}.
-
-    As noted above $T[vw]$ is a vertical path $x_0,\ldots,x_t$ that begins at $x_0=\x(vw)$.  If $t>0$, then we let $G_{vw}:=G_{x_1}$.  If $t=0$, then $G_{vw}$ denotes the empty graph.  Thus, $G_{vw}$ attaches to $H_{x_0}$ using the edge $vw$.
-
-    We distinguish between two kinds of edges in $G$: A $c$-edge $e$ is contained in $E(\hat{H}_{\x(e)})$.  A \emph{$\Delta$-edge} $e$ is contained in $E(H_{\x(e)})\setminus E(\hat{H}_{\x(e)})$.  Every $\Delta$-edge $vu$ has a \emph{dull endpoint} $u$ with $\deg_{H_{\x(xy)}}(u)=3$ and a \emph{sharp endpoint} $v$ with $\deg_{H_{\x(xy)}}(x)\ge 5$.  Note that each vertex $u$ is the dull endpoint of at most one edge in $H_x$ for any $x\in V(T)$.
-
-    Our colouring will make use of a function $\sgn:V(G)^2:\to\{+1,0,-1\}$.  For any $\Delta$-edge, $xy$ with sharp endpoint $x$ and dull endpoint $y$, $\sgn(x,y)={+1}$ and $\sgn(y,x)=0$.  For any $c$-edge $xy$, $\sgn(x,y)=-\sgn(y,x)\in\{{+1},{-1}\}$.
-
-    An edge $vw$ of $G$ is \emph{flat} if $\depth(v)=\depth(w)$ and $vw$ is \emph{vertical} otherwise. For a vertical edge with $\depth(v)<\depth(w)$ we call $v$ the \emph{upper endpoint} of $vw$ and $w$ is the \emph{lower endpoint} of $vw$.
-
-    We will start by defining an edge colouring $\varphi_1$ that does not have all the properties we want (in fact $\varphi_1$ is not even a proper edge colouring).  We will later use a product colouring with $\varphi_1$ as one of its parts.
-
-    For each $c$-edge $e$ of $G$, we define $\varphi_1(e):=\varphi_{\x(e)}(e)$. In this way, every edge receives a colour in $\{1,\ldots,c\}$.
-
-    Next, we colour the $\Delta$-edges of $G$. In order to achieve an $O(\Delta\log\Delta)$ factor in the number of colours, we have to take some extra care.  (An $O(\Delta^2)$ bound is easy, we could just do any proper edge $\Delta$-colouring of these edges.)  We process the nodes of $T$ in depth first order.  By the time we are done processing a node $x$, we will have coloured all the flat $\Delta$-edges in $H_x$.  Since the $c$-edges of $H_x$ are already coloured, this means that, by the time we are done processing $x$, all edges of $H_x$ will have been assigned a colour.  This processing order also implies that, when we begin processing a node $x$, none of the flat $\Delta$-edges in $H_x$ have been assigned colours.
-
-    When we process a node $x$ we partition the flat $\Delta$-edges of $H_x$ into groups $E_1,\ldots,E_k$ where all the edges in each $E_i$ have a common endpoint $v_i$ and no two edges in different groups have a common endpoint (see \figref{partition}).  The edges $v_iw_1,\ldots,v_iw_k$ in $E_i$ are then ordered so that the degree of $v_i$ in the graph $G_{v_iw_j}$ is not less than the degree of $v_i$ in the graph $G_{v_iw_{j+1}}$ for each $j\in\{1,\ldots,k-1\}$.  With this ordering we set $\varphi_1(e_i)=i$ for each $i\in\{1,\ldots,k\}$.  The justification for this particular ordering is that it implies that
-    \begin{equation}
-      \Delta\ge \deg_G(v_i)\ge \sum_{k=1}^j \deg_{G_{v_iw_k}}(v_i)\ge  j\cdot\deg_{G_{v_iw_j}}(v_i) \enspace ,
-      \label{harmonic_bounder}
-    \end{equation}
-    which will be used below to bound the number number of colours that appear in our product colouring.
-
-    Note, also that the colouring $\varphi_1$ has the property that, for any edge $vw$, $\varphi_1(vw) \le \max\{c, \deg_{H_{e}}(v), \deg_{H_e}(w)\}$.
-
-    Finally, we colour the vertical edges of $G$ whose upper endpoint is contained in $H_x$.  To do this, we consider each edge $vw$ of $H_x$.  Let $uu_1,\ldots,uu_s$ be the edges of $G_{uv}$, other than $uv$ incident to $u$. Each of these edges is a vertical edge and we colour them with the colours $\{1,\ldots,s\}$ using, for example, $\varphi_1(uu_i):=i$.  Similarly, we colour the vertical edges in $G_{uv}$ with upper endpoint $v$ using the colours $\{1,\ldots,\deg_{G_{uv}}(v)-1\}$.  This completes the description of the edge colouring $\varphi_1:E(G)\to\{1,\ldots,\Delta\}$.
-
-    We now define several additional edge colourings of $G$ whose product makes up our final edge colouring. First we need a definition.  For any edge $e$ of $G$ and any edge $e'$ of $G_e$, we call $e$ the \emph{projection} of $e'$ onto $H_{\x(e)}$.  Our product colouring has the following four parts:
-    \begin{compactenum}[$\varphi_1$:]
-        \item This is the colouring $\varphi_1:E(G)\to\{1,\ldots,\Delta\}$ defined above.
-        \item This is the colouring $\varphi_2:E(G)\to\{1,\ldots,\cbt(G)\}$ given by $\varphi_2(vw):=\min\{\depth(v),\depth(w)\}$.
-        \item This is the colouring $\varphi_3:E(G)\to\{1,2,3\}$ where $\varphi(e)$ is a value that indicates whether $e$ is a $c$-edge, a flat $\Delta$-edge, or a vertical edge.
-        \item This is a colouring $\varphi_3:E(G)\to\{-\Delta,\ldots,\Delta\}$ that is defined specifically to deal with certain vertical edges. For any non-vertical edge $vw$, $\varphi_4(vw)=\varphi_1(vw)$.
-        For each vertical edge $vw$ with $\depth(v)<\depth(w)$, let $vu$ be the projection of $vw$ onto $H_{\x(v)}$. Then we set  $\varphi_4(vw):=\sgn(u,v)\cdot\varphi_1(uv)$.
-    \end{compactenum}
-    The overall edge-colouring we use is then the product colouring in which each edge $e$ of $G$ is assigned the triple $\varphi(e):=(\varphi_1(e),\varphi_2(e),\varphi_3(e),\varphi_4(e))$.  On the surface, this looks like a colouring that uses $\Delta\cdot \cbt(G)\cdot 3(2\Delta+1)=\Theta(\pw(G)\cdot\Delta^2)$ colours.  We now argue that this $\Delta^2$ is an overestimate and that this colouring uses only $O(\pw(G)\cdot\Delta\log\Delta)$ colours.  In particular, the set $\{(\varphi_1(e),\varphi_4(e):e\in E(G)\}$ has size $O(\Delta c + \Delta\log\Delta)$.
-
-    \begin{compactenum}
-        \item If $\varphi_4(vw)=0$, then $(\varphi_1(vw),\varphi_4(vw))\in\{1,\ldots,\Delta\}\times\times\{0\}$, a set of size $\Delta$.
-
-        \item If $\varphi_4(vw)\neq 0$, then $vw$ is a vertical edge, $\varphi_1(vw)\neq 0$ and, without loss of generality $\depth(v)<\depth(w)$. Let $uv$ be the projection of $vw$ onto $H_{\x(v)}$.  Since $\varphi_4(vw)\neq 0$, $\deg_{H_{\x(v)}}(v)\neq 3$ and $|\varphi_4(vw)|=\varphi_1(uv)$.
-        \begin{compactenum}
-            \item If $uv$ is a $c$-edge, then $\varphi_1(uv)\in\{1,\ldots,c\}$, so $(\varphi_1(vw),\varphi_4(vw))\in\{1,\ldots,\Delta\}\times\{-1,1\}\times\{1,\ldots,c\}$, a set of size $2c\Delta$.
-            \item Otherwise, let $\ell:=\varphi_1(vw)$ and $j:=|\varphi_4(vw)|$. The fact that $\varphi_1(vw)=\ell$ implies that $\deg_{G_{uv}}(v)\ge\ell$.  Therefore, by \cref{harmonic_bounder}, $\Delta\ge \deg_G(v)\ge j\ell$.  The number of pairs $j,\ell\in\{1,\ldots,\Delta\}^2$ for which $j\ell\le\Delta$ is at most $\sum_{j=1}^{\Delta}\Delta/j=\Delta H_{\Delta}\le\Delta(1+\ln\Delta)$.
-        \end{compactenum}
-    \end{compactenum}
-    In all cases, $(\varphi_1(vw),\varphi_4(vw))$ takes on values in a set of size $O(\Delta\log\Delta)$.  Thus, $\varphi$ is an edge colouring of $G$ that uses $O(\pw(G)\cdot\Delta\log\Delta)$ colours.  All that remains is to show that $G$, with the colouring $\varphi$ does not have any repetitive paths.
-
-    Consider some path $P$ in $G$.  There exists some node $x\in V(T)$ of maximum depth such that $P$ is entirely contained in $G_x$.  Since $x$ has maximal depth, $P$ contains at least one vertex of $H_x$ and is not contained in $H_e$ for any $e\in E(H_x)$.
-
-    Partition $P$ into subpaths $P_0,\ldots,P_r$ by placing two edges of $P$ in the same subpath if they project onto the same edge of $H_x$.  Since $P$ is not contained in $G_e$ for any single edge $e\in H_x$, this partition has at least two parts, i.e., $r\ge 1$.  The partition $P_0,\ldots,P_r$ defines a path $P':=e_0,\ldots,e_r$ in $H_x$ in which, all edges in $P_i$ project onto $e_i$, for each $i\in\{0,\ldots,r\}$. (That each $P_i$ is a single path and that $P'$ is a path in $H_x$ follows from the fact that each edge $e_i$ is a cutset that separates $G_{e_i}-e_i$ from $H_x-e_i$.)
-
-    By \cref{spine_colouring}, the sequence $\varphi_1(e_0),\ldots,\varphi_1(e_r)$ is anagram-free.  We will now show that this implies that the sequence $\langle \varphi(e):e\in V(P)\rangle$ is not an anagram.  For simplicity, suppose that $P_{0}$ contains only one endpoint of $e_0$ and $P_r$ contains only one endpoint of $e_r$ (other cases are handled similarly).
-
-    For each $i\in\{1,\ldots,d-1\}$, the first edge $e_{i,0}$ and the last edge $e_{i,1}$ of $P_i$ have $\varphi_2(e_{i,0})=\varphi_2(e_{i,1})=\depth(x)$. (Note that the possibility that $e_{i,0}=e_{i,1}=e_i$ is also covered by this discussion.) Exactly one of these edges has $\varphi_4(e_{i,b})=\varphi_1(e_i)$.  The last edge $e_{0,1}$ of $P_{0}$ has $\varphi_2(e_{0,1})=\depth(x)$ and $\varphi_4(e_{0,1})=\varphi_1(e_0)$ or $\varphi_4(e_{0,1})\le 0$.  Similarly, the first edge $e_{r,0}$ of $P_r$ has $\varphi_2(e_{r,0})=\depth(x)$ and $\varphi_4(e_{r,0})=\varphi_1(e_r)$ or $\varphi_4(e_{r,0})\le 0$.
-
-    Therefore, if we consider the subsequence of edges $f_0,\ldots,f_s$ in $P$ consisting only of the edges $e$ for which $\varphi_2(e)=\depth(x)$ and $\varphi_4(e)>0$, then the colour sequence $\varphi_4(f_0),\ldots,\varphi_4(f_s)$ is a contiguous subsequence of $\varphi_1(e_0),\ldots,\varphi_1(e_r)$.  Since $\varphi_1(e_0),\ldots,\varphi_1(e_r)$ is anagram-free, the sequence $\varphi_4(f_0),\ldots,\varphi_4(f_s)$ is not an anagram.  If $r\ge 2$, then $s\ge 0$, and this implies that $\langle \varphi(e):e\in V(P)\rangle$ is not an anagram, so $P$ is not a repetitive path.
-
-    To finish the proof we need only handle the case $r=1$.  The upper endpoint $u$ of $e_{0,1}$ is also the upper endpoint of $u_{1,0}$.  Since $e_{0,1}$ and $e_{1,0}$ are the only edges of $P$ with $\varphi_2(e_{0,1})=\varphi_2(e_{1,0})=\depth(x)$, we only need to show that $\varphi_4(e_{0,1})\neq\varphi_4(e_{1,0})$.  If $\varphi_4(e_{0,1})\neq 0$ or $\varphi_4(e_{1,0})\neq 0$ then this follows from the fact that $\varphi_1$ is a proper edge-colouring of $H_x$ that uses colours $\{1,\ldots,\Delta\}$ (which implies that $|\varphi_4(e_{0,1})|\neq|\varphi_4(e_{1,0})|$.
-
-
-    The only other possibility is that $\varphi_4(e_{0,1})=\varphi_4(e_{1,0})=0$.  This implies is that $u$ is the dull endpoint of some edge $vu$ in $H_x$ and that $e_{0,1}$ and $e_{1,0}$ are both contained in $G_{vu}$. (Recall that $u$ is the dull endpoint of at most one edge in $H_x$.)  Since $P$ contains only $r=1$ vertices of $H_x$, this implies that the entire path $P$ is contained in $G_{vu}$.  The definition of hierarchical skeleton decomposition implies that $x$ has a child $x'$ such that $P$ is contained in $G_{x'}=G_{vu}$.  This is not possible, since $x$ is defined as the node of maximum depth such that $G_x$ contains $P$.
-\end{proof}
-
-
-\subsection{Serpentine Triangulations}
-
-Observe that all $n$-vertex serpentine triangulations of maximum degree $4$ are isomorphic.  For any integer $n\ge 3$, let $S_n$ denote the unique $n$-vertex serpentine triangulation of maximum degree 4.  The proof of the next lemma is the subject of the next section.
-
-\begin{lem}\label{serpentine_degree4}
-    There exists an integer $c$ such that, for every integer $n\ge 3$, $S_n$ has an edge $c$-colouring with no repetitive path.
-\end{lem}
-
-Every serpentine triangulation is an edge-maximal outerplanar graph and has a unique \emph{outerplanar embedding} in which all vertices lie on a single face that we call the \emph{outer face}.  If $H$ has $n\ge 4$ vertices then it has exactly two vertices $x$ and $y$ of degree $2$.  A \emph{spine} of $H$ is a shortest path from $x$ to $y$ that does not use any edges of the outer face except those incident to $x$ or $y$. A \emph{skeleton} $\hat{H}$ of $H$ is a spanning subgraph of $H$ that contains all edge in a spine of $H$ and all edges on the outer face of $H$.
-
-With \cref{serpentine_degree4}, we can prove the following lemma:
-
-\begin{lem}\label{spine_colouring}
-    There exists an integer $c$ such that for any integer $n\ge 4$, any $n$-vertex serpentine triangulation $H$ with has an edge colouring $\varphi:E(\hat{H})\to\{1,\ldots,2c\}$ of its spine such that every proper completion $\varphi:E(H)\setminus E(\hat{H})\to\{c+1,\ldots,c+k\}$ of $\varphi$ has no repetitive path.
-\end{lem}
-
-\begin{proof}
-    Let $v_0,\ldots,v_r$ be the spine of $H$. Observe that, for each $i\in\{2,\ldots,r-2\}$, $\hat{H}$ contains a path $P_i$ from $v_{i-1}$ to $v_{i+1}$ whose edges are all on the outer face of $H$ and whose internal vertices (if any) all have degree $2$ in $\hat{H}$.   Define the maximum-degree $4$ serpentine triangulation $\overline{H}$ as the graph with vertex set $V(\overline{H}):=\{v_0,\ldots,v_r\}$, that contains every edge of the spine of $H$ and that contains the edge $v_{i-1}v_{i+1}$ for each $i\in\{2,\ldots,r-2\}$.
-
-    By \cref{serpentine_degree4}, $\overline{H}$ has a edge $c$-colouring $\varphi$ with no repetitive path.  We define three edge colourings of $\hat{H}$:
-    \begin{compactenum}[$\varphi_1$:]
-        \item If $vw$ is an edge of $\overline{H}$, then $\varphi_1(vw):=\varphi(vw)$, otherwise $\varphi_1(vw):=\perp$.
-        \item For each $i\in\{1,\ldots,r-3\}$ and each path $P_i$, $\varphi_2$ is an edge $4$-colouring of $P_i$ with no repetitive path.  For any edge $vw$ that is not path of some path $P_i$, $\varphi_2(vw):=\perp$.
-        \item For each $i\in\{1,\ldots,r-3\}$ in which $P_i$ has length at least $2$, $\varphi_3$ colours the first edge $e_i$ of $P_i$ with $\varphi_3(e_i):=2\varphi(v_iv_{i+2})$ and colours the last edge $f_i$ of $P_i$ with $\varphi_3(f_i):=2\varphi(v_iv_{i+1})+1$.  All other edges are coloured with $\varphi_3(e):=\perp$.
-    \end{compactenum}
-    \todo[inline]{Now prove the product colouring has no repetitive path.}
-\end{proof}
-
-
-\section{Proof of \cref{serpentine_degree4}}
-
-\subsection{Annoyagram-Free Sequences}
+\begin{figure}
+    \begin{center}
+        \begin{tabularx}{\textwidth}{XXX}
+        % \multicolumn{2}{c}{$P$} \\
+        % \includegraphics{figs/pq-1} \newline
+        % \includegraphics{figs/pq-2} \newline
+        % \includegraphics{figs/pq-3} \newline
+        % \includegraphics{figs/pq-4} &
+        \includegraphics{figs/pq-8} \newline
+        \includegraphics{figs/pq-9} \newline
+        \includegraphics{figs/pq-10} \newline
+        \includegraphics{figs/pq-11} &
+        % \multicolumn{2}{c}{$Q$} \\
+        % \includegraphics{figs/pq-5} \newline
+        % \includegraphics{figs/pq-6} \newline
+        % \includegraphics{figs/pq-7} &
+        \includegraphics{figs/pq-12} \newline
+        \includegraphics{figs/pq-13} \newline
+        \includegraphics{figs/pq-14} &
+        \includegraphics{figs/r-8} \newline
+        \includegraphics{figs/r-9} \newline
+        \includegraphics{figs/r-10}
+        \end{tabularx}
+    \end{center}
+    \caption{The paths $P_1,\ldots,P_4$ and $Q_1,\ldots,Q_3$, and $R_1,\ldots,R_4$ in $S_n$.}
+    \label{good_paths}
+\end{figure}
 
 \begin{lem}
-    There exists an integer $m$ such that, for every $n\in\N$, there exists an annoyagram-free sequence of length $n$ over the alphbet $A:=\{0,\ldots,m\}$.
+    For each $n\ge 3$, the graph $S_n'$ contains four paths $P_1,\ldots,P_4$.  For each $(x,y)\in\{a_1,b_1\}\times\{a_n,b_n\}$ exactly one of these paths begins at $x$ and ends at $y$.  Each edge of $S_n'$ is used by exactly two of these paths.
 \end{lem}
-
-
-\section{Basic Definitions}
-
-An \emph{alphabet} $A$ is a finite set and we refer to its elements as \emph{symbols} or \emph{characters}.  Throughout this paper we will take $A:=\{0,\ldots,m\}$ for some positive integer $m$.  A \emph{string} $s:=s_1,\ldots,s_n$ over $A$ is a sequence, each of whose elements are contained in $A$.  The \emph{length} of $s$ is the length, $n$, of the sequence and $s$ is \emph{empty} if it has length zero.  The set of all strings over $A$ is denoted by $A^*$.
-
-A string $p=p_1,\ldots,p_a$ is a \emph{prefix} of a string $s=s_1,\ldots,s_b$ if $a\le b$ and $p_i=s_i$ for each $i\in\{1,\ldots,a\}$ and $p$ is a \emph{suffix} of $s$ if $p_i=s_{b-a+i}$ for each $i\in\{1,\ldots,a\}$. A  prefix or suffix $p$ of $s$ is \emph{proper} if $p\neq s$.
-
-For a string $s\in A^*$ and any $i\in A$, we let $h_i(s)$ is the number of occurrences of $i$ in the string $s$.  The \emph{histogram} of $s$ is the $(m+1)$-vector $\hist(s):=(\hist_0(s),\hist_1(s),\ldots,\hist_m(s))$.
-
-Two strings $s$ and $t$ are \emph{anagrams of each other} if $s$ is a permutation of $t$.  Equivalently, $s$ and $t$ are anagrams of each other if and only if $\hist(s)=\hist(t)$.  An even-length string $s:=s_1,\ldots,s_{2r}$ is an \emph{anagram}\todo{Use repetitive instead?} if the \emph{first half} $s_1,\ldots,s_r$ of $s$ and the \emph{second half} $s_{r+1},\ldots,s_{2r}$ of $s$ are anagrams of each other.
-
-\section{Anagrams and Annoyagrams}
-
-An \emph{annoyance} of a string $s:=s_1,\ldots,s_n$ is a string obtained by duplicating a prefix of $s$ of length at most $n/2$ and duplicating a suffix of $s$ of length at most $n/2$.  More precisely, for $b <a$, let $s_a,\ldots,s_b$ be defined as the empty string.  For any integers $i\in\{0,\ldots,\floor{n/2}\}$ and $j\in\{\floor{n/2}+1,\ldots,n+1\}$, the string
-\[
-    s_1,\ldots,s_{i}, s_1,\ldots,s_n,s_{j},\ldots,s_n
-\]
-is an annoyance of $s$. A string $s$ is an \emph{annoyagram} if is has an annoyance $s'$ that is an anagram.
-
-For example, the string $\colored{blue}{b}zaxbzcxb\colored{red}{acbxzb}$ is not an anagram (there are an odd number of occurences of $z$), but it is an annoyagram since the annoyance $\colored{blue}{bb}zaxbzcx\,b\colored{red}{acbxzb acbxzb}$ is an anagram.  Note that an anagram has even length, by definition, but an annoyagram can have any length greater than or equal to two. (For example, $aaa$ is an annoyagram.)
-
-A string is \emph{anagram-free} if none of its non-empty substrings is an anagram. A string is \emph{annoyagram-free} if none of its non-empty substrings is an annoyagram. The string $de\colored{blue}{b}zaxbzcxb\colored{red}{acbxzb}ed$ is anagram-free (this requires some effort to verify) but is not annoyagram-free since the substring $\colored{blue}{b}zaxbzcxb\colored{red}{acbxzb}$ is the annoyagram discussed in the preceding paragraph.
-
-\section{Long Annoyagram-Free Strings}
-
-We now construct a family of arbitrarily large annoyagram-free strings over a constant sized alphabet $A:=\{0,\ldots,m\}$.
-% The main tool we use similar to Pleasants' construction for anagram-free strings over a five character alphabet \cite{pleasants:non-repetitive}.
-Our strings are based on permutations $A\setminus\{m\}$ having certain properties.  We begin by defining these properties and later, when we define our strings, we will explain why these properties are important.
-
-\subsection{Tough Expanding Permutations}
-\label{permutations}
-
-Let $\mathcal{V}:=V_1,\ldots,V_k$ be a sequence of sets of binary $(m+1)$-vectors.  Let $F_d(\mathcal{V})$ be the set of all vectors that can be written as $\sum_{i=1}^k a_iv_i$, where
-\begin{compactenum}
-    \item $a_i$ is an integer, for each $i\in\{1,\ldots,k\}$;
-    \item $1\le |\{i\in\{1,\ldots,k\}:a_i\neq 0\}| \le d$; and
-    \item $v_i\in V_i$ for each $i\in\{1,\ldots,k\}$.
-\end{compactenum}
-We say that $\mathcal{V}$ is \emph{$(d,t)$-tough} if every vector $(v_0,\ldots,v_m)\in F_d(\mathcal{V})$ has $L_1$-norm $\sum_{j=0}^m |v_j| \ge t$.
-
-For a permutation $\pi:\{0,\ldots,m-1\}\to\{0,\ldots,m-1\}$ and each $i\in\{0,\ldots,m\}$, let $\pi_i:\{0,\ldots,m-1\}\to\{0,\ldots,m\}$ be defined by $\pi_i(x)=(\pi(x)+i)\bmod (m+1)$.  We treat each $\pi_i$ as a string of length $m$ over the alphabet $A:=\{0,\ldots,m\}$ given by $\pi_i(0),\ldots,\pi_i(m)$.
-
-For each $i\in\{0,\ldots,m\}$, let $S_{\pi,i}$ be the set of all suffixes $s$ of $\pi_i$ having length $m^{2/3}\log m \le |s|\le m-m^{2/3}\log m$.  For each $i\in\{0,\ldots,m\}$, let $P_{\pi,i}$ be the set of all prefixes $s$ of $\pi_i$ having length $m^{2/3}\log m \le |s|\le m-m^{2/3}\log m$.
-Let $\mathcal{V}_{\pi}:=X_0,\ldots,X_m,Y_0,\ldots,Y_m$ where, for each $i\in\{0,\ldots,m\}$,
-\[
-    X_i=\{(\hist(s) : s\in S_{\pi,i}\}\,, \quad
-    Y_i=\{(\hist(s) : s\in P_{\pi,i}\} \enspace .
-\]
-We say that the permutation $\pi$ is $(d,t)$-tough if $\mathcal{V}_{\pi}$ is $(d,t)$-tough.
-
-\begin{lem}\label{tough_permutations}
-    Let $m$ be a positive integer, let $d$ be an integer constant (independent of $m$), let $t\in o(m^{1/3})$,  and let $\pi:\{0,\ldots,m-1\}\to\{0,\ldots,m-1\}$ be a uniformly random permutation.  Then, $\Pr\left(\mbox{$\pi$ is not $(d,t)$-tough}\right)=m^{-\omega_m(1)}$.
-\end{lem}
-
-In order to avoid short anagrams, we require some additional properties of $\pi_0,\ldots,\pi_m$, which we now describe.  We say that a permutation $\pi$ of $\{0,\ldots,m-1\}$ is \emph{bad} if there exists distinct $i,j\in\{0,\ldots,m\}$ satisfying any of these conditions:
-\begin{compactenum}[(C1)]
-    \item $\{\pi_i(m-1),i\}=\{j,\pi_j(0)\}$;\label{two_two}\label{first}
-    \item $\{\pi_i(m-2),\pi_i(m-1),i\} = \{j,\pi_j(0),\pi_j(1)\}$;\label{three_three}
-
-    \item $\{\pi_i(m-1),i,j\}=\{\pi_j(0),\pi_j(1),j\}$;\label{two_three}
-    \item $\{\pi_i(m-2),\pi_i(m-1),i,j\}=\{\pi_j(0),\pi_j(1),j,\pi_j(2)\}$;\label{three_four}
-
-    \item $\{i,\pi_i(m-2),\pi_i(m-1)\}=\{i,\pi_j{0},\pi_j(1)\}$;
-    \item $\{\pi_i(m-3),i,\pi_i(m-2),\pi_i(m-1)\}=\{i,j,\pi_j(0),\pi_j(1)\}$.\label{last}
-\end{compactenum}
-If $\pi$ is not bad, then it is \emph{good}.
-
-\begin{lem}\label{bad_permutations}
-    For a uniformly random permutation $\pi:\{0,\ldots,m-1\}\to\{0,\ldots,m-1\}$, $\Pr(\mbox{$\pi$ is bad}) = O(1/m)$.
-\end{lem}
-
-By \cref{tough_permutations,bad_permutations} and the union bound, the probability that a randomly chosen permutation $\pi$ is bad or not $(d,t)$-tough is $O(1/m)+o_m(1) < 1$.  This immediately implies \cref{tough_expanding_permutations}.
-\begin{cor}\label{good_tough_permutations}
-    For any constant $d$, any sufficiently large $m$, and any $t\in o(m^{1/3})$, there exists a good $(d,t)$-tough permutation.
-\end{cor}
-
-\subsection{Large Annoyagram-Free Strings}
-
-
-\subsection{The Building Blocks $\Sigma_0,\ldots,\Sigma_m$}
-Let $\pi$ be a good $(7,20)$-tough permutation, which is guaranteed to exist by \cref{good_tough_permutations}.
-Define the string
-\[
-    \Sigma_{-1} := m,\pi(0)\pi(1),m,\pi(2),m,\ldots,m,\pi(m-2),\pi(m-1),m \enspace .
-\]
-In words $\Sigma_{-1}$ is obtained placing an $m$ before and after $\pi$ and in between every pair of consecutive elements except the first and last pairs $(\pi(0),\pi(1))$ and $(\pi(m-2),\pi(m))$.  $\Sigma_{-1}$ has length $2m-1$, contains $m-1$ occurrences of $m$ and exactly one occurrence of each $i\in\{0,\ldots,m-1\}$.
-
-For each $i\in\{0,\ldots,m\}$ define the string $\Sigma_i$ as the string obtained by replacing each occurrence of $x$ in $\Sigma_{-1}$ with $(x+i+1)\bmod (m+1)$, for each $x\in\{0,\ldots,m\}$.  In this way $\hist_i(\Sigma_i) = m-1$ and $\hist_j(\Sigma_i)=1$ for each $j\in A\setminus\{i\}$. It is helpful to think of $\Sigma_i$ as containing exactly one copy of the alphabet $A$ plus an additional $m-2$ copies of $i$.
-
-
-For a string $s\in A^*$ we let $s^\Sigma$ denote the string obtained by replacing each occurrence of $i$ in $s$ with $\Sigma_i$ for each $i\in\{0,\ldots,m\}$. We abuse notation slightly and let $\Sigma^*$ be the set of all strings that can be obtained this way.
 
 \begin{lem}
-    For any two strings $p,q\in A^*$ and any $i\in\{0,\ldots,m\}$, $m_i(p^\Sigma)-m_i(q^\Sigma) = (m-2)(m_i(p)-m_i(q)) + |p|-|q|$.
+    For each $n\ge 3$, the graph $S_n'$ contains three paths $Q_1,\ldots,Q_3$ that each begin at a vertex in $\{a_1,b_1\}$ and at a vertex in $\{a_3,b_3\}$.  Each edge in $S_n'$ is used in exactly one of these paths.
 \end{lem}
 
-\begin{proof}
-    The symbols in $\Sigma_i$ can be partitioned into $m-2$ occurences of $i$ and one copy of the entire alphabet $A$, including one copy of $i$.  Thus $m_i(p^\Sigma)=(m-2)m_i(p)+|p|$ and $m_i(q^\Sigma)=(m-2)m_i(q)+|q|$.
-\end{proof}
+
+In addition to the path sets described above, we need a simple gadget with three paths $a_1\rightsquigarrow a_3$, $a_1\rightsquigarrow b_3$ and $b_1\rightsquigarrow a_1$ without interfering with larger adjacent pieces.
 
 
 \begin{lem}
-    Let $s:=s_1,\ldots,s_n$ be a string in $A^*$ that is not an anagram.
+    The graph $S_3'$ contains three paths $R_1,\ldots,R_3$. For each $(x,y)\in\{(a_1,a_3),(a_1,b_3),(b_1,a_1)\}$ exactly one of these paths begins at $x$ and ends at $y$ and this path includes exactly one of $\{a_1,b_1\}$ and exactly one of $\{a_3,b_3\}$.
 \end{lem}
 
+Observe that, for $n=2t+1$, $S_n$ can be constructed by gluing together $t$ copies of $S_3$ where the vertices $a_3$ and $b_3$ in each copy are identified with the vertices $a_1$ and $b_1$ in the next copy.  In our proof we will not use the edges $a_{2x+1}b_{2x+1}$ for any $x\in\{0,\ldots,t\}$  (which is why these edges are lighter in \cref{s_n}).  Thus, the graph we are really interested in is the graph obtained by gluing together $t$ copies of $S_3'$.  We now proceed with the proof of \cref{edge_colouring}.
 
-A \emph{$\Sigma$-rounding} operation on a string $s$ is the process of finding a maximal substring $x$ in $s$ that is a proper prefix or suffix of $\Sigma_i$, for some $i\in\{0,\ldots,m\}$ and either
-\begin{inparaenum}[(i)]
-    \item deleting $x$ if $|x|<m^{2/3}$; or
-    \item replacig $x$ with $\Sigma_i$ if $|x|>m-m^{2/3}$.
-\end{inparaenum}
-Note that $\Sigma$ rounding exhaustively does not produce a string in $\Sigma^*$ since $s$ may contain some \emph{intermediate length} substrings that are neither deleted nor replaced with an element of $\Sigma_i$. The following observation says that a few rounds of $\Sigma$-rounding does not have much effect on $\hist(s)$.
-\begin{obs}
-    If $s'$ is obtained from $s$ by a sequence of $r$ $\Sigma$-rounding operations, then $|m_i(s')-m_i(s)|\in O(r m^{2/3})$ for each $i\in\{0,\ldots,m\}$.
-\end{obs}
+\begin{proof}[Proof of \cref{edge_colouring}]
+  Consider the graph $S_N$ for a very large value $N:=2t+1$ to be discussed shortly.  As discussed above, this graph is obtained by from $t$ copies of $S_3$ and we will only make use of the edges in $S_3'$.  The graph $S_3'$ has $7$ edges and therefore has a set $X$ of $c^7$ possible edge $c$-colourings.
+  For $X'\subseteq X$, we say that an edge colouring of $S_N$ is $X'$-restricted each of the $t$ copies of $S_3$ uses a colouring in $X'$.
+
+  Suppose, for the sake of contradiction, that $S_N$ has anagram-free edge-colouring that uses $c$ colours, for every $N\in\N$.  Take a minimal subset $X'\subseteq X$ such that $S_N$ has an $X'$-restricted anagram-free $c$-edge colouring for every $N\in\N$.  This implies that there exists an integer $\ell:=\ell(X')$ such that, for every $N\in\N$, every $i\in\{0,\ldots,t-\ell\}$, every $X'$-restricted anagram-free edge $c$-colouring of $S_N$ and every $\rho\in X$, the subgraph of $S_N$ induced by $\{a_{2i+1},\ldots,a_{2(i+\ell)+1}\}\cup \{b_{2i+1},\ldots,b_{2(i+\ell)+1}\}\}$ contains a copy of $S_3'$ coloured using $\rho$.
 
 
-% We say that a string $p\in A^*$ is \emph{near-$\Sigma^*$} if $s$ can be partitioned into substrings, each of which is a substring of some string in $\{\Sigma_0,\ldots,\Sigma_m$,
-% \begin{compactenum}
-%     \item at least $k-6$ of which are \emph{full blocks} of length exactly $2m-3$;
-%     \item at most $6$ of which are \emph{near-full blocks} of length at least $m-m^{2/3}$.
-%     \item at most $6$ of which are \emph{near-empty blocks} of length at most $m^{2/3}$;
-% \end{compactenum}
-% For a near-$\Sigma^*$ string $p$, the $\Sigma^*$
-%
-%
-% $y_1,\ldots,y_\alpha$, $z_1,\ldots,z_\beta$ each of which is a substring of some string in $\{0, such that
-% \begin{compactenum}[(i)]
-%     \item for each $j\in\{1,\ldots,k\}$, $x_j=\Sigma_{i}$ for some $i\in\{0,\ldots,m\}$;
-%     \item for each $j\in\{1,ldots,\alpha\}$, $|y_j|\le m^{2/3}$; and
-%     \item for each $j\in\{1,\ldots,\beta\}$, $|z_j|\ge m-m^{2/3}$ and $z_j$ is a substring    =\Sigma_{i}$ for some $i\in\{0,\ldots,m\}$;
-%
-% A string $p\in A^*$ is $\Sigma^*$-near if $p$ can be converted into a string $p'\in\Sigma^*$ at most six applications of one of the following two operations:
-% \begin{compactenum}
-%     \item Remove a substring of length at most $
-%
-%
-%  of a string $s$ is one of the following operations:
-% \begin{inparaenum}[(i)]
-%     \item removing a substring of length at most $m^{2/3}$ from $p$; or
-%     \item
-% We say that a string $p'$ is a $t$-$\Sigma$-rounding of a string $p$ if $p'$ can be obtained from
-%
-%
-% \begin{lem}
-%     Let $p$ and $q$ be two strings such that $p$ can be partitioned substrings $p_1,\ldots,p_k$, $p_1',\ldots,p_6'$ where each $p_i$ is in $\Sigma_{0},\ldots,\Sigma_m$ and each $p_i'$ has length at most
-% \end{lem}
-%
-%
-% \begin{lem}
-%     Let $A$ and $B$ be two multisets whose elements are all prefixes or suffixes of $\Sigma_{0},\ldots,\Sigma_m$
-% \end{lem}
-%
-%
-%
-%
-%
+  Fix some $X'$-restricted anagram-free edge $c$-colouring $\varphi$ of $S_N$.
+  Now select any $\rho\in X'$ and use each occurrence of the colouring $\rho$ to break $S_N$ into blocks, each of length at most $\ell$ with each pair of consecutive blocks separated by a copy of $S_3'$ coloured using the colouring $\rho$.  Now, each block is a copy of $S_k$ for some $k\in\{3,\ldots,\ell-1\}$.  The graph $S_k'$ has $4k-5$ edges and therefore has at most $c^{4k-5}$ possible edge $c$-colourings.  Thus, there are at most $\sum_{k=3}^{\ell-1} c^{4k-5} < c^{4\ell-5}$ types of blocks.\todo{constants.}
 
+  These blocks define a string $s_0,\ldots,s_m$ over an alphabet $A$ of size $C\le c^{4\ell-4}$.  Let $r_0:=10^{100}$ and $\epsilon=1/1000000c^{4\ell-4}\ell$. Note that $\epsilon$ and $r_0$ depends only on $\ell$, which depends only on $X'$, which depends only $c$.  None of these values depends on $N:=2t+1$.  Therefore, by \cref{near_anagram_fourier}, we can choose $t$ sufficiently large to obtain a substring $p:=p_1,\ldots,p_{2r}$ of $s_0,\ldots,s_m$ whose length is $2r>2r_0$ and such that $\|\hist(p_1,\ldots,p_{r})-\hist(p_{r+1},\ldots,p_{2r})\|_1\le \epsilon r$.
 
-\subsection{Properties of the Blocks}
+  The substring $p_1,\ldots,p_{2r}$ corresponds to a sequence of $2r$ blocks in the original graph $S_n$. For each $x\in X'$, let $\delta_x:=\hist_x(p_1,\ldots,p_r)-\hist_x(p_{r+1},\ldots,p_{2r})$.  By \cref{near_anagram_fourier}, $|\delta_x|\le \epsilon r$.
 
-Observe that if we remove all occurrences of $i$ from $\Sigma_i$ then we obtain the string $\pi_i$ considered in \cref{permutations}.  Since $\pi$ is a good permutation, it satisfies all \condref{first}--\condref{last}.
-
-The strings $\Sigma_0,\ldots,\Sigma_m$ will be used as building blocks to build longer strings.  The following lemma says that we can concatenate any pair $\Sigma_i$ and $\Sigma_j$, $j\neq i$ and get an anagram-free string.
-
-\begin{lem}\label{pairs_anagram}
-    For any distinct $i,j\in\{0,\ldots,m\}$, the string $\Sigma_i,\Sigma_j$ is anagram-free.
-\end{lem}
-
-\begin{proof}
-    First we verify that $\Sigma_i$ is anagram-free. Any pair of consecutive symbols in $\Sigma_i$ are different, so  $\Sigma_i$ has no length-$2$ anagrams. For $r\ge 2$ any substring $s_1,\ldots,s_{2r}$ of $\Sigma_i$, has $s_b\neq i$ for some $b\in\{1,2\}$.  The symbol $s_b$ appears only once in $\Sigma_i$.  Therefore $s_b$ appears in $s_1,\ldots,s_r$ but not in $s_{r+1},\ldots,s_{2r}$, so $s_1,\ldots,s_{2r}$ is not an anagram. Therefore $\Sigma_i$ is anagram-free and the same argument shows that $\Sigma_j$ is anagram-free.
-
-    Now let $s:=s_1,\ldots,s_{2r}$ be a substring of $\Sigma_i\Sigma_j$.  Since we have already established that each of $\Sigma_i$ and $\Sigma_j$ is anagram-free, we may assume that $s$ consists of a $t$-suffix of $\Sigma_i$ followed by a $(2r-t)$-prefix of $\Sigma_j$ for some $t\in\{1,\ldots,2r-1\}$.
-
-    By symmetry, we may assume that $t\le r$, so that the second half $s_{r+1},\ldots,s_{2r}$ of $s$ is entirely contained in $\Sigma_j$.    Since $\Sigma_j$ contains exactly one occurrence of $i$, $s_{r+1},\ldots,s_{2r}$ contains at most one occurrence of $i$.  Therefore, if $s_1,\ldots,s_r$ contains two or more occurrences of $i$ then $s$ is not an anagram.  This immediately i=mplies that we need only consider $t\in\{1,2,3\}$.
-
-    The character $\pi_{j}(0)$ appears only once in $\Sigma_j$.  If $r-t\ge 2$, then $s_1,\ldots,s_r$ contains $s_{t+2}=\pi_j(0)$ so $s$ is not an anagram since $s_{t+2}$ appears in $s_1,\ldots,s_r$ but not in $s_{r+1},\ldots,s_{2r}$.  This leaves only the following cases corresponding to $(t,r-t)\in\{1,2,3\}\times\{0,1\}$:
-
-    \begin{compactitem}
-        \item $t=1$, $r=1$.  In this case $s=ij$ and is not anagram since $i\neq j$.
-        \item $t=1$, $r=2$. In this case $s$ is an anagram if and only if $\{i,j\}=\{\pi_j(0),\pi_j(1)\}$, which is not possible since $j\not\in\{\pi_j(0),\pi_j(1)\}$.
-        \item $t=2$, $r=2$.  In this case, $s$ is an anagram if and only if $\{\pi_{i}(m-1),i\}=\{j,\pi_j(0)\}$, which is ruled out by \condref{two_two}.
-        \item $t=2$, $r=3$. In this case, $s$ is an anagram if and only if $\{\pi_i(m-1),i,j\} = \{\pi_j(0),\pi_j(1),j\}$, which is ruled out by \condref{two_three}.
-        \item $t=3$, $r=3$. In this case, $s$ is an anagram if and only if $\{\pi_i(m-2),\pi_i(m-1),i\}=\{j,\pi_j(0),\pi_j(1)\}$, which is ruled out by \condref{three_three}.
-        \item $t=3$, $r=4$. In this case, $s$ is an anagram if and only if $\{\pi_i(n-2),\pi_i(n-1),i,j\}=\{\pi_j(0),\pi_j(1),j,\pi_j(2)\}$, which is ruled out by \condref{three_four}. \qedhere
-    \end{compactitem}
+  To deal with the fact that $\delta_x>0$ we need $6\delta_x$ copies of $x$ in $p_1,\ldots,p_r$ and $4\delta_x$ copies of $x$ in $p_{r+1},\ldots,p_{2r}$.  By using paths $Q_1,\ldots,Q_3$ ($2\delta_x$ times each) in the first half and using $P_1,\ldots,P_r$ ($\delta_x$ times each) in the second half we are able to cancel everything.\todo{Explain how we can use $4$ versus $3$ to fix parity also.}  This is not a problem because each of these contains at least $r/\ell$ copies of $x$.  Doing this for each $x\in X'$ gives rise to a demand for a total of at most
+  \[
+    \sum_{x\in |X'|} 4|\delta_x| \le \sum_{x\in |X'|} 4\epsilon r = 4|X'|\epsilon r\le 4c^7\epsilon r
+  \]
+  elements from each half.
+  \todo[inline]{Explain that we use an independent set of blocks and how we (easily) get it.}
+  \todo[inline]{Explain that every block we don't use just uses the straight path $a_1,\ldots,a_r$ across the top.}
+  \todo[inline]{Explain that, for each of the three types of connector blocks, that type of block is used the same number of times in the first half and in the second half, so these connectors cancel each other out.}
 \end{proof}
 
-The next lemma says that we can concatenate any pair $\Sigma_i$ and $\Sigma_j$, $j\neq i$ and get an annoyagram-free string.
+\section{Vertex Colouring}
+\label{vertex_colouring}
 
-\begin{lem}\label{pairs_annoyagram}
-    For any distinct $i,j\in\{0,\ldots,m\}$, the string $\Sigma_i,\Sigma_j$ is annoyagram-free.
-\end{lem}
+\todo[inline]{Come up with a similar argument to show that anagram-free vertex colouring of $S_n$ with a constant number of colours is not possible.}
 
-\begin{proof}
-    TODO.  Again, one need only consider annoyances of some string $s$ that contains at most a $3$-suffix of $\Sigma_i$ or a $3$-suffix of $\Sigma_j$.
+\todo[inline]{See if we could even do the graph $2\times n$ grid that Wilson conjectures can't be anagram-free coloured with a constant number of colours.}
+
+\section{Proof of \cref{near_anagram_fourier}}
+\label{near_anagram_section}
+
+\todo[inline]{This proof is taken from a draft of an older paper that was proving a lower bound for anagram-free vertex colouring.  Eventually, we found a simpler argument, so we never used this proof.  Right now, it proves the existence of a $2$-balanced substring but the same technique should work to give an $\epsilon$-balanced substring.  I also think this lemma (and probably a better quantitative version) has a proof using Fourier approximation, but I don't know enough about Fourier approximation.}
+
+
+\begin{proof}[Proof of \cref{near_anagram_fourier}]
+  Call a string a \emph{$c$-string} if it is over an alphabet of size $c$
+  and call a string \emph{good} if it contains no balanced substring.
+  For each $c\in\N$, let $h_c$ denote the minimum integer for which
+  there is no good $c$-string of length $2^{h_c}$.  Thus, our goal is
+  to show that $h_c$ is finite for each $c\in\N$.
+  Suppose this is not true so that there exists some minimum value
+  $c$ for which $h_c$ is infinite.  Choosing the minimum such value of
+  $c$ ensures that $h_{c-1}$ is finite and that any good (sub)string of
+  length at least $r:=2^{h_{c-1}}$ uses an alphabet of size at least $c$.
+
+  Let $s$ be a good string over the alphabet $\Sigma=\{1,\ldots,c\}$ and having
+  length $r2^{h}$, for some value $h$ to specified shortly.   Consider
+  the complete binary tree $T$ of height $h$ whose leaves, in order,
+  are the length-1 substrings of $s$ and for which each internal node is
+  the substring obtained by concatenating the node's left and right child.
+  See \cref{binary_tree}.
+
+  \begin{figure}
+    \begin{center}
+       \includegraphics[width=\textwidth]{figs/binary-tree-1}
+    \end{center}
+    \caption{Building a binary tree $T$ over the string $s$.}
+    \label{binary_tree}
+  \end{figure}
+
+  For each node $v$ of $T$, let $h(v)$ denote the height of $v$'s subtree
+  and $s(v)=2^{h(v)}$ denote the length of the string $v$. For each
+  $i\in\Sigma$, let $w_i(v):=n_i(v)/s(v)$.  Note that $0\le w_i(v)\le
+  1/2$ and that $\sum_{i\in\Sigma} w_i(v)=1$.  Furthermore, if $v$
+  has two children $x$ and $y$, then $w_i(v) = (w_i(x)+w_i(y))/2$.
+  The assumption that $s$ has no balanced substring implies $v$ is
+  $i$-unbalanced, for some $i{t}\in\Sigma$.  Assign each internal node
+  $v$ of $T$ the \emph{label} $\ell(v):=\min\{i\in\Sigma: \mbox{$v$
+  is $i$-unbalanced}\}$.
+
+  \begin{figure}
+    \begin{center}
+       \includegraphics[width=\textwidth]{figs/binary-tree-3}
+    \end{center}
+    \caption{The tree $T$ with the vector $(w_1(v),\ldots,w_5(v))$ for each
+     internal node $v$.  The unbalanced index that defines $\ell(v)$ is highlited for each node.}
+    \label{binary_tree_2}
+  \end{figure}
+
+  For each $i\in\Sigma$, let $S_i=\{v\in V(T): \ell(v)=i\}$ and observe that
+  \[
+      \sum_{v\in V(T)}s(v)=\sum_{i\in\Sigma} \sum_{v\in S_i} s(v) = (h+\log_2 r)r2^{h}
+  \]
+  and therefore, there exists some $i^*\in\Sigma$ such that $\sum_{v\in
+  S_{i^*}}s(v)\ge (h+\log_2 r)r2^h/c$.  Let $X=S_{i^*}$ and $w=w_{i^*}$.
+  From this point on the pro{t}of makes no further reference to the original
+  string $s$.  It is helpful to think of $T$ as having being ordered
+  so that, for each internal node $v$ with left and right children $x$
+  and $y$, respectively, $w(x)\ge w(y)$.  From this point on we use
+  the shorthands (for any $R\subseteq V(T)$) $s(R):=\sum_{v\in R}s(v)$
+  and $w(R):=\sum_{v\in R}s(v)w(v)/s(R)$.
+
+  Summarizing, we have a complete binary tree $T$ of height $h+\log_2 r$ and
+  a subset $X\subseteq V(T)$ with the following properties:
+  \begin{enumerate}
+    \item For each $v\in V(T)$, $w(v) \le 1/2$.
+    \item For each $v\in V(T)$ with $s(v) \ge r$, $w(v)\ge 1/r$.
+    \item For each internal node $v\in V(T)$ with children $x$ and $y$,
+       $w(v) = (w(x)+w(y))/2$.
+    \item $w(X) \ge (h+\log_2 r)r2^{h}/c$.
+     \item For each internal node $v\in V(T)\cap X$ with children $x$ and $y$,
+       $w(x) > 2w(y)$.\todo{Replace with $w(x)>w(y)+\epsilon/c$}
+  \end{enumerate}
+  Now, for each $i\in\{1,\ldots,h\}$, let $X_i\subset X$ denote the
+  set of nodes $v\in X$ for which the path from the root of $T$ to $v$
+  contains exactly $i$ nodes in $X$ (including $v$).  Observe that
+  \[  r2^h \ge s(X_1) \ge s(X_2) \ge \cdots\ge s(X_{h+\log_2 r}) \enspace . \]
+
+  We will show that, there exists a constant $t$ such that,
+  for each $i\in\{1,\ldots,h-t\}$,
+  \begin{equation}
+     s(X_{i+t}) \le (1-(1/2)^{t+1}) s(X_i) \enspace . \label{t}
+  \end{equation}
+  In this way,
+  \begin{align*}
+     (h+\log_2 r)r2^{h}/c
+        \le s(X) & = \sum_{i=1}^{h+\log_2 r} s(X_i) \\
+           &\le (\log_2 r)r2^{h}+\sum_{i=1}^{h} s(X_i) \\
+           &\le (\log_2 r)r2^{h}+\sum_{i=1}^{h} s(X_{\floor{i/t}+1}) \\
+           &\le (\log_2 r)r2^{h}+t\sum_{i=0}^{\floor{h/t}} s(X_{it+1}) \\
+           &\le (\log_2 r)r2^{h}+t\sum_{i=0}^{\infty} (1-(1/2)^{t+1})^i s(X_1) \\
+           &\le (\log_2 r)r2^{h}+tr2^{h}\sum_{i=0}^{\infty} (1-(1/2)^{t+1})^i  \\
+           & = (\log_2 r+t2^{t+1})r2^{h}
+  \end{align*}
+  which is a contradiction for sufficiently large $h$; in particular, for
+  \[
+        h \ge (c-1)\log_2 r+ ct2^{t+1} \enspace .
+  \]
+
+  It remains to establish \cref{t}, which we do now.  For each node
+  $v\in X$, let $R(v)$ denote the unique child of $v$ such that $w(R(v))
+  < 2w(v)/3$, i.e., the right child of $v$. (The existence of $R(v)$ follows from Properties~3 and
+  5, above).  For a subset $A\subset X$, let $R(A)=\{R(x):x\in A\}$.
+  Define $A_0\subseteq X_i$ and, for each $j\ge 1$, define $A_j$
+  to be the subset of $X_{i+j}$ that are descendants of some node in
+  $R(A_{i-1})$.  See \cref{bigtree}. Observe that $s(A_i) \le s(R(A_{i-1})) = s(A_{i-1})/2$,
+  so
+   \begin{align*}
+      s(X_{i+t})
+         &\le (1/2)s(A_0) + (1/2)s(A_1) + \cdots + (1/2)s(A_{t-1}) + s(A_t) \\
+         &\le (1/2)s(A_0) + (1/4)s(A_0) + \cdots + (1/2)^t s(A_{0}) + s(A_t) \\
+         &  = (1-(1/2)^t)s(A_0) + s(A_t) \enspace .
+   \end{align*}
+  So all that remains to establish \eqref{t} is to prove that
+  $s(A_t)\le (1/2)^{t+1}s(A_0)$.
+
+  \begin{figure}
+    \begin{center}
+       \includegraphics[width=\textwidth]{figs/bigtree}
+    \end{center}
+    \caption{The partitioning of $X$ into $X_1,X_2,\ldots,X_h$. Shaded
+    nodes are in $X$ and all nodes in $X_i$ are shaded with the same
+    colour.   Starting with $A_0=X_1$, the elements of $A_0,\ldots,A_h$
+    are highlighted.  The elements of $R(A_0),\ldots,R(A_h)$ are also highlighted.}
+    \label{bigtree}
+  \end{figure}
+
+  Now, the key inequality is{t}
+  \begin{equation}
+      w(A_i) \le w(R(A_{i-1}))\cdot\frac{s(R(A_{i-1}))}{s(A_i)}
+  \end{equation}
+  which implies
+  \begin{equation}
+       w(A_i) \le (2/3)w(A_{i-1})\cdot\frac{s(A_{i-1})}{2s(A_i)}
+             = (1/3)w(A_{i-1})\cdot\frac{s(A_{i-1})}{s(A_i)}
+             \label{strings}
+  \end{equation}
+
+  Beginning at $A_0$ and repeatedly applying \cref{strings}, we obtain:
+  \[
+      w(A_t) \le (1/3)^t w(A_0)\cdot\frac{s(A_0)}{s(A_t)}
+             \le (1/2)(1/3)^t \cdot\frac{s(A_0)}{s(A_t)} \enspace .
+  \]
+  On the other hand, $w(A_t)\ge 1/r$, so
+  \[
+      1/r \le (1/2)(1/3)^t\cdot\frac{s(A_0)}{s(A_t)} \enspace .
+  \]
+  and rearranging terms yields
+  \[
+     s(A_t) \le (1/2)(1/3)^t r s(A_0) \le (1/2)^{t+1}s(A_0)
+  \]
+  for $t = \ceil{\log_{3/2} r}$.
 \end{proof}
-
-The proofs of \cref{pairs_anagram,pairs_annoyagram} are the only places in which we use the fact that $\pi$ is a good permutation.  Indeed, properties \condref{first}--\condref{last} are required only to establish that, for substrings $s$ of length at most $2m$, no annoyance of $s$ is an anagram.
-
-\subsection{Boosting Anagram-Free Strings}
-
-The next lemma shows that we can blow up any anagram-free string $S$ to obtain obtain a new anagram-free string $T$ that is $2m-1$ times longer than $S$.
-
-\begin{lem}\label{blow_up_af}
-    Let $S$ be an anagram-free string over the alphabet $A:=\{0,\ldots,m\}$ and let $T$ be the string obtained by replacing each occurrence of $i$ in $S$ with $\Sigma_i$, for each $i\in A$.  Then $T$ is anagram-free.
-\end{lem}
-
-\begin{proof}
-    Assume, for the sake of contradiction that $s:=s_1,\ldots,s_{2r}$ is an anagram that is a substring of $T$. If $r \le m$, then $s$ is contained in $\Sigma_i\Sigma_j$ for some distinct pair $i,j\in\{0,\ldots,m\}$ so, by \cref{pairs_anagram}, $s$ is not an anagram.  Therefore, we need only consider the case $r> m$.
-
-    The string $s$ begins with a (possibly empty) suffix $p$ of some block $\Sigma_i$, followed by one or more complete blocks, and ends with a (possibly empty) prefix $q$ of some block $\Sigma_j$.
-
-
-    By definition, there exists $a\ge 1$ and a substring $i_0,\ldots,i_a$ of $S$ such that $s$ consists of
-    \begin{inparaenum}[(i)]
-        \item a proper (possibly empty) suffix $p$ of $\Sigma_{i_0}$ followed by
-        \item the concatenation of $B_1,\ldots,B_{a-1}$ followed by
-        \item a proper (possibly empty) prefix $q$ of $\Sigma_{i_a}$.
-    \end{inparaenum}
-    We call each of substring $B_{i_j}$ a \emph{block}.  We say that the blocks are $B_1,\ldots,B_{a-1}$ are \emph{complete blocks} and the blocks $B_0$ and $B_a$ are \emph{partial blocks}.
-
-
-
-
-
-    Consider the \emph{rounding} $\mathring{s}$ of $s$ obtained as follows:
-    \begin{compactenum}
-        \item If $|p|<2m^{2/3}$ then remove it.
-        \item If $|p|>2(m-m^{2/3})$ the replace it with $B_0$.
-        \item If $|q|<2m^{2/3}$ the remove it.
-        \item If $|q|>2(m-m^{2/3})$ the replace it with $B_a$.
-    \end{compactenum}
-
-
-        \item Remove the prefix $p$ and, if $|p|>2(m-m^{2/3})$, replace it with $B_0$.
-        \item Remvoe the suffix $q$ and, if $|q|>2(m-m^{2/3})$, replace it with $B_a$.
-
-
-    % \paragraph{A Weird Try}
-    % Let $s'$ be the substring of $T$ obtained from the concatenation of each block $B_i$ that contributes at least $m-m^{2/3}$ symbols to $s_1,\ldots,s_{r}$ and let $s''$ be the the substring of $T$ obtained from the concatenation of each block $B_i$ that contributes at least $m-m^{2/3}$ symbols to $s_{r+1},\ldots,s_{2r}$.  There are at most three blocks in $B_0,\ldots,B_a$ that are not included in either of these.
-    % Now, consider the vector $(v_0,\ldots,v_m):=\hist(s')-\hist(s'')$.  Each entry $v_i$ is of the form $a_i(m-2)+b$ where $a$ is an integer and $-2\le b\le 2$ depends only on the number of blocks included in $s'$ and $s''$.
-    %
-    % are integer multiples of $m-2$ and
-
-    \paragraph{The Degenerate Case.}
-    We first dispense with the ``degenerate'' case in which $s_1,\ldots,s_r$ contains all but a
-
-    every complete block entirely is contained either in the first half or the second half of $s$.  More specifically, this occurs when $a$ is odd and $s_1,\ldots,s_r=p,B_1,\ldots,B_{(a-1)/2}$ so $s_{r+1},\ldots,s_{2r}=B_{(a+1)/2},\ldots,B_{a-1},q$.  Note that this implies that $|p|=|q|$.
-
-    Since $S$ is anagram-free, $i_1,\ldots,i_{a-1}$ is not an anagram.  Therefore $h:=\hist(B_1,\ldots,B_{(a-1)/2})-\hist(B_{(a+1)/2},\ldots,B_{a-1})$ is a $(m+1)$-vector whose entries are integer multiples of $m-2$ and at least two of these entries are non-zero. At least one entry is positive and at least one entry is negative.  Since $s$ is an anagram, we must have
-    \[
-        \hist(p) + \hist(B_1,\ldots,B_{(a-1)/2})-\hist(B_{(a+1)/2},\ldots,B_{a-1}) - \hist(q) = 0 \enspace .
-    \]
-    Therefore, each of $\hist(p)$ and $\hist(q)$ must have at least one entry greater than or equal to $m-2$.  But this is a contradiction since $p$ is a \emph{proper} suffix of $B_0$ and $q$ is a \emph{proper} prefix of $B_a$.
-
-    \paragraph{The Generic Case}
-    If the degenerate case does not occur, then there exists a block $B_t$, called the \emph{middle block} that contains a non-empty suffix $p'$ of $s_1,\ldots,s_r$ and a non-empty prefix $q'$ of $s_{r+1},\ldots,s_{2r}$.  Since $|s| > 2m$,  $t> 0$ and $t<a$, so $B_t$ is a complete block.
-
-    Since $s$ is an anagram,
-    \[  \hist(p) + \hist(B_1,\ldots,B_{t-1})+\hist(p')
-        - \hist(q') - \hist(B_{t+1},\ldots,B_{a-1}) = \hist(q) = 0
-    \]
-    Now, $\hist(p)\in Y_{i_0}$, $\hist(p')\in X_{i_t}$, $\hist(q')\in Y_{i_t}$ and $\hist(q)\in X_{i_a}$.  Therefore, by the definition of a $(t,d)$-tough permutation, the vector $\tilde{v}:=\hist(p)+\hist(p')-\hist(q')-\hist(q)$ has at least $t-3$ non-zero entries each in the interval $[-2,3]$.  On the other hand, the vector $v:=(v_0,\ldots,v_m):=\hist(B_1,\ldots,B_{t-1}) - \hist(B_{t+1},\ldots,B_{a-1})$ has entries of the form $v_i=a_i(m-2)+b$ where $b:=t-1-(a-t)\in[-1,1]$.  Therefore, the vector $v+\tilde{v}$ has non-zero entries except, possibly,
-
-
-
-
-
-
-    If $\hist(B_1,\ldots,B_{t-1})+\hist(p') = \hist(B_{t+1},\ldots,B_{a-1})$ then $i_0\neq i_t$ and $i_a\neq i_t$ since, otherwise $i_0,\ldots,i_{a-1}$ is an anagram or $i_1,\ldots,i_a$ is an anagram.  Therefore $\hist_{i_t}(p),\hist_{i_t}(q)\in \{0,1\}$. Since $\hist_{i_t}(p')+\hist_{i_t}(q')=m-1$, it must therefore be the case that
-    $\hist_{i_t}(p')-\hist_{i_t}(q')\in\{-1,0,1\}$.  Therefore $m-O(1)\le |p'|,|q'| \le m+O(1)$.
-
-
-    If $|p'|<blah$
-
-
-
-
-    Now we consider a maximum matching $M$ in the bipartite graph $(L,R,E)$ where $L:=\{1,\ldots,t-1\}$, $R:=\{t+1,\ldots,a-1\}$ and that contains the edge $xy$ if and only if $i_x=i_y$.  Note that, unlike the degenerate case, $L$ and $R$ may differ in size (by at most one).  Let $k$ and $\ell$ denote the number of unmatched blocks in $B_1,\ldots,B_{t-1}$ and $B_{t+1},\ldots,B_{a-1}$, respectively.  Since $|p|\ge |q|$, $k\ge\ell$.  We distinguish between the following cases:
-
-    \begin{enumerate}
-        \item $k=\ell=0$: In this case $i_1,\ldots,i_{t-1},i_{t+1},\ldots,i_{a-1}$ is an anagram.  Observe that $i_0\neq i_t$ since, otherwise $i_0,\ldots,i_{a-1}$ is an anagram.  Similarly, $i_a\neq i_t$ since otherwise $i_1,\ldots,i_a$ is an anagram.
-
-        Since $|p|\ge |q|$, $s_{r+1},\ldots,s_{2r}$ begins with a suffix of $B_t$ of length at least $(2m-1)/2 \ge \sqrt{m\log m}$. Therefore, \cref{killer} implies that $|p|\ge 2m-o(m)$.  This implies that $p$ contains at least $m-o(m)>2$ occurrences of $i_0$.  Since the symbol $i_0$ appears only once in $B_t$ it must appear more than once in $q$, which implies that $i_q=i_0$ and $|q|\ge 2m-o(m)$.
-
-        Since $s_{r+1},\ldots,s_{2r}$ contains the second half of $B_t$, it contains an $(m/2-O(1))$-element subset $A'\subseteq A\setminus\{i_0,i_t\}$. On the other hand, $q$ contains a $(m-o(m))$-element subset $A''\subseteq A\setminus\{i_0,i_t\}$.  For each of the $m/2-o(m)$ symbols $x\in A'\cap A''$, there are two unmatched occurrences of $x$ in $s_{r+1},\ldots,s_{2r}$ but at most one unmatched occurrence of $x$ in $s_1,\ldots,s_r$, contradicting the assumption that $s$ is an anagram.
-
-        \item $k=1,\ell=0$: Exactly one block $\Sigma_{i^*}$ in $B_1,\ldots,B_{t-1}$ in the first half of $s$ remains unmatched, but no block in the second half of $s$ is unmatched.  Then $i^*\neq i_t$ since, otherwise, $i_1,\ldots,i_{a-1}$ is an anagram. Therefore $s_1,\ldots,s_r$ contains $m-1$ unmatched occurrences of $i^*$ and, since $s$ is an anagram, $q$ must contain at least $m-2$ occurrences of $i^*$, so $i_a=i^*$.  This is also a contradiction since it implies that $i_1,\ldots,i_a$ is an anagram.
-
-        \item $k=1,\ell=1$: Exactly one block $\Sigma_{i^*}$ in the first half $B_1,\ldots,B_{t-1}$ is unmatched and exactly one block $\Sigma_{j^*}$ in the second half $B_{t+1},\ldots,B_{a-1}$ is unmatched. Since $M$ is a maximum matching, $i^*\neq j^*$.  Therefore, at least one of $i^*$ or $j^*$ is not equal to $i_t$.  Suppose without loss of generality that $i^*\neq i_t$. Then the overabundance of $i^*$ in $B_{1},\ldots,B_{t-1}$ implies that $i_a=i^*$ and that $|q|\ge 2m-O(1)$.  This implies that $j^*\neq i_t$ since, otherwise $i_1,\ldots,i_a$ is an anagram.  Therefore, the overabundance of $j^*$ in $B_{t+1},\ldots,B_{a-1}$ implies that  $i_0=j^*$ and $|p|= 2m-O(1)$.
-
-        Again, we can consider the $(m/2-O(1))$-element subset $A'\subset A\setminus\{i^*,j^*,i_t\}$ that appears both in the second half of $B_t$ and in $q$.  Each element in $A'$ has two unmatched occurrences in $s_{r+1},\ldots,s_{2r}$ and at most one unmatched occurrence in $s_1,\ldots,s_r$, contradicting the assumption that $s$ is an anagram.
-
-        \item $k=2,\ell=2$: In this case, one of the halves (say the first half) has no blocks equal to $i_t$.  Then $B_{i_t}$ can not make up for any of the unmatched symbols in those two blocks and $B_{i_a}$ can make up for at most one of the unmatched blocks.
-
-        \item $k=2,\ell=1$.  In this case, the first half of $s$ has two unmatched blocks $\Sigma_{i^*}$ and $\Sigma_{j^*}$ and, since $s$ is an anagram it must be that $\{i_t,i_a\}=\{i^*,j^*\}$.  Without loss of generality, $i_t=i^*$ and $i_a=j^*$.  The second half of $s$ has one unmatched block $\Sigma_{k^*}$ with $k^*\not\in\{i^*,j^*\}$.  Now the overabundance of $k^*$ in $B_{t+1},\ldots,B_{a}$ implies that $i_0=k^*$.  This is a contradiction, since it implies that $i_0,\ldots,i_a$ is an anagram.
-
-        \item $k\ge 3$:  In this case, $B_{i_t}$ and $B_{i_a}$ can't make up for the duplicate symbols in these three unmatched blocks.
-        \qedhere
-    \end{enumerate}
-\end{proof}
-
-
-\subsection{Boosting Annoyagram-Free Strings}
-
-\begin{lem}\label{blow_up_af}
-    Let $S$ be an annoyagram-free string over the alphabet $A:=\{0,\ldots,m\}$ and let $T$ be the string obtained by replacing each occurrence of $i$ in $S$ with $\Sigma_i$, for each $i\in A$.  Then $T$ is annoyagram-free.
-\end{lem}
-
-\begin{proof}
-    Suppose, by way of contradiction, that $s$ is an annoyagram contained in $T$.  By \cref{pair_af}, we may assume that the length of $s$ is greater than $2m$.  Then, as in the previous proof, there exists $a\ge 1$ and a substring $i_0,\ldots,i_a$ of $S$ such that $s$ consists of
-    \begin{inparaenum}[(i)]
-        \item a proper (possibly empty) suffix $p$ of $\Sigma_{i_0}$ followed by
-        \item the concatenation of $s':=B_1,\ldots,B_{a-1}$ followed by
-        \item a proper (possibly empty) prefix $q$ of $\Sigma_{i_a}$.
-    \end{inparaenum}
-    Without loss of generality, assume that $|p|\ge |q|$.
-
-    Since $s$ is an annoyagram, it has a prefix $s'$ and a suffix $s''$, each of length less than $|s|/2$ such that the string $\sigma:=s'ss''$ is an anagram.  Let $\sigma_1,\ldots,\sigma_{2r}:=\sigma$.
-
-    \paragraph{The Degenerate Case:}
-    We first handle the case in which the first half $\sigma_1,\ldots,\sigma_r=s'pB_1,\ldots,B_t$ of $\sigma$ ends at a block boundary. In this case, the second half of $\sigma$ is $s_{r+1},\ldots,s_{r2}=B_{t+1},\ldots,B_{a-1}q s''$.  The first half of $\sigma$ has at most three partial blocks:
-    \begin{compactenum}
-        \item $p$ is a suffix of $B_0$;
-        \item $s'$ begins with a prefix of $p$, which is contained in $B_0$;
-        \item $s'$ ends with a with a (possibly empty) proper prefix of $B_\alpha$, for some $\alpha\in\{1,\ldots,t\}$.
-    \end{compactenum}
-    Note that, if $|s'|<|p|$ then $k=1$ and the third partial block is empty.
-    \todo[inline]{For now, assume $|s'|\ge |p|$ so that the first half of $\sigma$ contains two complete copies of $p$.}
-
-    \todo[inline]{Say something similar about the second half of $\sigma$.}
-
-    Throughout the remainder of this part of the proof, we will constantly make use of the fact that, if $L$ contains an unmatched block $\Sigma_{i^*}$, then these $m-1$ unmatched occurrences of $i^*$ in the first half of $\sigma$ can only be compensated for in the second half of $\sigma$ if
-    \begin{inparaenum}
-        \item $i_\beta=i^*$ or
-        \item $i_a=i^*$ and $|q|\ge m-O(1)$.
-    \end{inparaenum}
-    Similarly, if $R$ contains an unmatched block $\Sigma_{k^*}$ then
-    \begin{inparaenum}
-        \item $i_\alpha=k^*$ or
-        \item $i_0=k^*$ and $|q|\ge m-O(1)$.
-    \end{inparaenum}
-
-
-    \begin{clm}\label{weirdo}
-        If $|s'|\ge |p|$ and $\sqrt{m\log m} \le |p| \le 2m-\sqrt{m\log m}$ then $i_0=i_\alpha=i_\beta$ and $R$ contains exactly one unmatched $\Sigma_{i_0}$.
-    \end{clm}
-
-    Define the bipartite graph $(L,R,E)$ where $L$ contains the complete blocks in the first half, $R$ contains the complete blocks in the second half and an edge $xy$ is present if two blocks are of the same type, i.e., $x=\Sigma_i$ and $y=\Sigma_i$ for some $i\in\{0,\ldots,m\}$.  Again, we let $M$ be a maximum matching in this graph and we let $k$ and $\ell$ be the number of unmatched blocks in $L$ and $R$, respectively.  Without loss of generality, we may assume that $k\ge\ell$.   We distinguish between the following cases:
-    \begin{enumerate}
-        \item $k=\ell=0$.  In this case, $i_1,\ldots,i_{a-1}$ is an annoyagram, contradicting the assumption that $S$ is annoyagram-free.
-
-        \item $k=1,\ell=0$.  In this case, $L$ contains an unmatched block $\Sigma_{i^*}$.  If $i_\beta=i^*$, then $i_1,\ldots,i_{a-1}$ is an annoyagram, so $i_\beta\neq i^*$. Therefore, $i_a=i^*$ and $|q|\ge m-O(1)$.
-        \begin{compactenum}
-            \item If $|q|<2m-o(m)$ then \cref{weirdo} implies that $i_\beta=i^*$, a contradiction.
-            \item If $|q|\ge 2m-o(m)$ then $R$ contains $2m-o(m)$ unmatched copies of $i^*$. The unmatched $\Sigma_{i^*}$ block in $L$ accounts for $m-1$ of these.  The remaining ones can only be matched if $i_\alpha=i^*$ or $i_0=i^*$ and $|p|\ge m-O(1)$.  If $i_\alpha=i^*$ then  $i_1,\ldots,i_a$ is an annoyagram, a contradiction.  If $i_\alpha\neq i^*$, then $i_0=i^*$, and $|p|\ge m-O(1)$.  Furthermore, since $p$ contributes $|p|-O(1)$ unmatched occurrences of $i^*$, it must be that $|p|\le m+O(1)$.  Therefore \cref{weirdo} implies that $i_\alpha=i_\beta=i^*$, contradicting the fact that $i_\beta \neq i^*$.
-        \end{compactenum}
-
-        \item $k= 1,\ell= 1$.  In this case, $L$ contains an unmatched  block $\Sigma_{i^*}$ and $R$ contains an unmatched block $\Sigma_{j^*}$.  If $i_\beta=i^*$ and $i_\alpha=j^*$, then $i_1,\ldots,i_{a-1}$ is an annoyagram, so we may assume, without loss of generality, that $i_\beta\neq i^*$. This implies that $i_a=i^*$ and $|q|\ge m-O(1)$.  Then, either and \cref{weirdo} implies that $i_\alpha=i_\beta=i^*$, a contradiction or $q$ contributes $2m-o(m)$ unmatched copies of $i^*$ to the second half of $\sigma$. The unmatched $\Sigma_{i^*}$ block in $L$ accounts for $m-1$ of these. The remaining $m-o(1)$ unmatched occurrences of $i^*$ in the second half implies that $i_\alpha=i^*$ or $i_0=i^*$.  The former case implies that $i_1,\ldots,i_a$ is an anagram.  The latter case implies that $m-O(1)\le |p|\le m+O(1)$, so \cref{weirdo} implies that $i_{\alpha}=i_{\beta}=i^*$, a contradiction.
-
-        \item $k=2,\ell=0$.  In this case, $L$ contains an unmatched $\Sigma_{i^*}$ block and an unmatched $\Sigma_{j^*}$ block.
-        \begin{compactenum}
-            \item If $i^*=j^*$ then this implies that $i_a=i^*$. This immediately implies that $i_1,\ldots,i_a$ is an annoyagram.
-            \item If $i^*\neq j^*$ then this implies, without loss of generality, that $i_a = i^*$, $|q|\ge m-O(1)$ and $i_\beta=j^*$.  To avoid a contradiction from \cref{weirdo} we must then have $|q|\ge 2m-o(m)$.  This creates an overabundance of $i^*$ in $R$ that implies $i_\alpha=i^*$ or $i_0=i^*$ and $m-O(1)\le|p|\le m+O(1)$.  The former case implies that $i_1,\ldots,i_a$ is an annoyagram.  The latter case implies that $i_0,\ldots,i_a$ is an annoyagram.
-        \end{compactenum}
-
-        \item $k=2,\ell=1$. In this case $L$ contains two unmatched blocks $\Sigma_{i^*}$ and $\Sigma_{j^*}$ and $R$ contains at least one unmatched block $\Sigma_{k^*}$.  Without loss of generality, this implies that $i_a=j^*$ and that $|q|\ge m-O(1)$.
-        \begin{compactenum}
-            \item If $|q|<2m-o(m)$, then \cref{weirdo} implies that $i_\alpha=i_\beta=j^*$, so $i^*=j^*$.  But \cref{weirdo} also implies that $L$ contains exactly one unmatched $\Sigma_{j^*}$, which contradicts the fact that $i^*=j^*$.
-            \item If $|q|\ge 2m-o(m)$.
-            \begin{compactenum}
-                \item If $i^*=j^*$, then the unmatched $\Sigma_{k^*}$ block in $R$ implies that $i_0=k^*$ and $|p|\ge m-O(1)$ or $i_\alpha=k^*$.  If $i_\alpha=k^*$, then $i_1,\ldots,a_i$ is an annoyagram in $S$, a contradiction.  Otherwise, $i_0=k^*$ and $p\ge m-O(1)$.  If $|p|<2m-o(m)$ then \cref{weirdo} implies that $i_\alpha=i_\beta=k^*$, which implies that $i_1,\ldots,i_a$ is an annoyagram, a contradiction. If $|q|\ge 2m-o(m)$, then $i_\beta=k^*$, which implies that $i_1,\ldots,i_a$ is an annoyagram, also a contradiction.
-                \item If $i^*\neq j^*$ then $i_{\beta}=i^*$.  one of the following applies:
-                \begin{compactenum}
-                    \item $i_a=k^*$, $|p|\ge m-O(1)$ and $i_\alpha=i^*$. If $|p|<2m-o(m)$ then \cref{weirdo} gives the contradiction $i_\alpha=i_\beta=k^*$.  If $|p|>2m-o(m)$ then $s$ is not an annoyagram, since the number of unmatched $k^*$ symbols in the first half is $2m-o(m)$ and the number of unmatched $k^*$ symbols in the second half is $m+O(1)$.
-                    \item $i_\alpha=k^*$, $i_a=i^*$, and $|p|>m-O(1)$.  In this case the same argument as in the previous case implies that $i_{\alpha}=i^*$ or that $s$ is not an annoyagram.
-                \end{compactenum}
-            \end{compactenum}
-        \end{compactenum}
-
-        \item $k=2,\ell=2$. In this case we argue exactly as in the case $k=2,\ell=1$ except in Subcase (a)(ii)A.  In this case, we do not immediately derive a contradiction because the other unmatched block in $R$ could be another $\Sigma_{k^*}$.  However, in this case, $i_0,\ldots,i_a$ is an annoyagram, also a contradiction.
-
-        \item $k=3,\ell= 1$.  In this case, the only possibility is that $L$ contains two unmatched occurrences of $\Sigma_{i^*}$ and one unmatched occurrence of $\Sigma_{j^*}$, $i_a=i^*$, $|q|\ge 2m-O(1)$, and $i_\beta=j^*$.  Furthermore, since $\ell=1$, $R$ contains an unmatched $\Sigma_{k^*}$.  There are two possibilities:
-        \begin{compactenum}
-            \item $i_\alpha=k^*$.  In this case, $i_1,\ldots,i_a$ is an annoyagram, a contradiction.
-            \item $i_0=k^*$ and $|p|\ge m-O(1)$.  Then $|p|\le m+O(1)$ since, otherwise the first half of our annoyance contains more occurrences of $k^*$ than the second half.  Therefore, by \cref{weirdo}, $i_\alpha=\i_beta=k^*$, contradicting the requirement that $i_\beta=j^*$.
-        \end{compactenum}
-
-        \item $k=3,\ell=2$. In this case, the only possibility is that $L$ contains two unmatched occurrences of $\Sigma_{i^*}$ and one unmatched occurrence of $\Sigma_{j^*}$, $i_a=i^*$, $|q|\ge 2m-O(1)$, and $i_\beta=j^*$.  Furthermore, since $\ell=2$, $R$ contains at least one unmatched $\Sigma_{k^*}$, $i_0=k^*$ and $|p|\ge m-O(1)$.  If $|p|\le 2m-o(m)$ then \cref{weirdo} leads to the contradiction that $i_\alpha=i_\beta=k^*$.  If $|p|\ge 2m-o(m)$ then the only possibility is that both unmatched blocks in $R$ are $\Sigma_{k^*}$ blocks.  But then $i_0,\ldots,i_a$ is an annoyagram, also a contradiction.
-
-        \item $k\ge 3,\ell\ge 3$.  The only possibility here is that $L$ contains two unmatched $\Sigma_{i_a}$ blocks and one unmatched $\Sigma_{i_\beta}$ blocks.  A similar statement holds for $R$, which implies that $i_0,\ldots,i_a$ is an annoyagram, a contradiction.
-    \end{enumerate}
-
-
-    \paragraph{The Generic Case:}
-    We now move on to the generic case in which there is some block $B_t$ that contains a non-empty proper suffix contains some of the first half of $\sigma$ and a non-empty proper prefix of the second half of $\sigma$.  In this case we do not include the block $B_t$ in the matching graph $(L,R,E)$ but otherwise we proceed as in the degenerate case.  Again, there are cases to consider depending on the number of the numbers of unmatched blocks in $k$ and $\ell$, respectively.  We may assume, without loss of generality, that the second half of $\sigma$ begins with a suffix of $B_t$ that has length $\gamma \ge m$.
-
-    \begin{enumerate}
-        \item $k=0,\ell=0$. In this case neither $i_\alpha=i_t$ or $i_\beta=i_t$, otherwise $i_1,\ldots,i_{a-1}$ is an annoyagram.  If $\gamma < 2m-o(m)$ then $|p|=\gamma\pm O(1)$.
-    \todo{Deal with the annoying case where some of $B_t$ is also used at the ends of the annoyance.}
-    \end{enumerate}
-\end{proof}
-
-
-
-
-
-
-% This collection of strings is constructed in order to have the following property:
-% \begin{obs}\label{expander_property}
-%     For any distinct $i,j\in\{0,\ldots,m\}$, the length-$(m/2-10)$ prefix of $\Sigma_i$ contains a character that appears only in the length-$2\lceil c \log m\rceil$ suffix of $\Sigma_j$.  Symmetrically, the length-$(m/2-10)$ suffix of $\Sigma_i$ contains a character that appears only in the length-$2\lceil c \log m\rceil$ prefix of $\Sigma_j$.
-% \end{obs}
-%
-%
-% \begin{clm}\label{base_case}
-%     For each $i\in\{1,\ldots,m\}$, $\Sigma_i$ is annoyagram-free.
-% \end{clm}
-%
-% \begin{proof}
-%     Consider any substring $s=s_1,\ldots,s_n$ of $\Sigma_j$ of length $n\ge 2$.  If $s$ has length $n=2$ then the only annoyance of $s$ is $s$ itself. We have already argued, above, that $\Sigma_i$ is anagram-free therefore $s$ is not an anagram.
-%
-%     If $n\ge 3$ then $s_a$ appears only once in $s$ for some $a\in\{1,2\}$. In any annoyance $s'$ of $s$, $s_a$ appears only in the first half of $s'$ (possibly twice) but does not appear at all in the second half of $s'$. Therefore $s'$ is not an anagram.  Since this is true for any annoyance $s'$ of any substring $s$ of $\Sigma_i$, $\Sigma_i$ is a annoyagram-free.
-% \end{proof}
-
-For each $i\in\{0,\ldots,m\}$, let $S_i^0=i$ and, for each positive integer $k$, let $S_i^k$ be the string obtained from $S_i^{k-1}$ by replacing each occurrence of $j$ with the string $\Sigma_j$ for each $j\in A$.  Since $S_i^0$ is clearly anagram-free, it follows immediately from \cref{blow_up_af} that $S_i^k$ is anagram-free for every $k\ge 0$.
-
-
-
-
-% When $S_i^k$ appears within a larger string, we call it a \emph{$k$-block} or, if we want to be more specific, an \emph{$(i,k)$-block}.  Thus, the $k$-block $S_i^k$ consists of a sequence of $2m-1$ $(k-1)$-blocks.
-
-
-% Start with an easy warm-up exercise:
-%
-% \begin{clm}\label{warm_up}
-%     Let $s=s_1,\ldots,s_{2r}$ be a non-empty even-length annoyance of $\Sigma_i$ and let $s'$ be obtained by replacing each occurrence of $\sigma_j$ in $s$ with $S_j^k$ for each $j\in\{1,\ldots,m\}$.  Then $s'$ is not an anagram.
-% \end{clm}
-%
-% \begin{proof}
-%     By \cref{base_case}, $s$ is not an anagram, so there is some character $\sigma_j$ that oocurs $x$ times in $s_1,\ldots,s_r$ and appears $y\neq x$ times in $s_{r+1},\ldots,s_{2r}$. By \cref{counts}, $\sigma_j$ appears exactly $\tfrac{r}{m}(2m-1)^k + \tfrac{xm-r}{m}(m-1)^k$ times in the first half of $s'$ and appears exactly $\tfrac{r}{m}(2m-1)^k + \tfrac{ym-r}{m}(m-1)^k$ times in the second half of $s'$.  Since $x\neq y$, $s'$ is therefore not an anagram.
-% \end{proof}
-%
-% \Cref{warm_up} shows that if we restrict ourselves to annoyances whose defining points are ``nicely aligned'' then the annoyagram-freeness of $S_i^k$ is inherited from the annoyagram-freeness of $S_i^1=\Sigma_i$.  Thus, the main challenge that remains is to deal with annoyances whose definining points are not so cleanly aligned with block boundaries.  The proof of \cref{warm_up} offers a hint as to how we might achieve this since it shows that, in a nicely aligned annoyance there is a symbol $\sigma_j$ that occurs $(m-1)^k$ times more often in one half of the annoyance $s'$ than in the other half.  We will make use of this extreme imbalance to argue that there remains an imbalance even when the block boundaries are not so well aligned.  This requires come care because every symbols occurs $\tfrac{r}{m}(2m-1)^k\pm O(r(m-1)^k)$.
-
-\bibliographystyle{plainurlnat}
-\bibliography{af2t}
-
-
-\end{document}
-
-
-\subsection{Density Lemmas}
-
-
-\begin{clm}\label{counts}
-    For each $k\in \N$,
-    \begin{compactenum}[(i)]
-        \item $|S_i^k| = (2m-1)^k$;
-        \item $S_i^k$ contains $\tfrac{1}{m}(2m-1)^k + \tfrac{m-1}{m}(m-1)^k$ occurences of $\sigma_i$; and
-        \item $S_i^k$ contains $\tfrac{1}{m}(2m-1)^k - \tfrac{1}{m}(m-1)^k$ occurrences of $\sigma_j$ for each $j\in\{1,\ldots,m\}\setminus\{i\}$.
-    \end{compactenum}
-\end{clm}
-
-
-\begin{clm}\label{prefix_bounds}
-    Let $s$ be a proper prefix or a proper suffix of $S_i^k$.  Recall that $m\ge 5$ and let $\alpha:= 2+\tfrac{2}{m-4}$ and $\beta := 1+\tfrac{4}{m(m-4)}$.  Then
-    \begin{compactenum}[(i)]
-        \item for each $j\in\{1,\ldots,m\}$, $\hist_j(s)\ge |s|/m - \alpha(m-1)^{k-1}$;
-        \item $\hist_{i}(s) \le |s|/m+\beta(m-1)^k$; and\todo{Do we need this?}
-        \item for each $j\in\{1,\ldots,m\}\setminus\{i'\}$, $\hist_j(s) \le |s|/m+ (\beta+1)(m-1)^{k-1}$.
-    \end{compactenum}
-\end{clm}
-
-\todo[inline]{The calculations below are all off now since we changed the length of each $\Sigma_i$ [and the size of the alphabet.]}
-
-\begin{colourblock}{red}
-\begin{proof}
-    The proof is the same whether $s$ is a prefix or a suffix of $S_i^k$ so we assume, without loss of generality, that $s$ is a prefix of $S_i^k$. The proof is by induction on $k$.  In the base case $k=0$ and $|s|=1$ and the conditions are easily verified. Now assume $k\ge 1$.
-
-    Let $d=\lfloor |s|/(2m-1)^{k-1}\rfloor$.  Since $s$ is a proper prefix of $S_i^k$, $|s|< (2m-1)^k$, so $d < 2m-1$. Split $s$ into a prefix $s'$ of length $d(2m-1)^{k-1}$ and a suffix $q$ containing the rest of $s$.
-    The prefix $s'$ consists of $d$ $(k-1)$-blocks $B_1,\ldots,B_{d}$.
-
-    We now prove (i).  By \cref{counts} $\hist_j(B_r)\ge \tfrac{1}{m}(2m-1)^{k-1} - \tfrac{1}{m}(m-1)^{k-1}$ for each $r\in\{1,\ldots,d\}$.  Therefore,
-    \begin{align*}
-        \hist_j(s') & = \sum_{r=1}^d \hist_j(B_r) \\
-        & \ge  \tfrac{d}{m}(2m-1)^{k-1} - \tfrac{d}{m}(m-1)^{k-1} \\
-        & = |s'|/m - \tfrac{d}{m}(m-1)^{k-1} \\
-        & \ge |s'|/m - \tfrac{2m-4}{m}(m-1)^{k-1} & \text{(since $d\le 2m-4$)}\\
-        & > |s'|/m - 2(m-1)^{k-1} \enspace .
-    \end{align*}
-    Now, the suffix $q$ is a prefix of the block $B_{d+1}$ immediately following $B_d$.  The block $B_{d+1}=S_{q}^{k-1}$ for some $q$.
-    Applying induction on $q$ we get $\hist_j(q) \ge |q|/m - \alpha(m-1)^{k-2}$.  We finish up with
-    \begin{align*}
-        \hist_j(s) & = \hist_j(s') + \hist_j(q) \\
-        & \ge |s'|/m - 2(m-1)^{k-1} + |q|/m - \alpha(m-1)^{k-2} \\
-        & \ge |s|/m - 2(m-1)^{k-1} - \alpha(m-1)^{k-2} \\
-        & = |s|/m - \alpha(m-1)^{k-1}
-    \end{align*}
-    for $\alpha = \tfrac{2(m-1)}{m-4}=2+\tfrac{2}{m-4}$.
-
-    Now we prove (ii). All of the even-indexed blocks in $B_1,\ldots,B_d$ are $(i,k-1)$-blocks and each of the odd-indexed blocks is a $(j,k-1)$-block for some $j\neq i$. Therefore, using \cref{counts}(ii) on the $\lfloor d/2\rfloor$ even-indexed blocks and \cref{counts}(iii) on the $\lceil d/2\rceil$ odd-indexed blocks we get
-    \begin{align*}
-        \hist_i(s') & = |s'|/m + \tfrac{\lfloor d/2\rfloor(m-1)}{m}(m-1)^{k-1} - \tfrac{\lceil d/2\rceil}{m}(m-1)^{k-1} \\
-         & = |s'|/m + (\lfloor d/2\rfloor - \tfrac{d}{m})(m-1)^{k-1} \\
-         & \le |s'|/m + (m-2-\tfrac{2m-4}{m})(m-1)^{k-1} & \text{(since $d\le 2m-4$)}\\
-         & = |s'|/m + (m-4+\tfrac{4}{m})(m-1)^{k-1} \enspace .
-    \end{align*}
-    Applying induction on $q$ we get $\hist_i(q) = |q|/m + \beta(m-1)^{k-1}$.
-    Putting it all together, we get
-    \begin{align*}
-        \hist_i(s) & = \hist_i(s')+\hist_i(q) \\
-               & \le |s|/m + (m-4+\tfrac{4}{m})(m-1)^{k-1} + \beta(m-1)^{k-1} \\
-        & \le |s|/m + \beta(m-1)^{k}
-    \end{align*}
-    for $\beta = 1+\tfrac{4}{m(m-4)}$.
-
-    Finally, we prove (iii).  Since $j\neq i'$, there is at most one $(j,k-1)$-block in $B_1,\ldots,B_d$.  Using \cref{counts}(ii) on that block and \cref{counts}(iii) on the other blocks, we get
-    \begin{align*}
-        \hist_j(s') & \le |s'|/m + \tfrac{m-1}{m}(m-1)^{k-1} - \tfrac{d-1}{m}(m-1)^{k-1} \\
-        & = |s'|/m + \tfrac{m-d}{m}(m-1)^{k-1} \\
-        & \le |s'|/m + (m-1)^{k-1} \\
-    \end{align*}
-    Again, the block $B_{d+1}=S_{q}^{k-1}$ for some $q$. Possibly $q=j$.  Nevertheless, we apply the inductive hypothesis on $q$, using (ii) and (iii) to conclude that
-    \[  \hist_j(q) \le |q|/m + \max\{\beta(m-1)^{k-1},(\beta+1)(m-1)^{k-2}\} \le |q|/m + \beta(m-1)^{k-1} \]
-    for any $\beta\ge 1/(m-4)$.  In particular, for any $m\ge 5$, this condition is satisfied for any $\beta \ge 1$.
-    We finish with
-    \begin{align*}
-      \hist_j(s) & = \hist_j(s')+\hist_j(q) \\
-         & \le |s|/m + (m-1)^{k-1} + |q|/m + \beta(m-1)^{k-1} \\
-         & = |s|/m + (m-1)^{k-1} + \beta(m-1)^{k-1} \\
-         & = |s|/m + (\beta+1)\cdot(m-1)^{k-1} \enspace . \qedhere
-    \end{align*}
-\end{proof}
-\end{colourblock}
-
-% This is probably not neeeded
-% \begin{cor}\label{substring_bounds}
-% Let $s$ be a substring $S_i^k$ and let $\alpha$ and $\beta$ be defined as in \cref{prefix_bounds}.  Then
-% \begin{compactenum}[(i)]
-%     \item for each $j\in\{1,\ldots,m\}$, $\hist_j(s)\ge |s|/m - \alpha(1+\tfrac{2\alpha}{m-3})(m-1)^{k-1}$;
-%     \item $\hist_{i}(s) \le |s|/m+(1+\tfrac{2\beta}{m-3})(m-1)^k$; and
-%     \item for each $j\in\{1,\ldots,m\}\setminus\{i'\}$, $\hist_j(s) \le |s|/m+ (1+\tfrac{2(\beta+1)}{m-3})(m-1)^{k-1}$.
-% \end{compactenum}
-% \end{cor}
-%
-% \begin{proof}
-%     We may assume that $s$ is not entirely contained in a single $(k-1)$-block since, otherwise we can apply \cref{substring_bounds} to the string $S_{i'}^{k-1}$ that contains $s$ and get even better bounds. (Formally, this is induction on $k$.)
-%
-%     Therefore, the string $s$ consists of a (possibly empty) prefix $p$ and suffix $q$ each of length less than $(2m-1)^{k-1}$ and a (possibly empty) portion $s'$ between $p$ and $q$ that consists of a sequence of $d$ $(k-1)$-blocks $B_1,\ldots,B_d$.
-%
-%     The prefix $p$ is either empty or is a suffix of some $(k-1)$-block $B_0$ that immediately precedes $B_1$ on which we can apply \cref{prefix_bounds}.  The suffix $q$ is a prefix of some $(k-1)$-block $B_{d+1}$ on which we can apply \cref{prefix_bounds} to obtain
-%     \begin{compactenum}[(i)]
-%         \item for each $j\in\{1,\ldots,m\}$, $\hist_j(pq) \ge |pq|/m - 2\alpha(m-1)^{k-2}$;
-%         \item $\hist_i(pq) \le |pq|/m + 2\beta(m-1)^{k-1}$; and
-%         \item for each $j\in\{1,\ldots,m\}\setminus\{i\}$, $\hist_j(pq)\le |pq|/m + 2(\beta+1)(m-1)^{k-2}$.
-%     \end{compactenum}
-%
-%     For the string $s'$ we use exactly the same arguments used in the proof of \cref{prefix_bounds}\footnote{For the upper bound on $\hist_i(s')$ the roles of $\lceil d/2\rceil$ and $\lfloor d/2\rfloor$ are reversed. This changes very little except that the relevant expression is maximized when $d=2m-5$ and we obtain the bound $s_i(s')\le |s'|/m+(m-4+\tfrac{5}{m})(m-1)^{k-1} \le|s'|/m + (m-1)^k$ used here.} to show that
-%     \begin{compactenum}[(i)]
-%         \item for each $j\in\{1,\ldots,m\}$, $\hist_j(s')\ge |s'|/m - 2(m-1)^{k-1}$;
-%         \item $\hist_{i}(s) \le |s'|/m+(m-1)^{k}$;
-%         \item for each $j\in\{1,\ldots,m\}\setminus\{i\}$, $\hist_j(s) \le |s'|/m+ (m-1)^{k-1}$.
-%     \end{compactenum}
-%     Combining the corresponding bounds gives the results stated in the lemma.
-% \end{proof}
-
-\subsection{Another Warm Up}
-
-\begin{clm}
-    There exists an integer $m$ such that, for every $k\in\N$, every $k$-block is anagram-free.
-\end{clm}
-
-\begin{proof}
-    The proof is by induction on $k$.  The case $k=0$ is obvious since a $0$-block is a string of length 1.
-
-    Now, suppose $s$ is a substring of some $k$-block.  If $s$ is also a substring of some $k'$-block for $k'<k$ then we can immediately apply induction.  Otherwise, there are a sequence of $(k-1)$-blocks $s^+:=B_0,\ldots,B_a$, $a\ge 1$, such that $s$ begins with a (possibly empty) proper suffix $s_0$ of $B_0$ followed by $s^-:=B_1,\ldots,B_{a-1}$, followed by a (possibly empty) prefix $s_a$ of $B_a$.  (In case $s_0$ and $s_a$ are both empty, $a\ge 2$.)
-
-    Let $p$ and $q$ be the first and second half of $s$, respectively.    Define $p^-$ as the substring of $p$ formed by full blocks $B_1,B_2,\ldots,B_\alpha$ completely contained in $p$.  Similarly, define $q^-$ as the substring of $q$ formed by full blocks $B_{a-\beta},\ldots,B_{a-1}$ completely contained in $q$.  Note that $\alpha+\beta=a-1$ exactly when the last character in $p$ is the last character in $B_\alpha$ (so the first character in $q$ is the first character in $B_{a-\beta}$).  Otherwise, there is some block $B_r$ that contains both a suffix of $p$ and a prefix of $q$.
-
-    Define $i_0,\ldots,i_a$ so that $B_{j}$ is an $(i_j,k-1)$-block for each $j\in\{0,\ldots,a\}$.  By the inductive hypothesis, the string $i_0,\ldots,i_a$ is anagram-free. For any string $z$ made up entirely of $(k-1)$-blocks we let $\tilde{z}$ denote the string obtained by replacing each $(i,k-1)$-block with the integer $i$, for each $i\in\{1,\ldots,m\}$. We distinguish between the following cases:\todo{These are not obviously exhaustive.}
-    \begin{enumerate}
-        \item There is some value $i\in\{1,\ldots,m\}$ such that $\hist_i(\tilde{p}^-) > \hist_i(\tilde{q}^+)$.  In this case we can show that $\hist_i(p) > \hist_i(q)$.
-
-        \item There is some value $i\in\{1,\ldots,m\}$ such that $\hist_i(\tilde{q}^-) > \hist_i(\tilde{p}^+)$.  This is symmetric to the previous case, so we can show that $\hist_i(q) > \hist_i(p)$.
-
-        \item The string $i_1,\ldots,i_\alpha,i_\beta,\ldots,i_{a-1}$ is an anagram.  In this case, there must be a middle block $B_r$ that intersects both $p$ and $q$, so $\alpha=r-1$ and $\beta=r+1$.
-        Now, $B_r\neq B_0$ since, otherwise $i_0,\ldots,i_a$ would be an anagram.  Similarly, $i_r\neq i_{a}$ since, otherwise $i_1,\ldots,i_{a}$ would be an anagram. This implies that $B_r$ is approximately equally split between $p$ and $q$ since there is no other way for the additional $(i_r,k-2)$-blocks to cancel each other.
-
-        Suppose, without loss of generality, that at least half of $B_r$ is contained in $q$.  Now, $p^-$ and $q^-$ cancel each other and the second half of $B_r$ contains $m/2$ characters that do not appear in the first half of $B_r$.  Therefore, if $s$ is an anagram, then all but one of the characters in the second half of $B_r$ must be contained in $s_0$.  Since $B_0\neq B_r$, \cref{expander_property,prefix_bounds} implies that $s_0$ contains (much) more than half of $B_0$.  Another application of \cref{expander_property} implies that $s_0$ contains $(i,k-2)$-blocks that also appear near the front of $B_r$, which means they also appear in $p$.  These blocks do not appear at all in the part of $B_r$ contained in $q$ and only appear once in $B_a$, so they can't be cancelled. BAM!
-
-
-        \item Not the previous case, but the string $i_0,\ldots,i_\alpha,i_\beta,\ldots,i_{a}$ is an anagram.  Now we argue as above that $s_0$ is large.  Again, this causes $(i,k-2)$-blocks in $s_0$ to appear in the part of $B_r$ contained in $q$.  This means that many of these blocks appear twice in $p$ and not at all in the part of $B_r$ contained in $q$.\todo{We require at least two, so strengthen \cref{expander_property}} The only place left for these blocks is in $B_a$, but $B_a$ contains only one copy of any $(i,k-2)$-block for any $i\neq i_a$.  Again, we get a contradiction. BAM!
-    \end{enumerate}
-
-
-    So how do we get from here to annoyagram-freeness?  I think this trick of comparing $p^-$ and $q^+$ is a good one.  In the annoyagram case, though $p^-$ has its head and tail trimmed as well as two partial blocks in its first half.
-
-    %
-    %
-    %
-    %
-    % Let $p^*$ and $q^*$ be obtained by replacing each $(i,k-1)$-block of $p^-$
-    %
-    % Let $s^-:=B_1,\ldots,B_{a-1}$
-    %
-    % Define $i_0,\ldots,i_a$ so that $B_j = S_{i_j}^{k-1}$.  Then the sequence $i_0,\ldots,i_a$ is a substring of some $(k-1)$-block.  There $i_0,\ldots,i_a$ is itself, anagram-free.
-    %
-    %
-    %
-    %
-    %
-    % We distinguish between two cases:
-    % \begin{enumerate}
-    %     \item $a\ge 5$:  Define the string $z$ as follows: If some block $B_r$ instersects both $p$ and $q$, then $z=i_1,\ldots,i_{r-1},i_{r+1},\ldots,i_{a-1}$.  Otherwise $z=i_1,\ldots,i_{a-1}$.  We distinguish between two cases:
-    %     \begin{enumerate}
-    %         \item $z$ is an anagram:
-    %
-    %            UGGGG MOre cases
-    %
-    %         \item $z$ is not an anagram:
-    %         In this case, there exists some $i'$ such that $p$ contains more $(i',k-1)$-blocks than $q$ or vice-versa.  Suppose, without loss of generality that $p$ contains $x$ $(i',k-1)$-blocks and $q$ contains $y< x$ $(i',k-1)$-blocks.
-    %
-    %         Now, $p$ consists of a suffix $p'$ of $B_0$, a sequence $p''=B_1,\ldots,B_{r-1}$ of $r-1\le (a+1)/2$ consecutive blocks, and a prefix $p'''$ of $B_r$.  Using \cref{prefix_bounds}(i) to lower bound $\hist_{i'}(p')$ and $\hist_{i'}(p''')$ and using \cref{counts} to count $\hist_{i'}(p'')$ we obtain
-    %         \[
-    %                 \hist_{i'}(p) \ge |p|/m + (x-\tfrac{a+1}{2m})(m-1)^{k-1} - 2\alpha(m-1)^{k-2} \enspace .
-    %         \]
-    %         On the other hand, $q$ consists of a suffix of $q'$ of $B_r$, a sequence $q''=B_{r+1},\ldots,B_{a-1}$ of at least $a/2-1$ blocks, and a prefix $q'''$ of $B_{a+1}$.  Using \cref{prefix_bounds}(iii) to upper bound $\hist_{i'}(q')$ and $\hist_{i'}(q''')$ and using \cref{counts} to count $\hist_{i'}(q'')$ we obtain
-    %         \[
-    %             \hist_{i'}(q) \le |q|/m + (y-\tfrac{a/2-1}{m}(m-1)^{k-1} + 2(\beta+1)(m-1)^{k-2} \enspace .
-    %         \]
-    %         Therefore
-    %         \[
-    %             \hist_{i'}(p)-\hist_{i'}(q) \ge (x-y)(m-1)^{k-1} - O((m-1)^{k-2}) > 0 \enspace ,
-    %         \]
-    %         for sufficiently large $m$.\todo{explicit calculation}  Therefore $s$ is not an anagram.
-    %     \end{enumerate}
-    % \end{enumerate}
-\end{proof}
-
-
-
-
-% \begin{clm}
-%      Let $s$ be a prefix of $S_i^k$ of length $n=a(2m-1)^{k-1} + r$ for some integer $4\le a< 2m-1$ and $r< (2m-1)^{k-1}$.  Then $s$ is not an anagram.
-% \end{clm}
-%
-% \begin{proof}
-%     Observe that $S_i^k$ can be obtained from $\Sigma_i$ by replacing each occurence of $\sigma_j$ with $\S_j^{k-1}$ for each $j\in\{1,\ldots,m\}$.
-%     Thus $s$ consists of $a$ \emph{blocks} $B_1,\ldots,B_a$ each of length $(2m-1)^{k-1}$ followed by a partial block $B_{a+1}$ of length $r$.
-%
-%     Let $x=\lfloor a/2\rfloor$.  If
-%     If $a$ is odd, then the first half of $s$ contains blocks $B_1,\ldots,B_{x}$ and the second half of $s$ contains blocks $B_{x+2},\ldots,B_a$.
-%
-%     Now perform a matching between $B_1,\ldots,B_{x}$ and $B_{x+2},\ldots,B_a$ as follows:  First perform a maximum matching on equal blocks (these are all equal to $S_i^{k-1}$) and eliminate the at most $x/2$ pairs of blocks used in this matching.  Next perform an arbitrary perfect matching on the remaining pairs.  Perform cancellation on pairs of matched blocks.  After doing this, each block is reduced to $(m-1)^{k-1}$ occurrences of a single letter.  Indeed, if $S_{j}^{k-1}$ is cancelled with $S_{j'}^{k-1}$ for $j\neq j'$, then the cancellation reduces $S_j$ to $(m-1)^{k-1}$ occurrences of $\sigma_j$ and reduces $S_{j'}$ to $(m-1)^{k-1}$ occurrences of $\sigma_{j'}$.
-%
-%     Now, the first half of $s$ contains a prefix of $B_{x+1}$ of length $\ell:=((2m-1)^{k-1} + r)/2$.  The second half of $s$ contains the rest of $B_{x+1}$ and a length-$r$ prefix of $B_{a+1}$. Now, perform cancellation among these two sets. By \cref{bounds}, the number of occurrences of $\sigma_j$ after cancellation is at most $X+Y < (m-1)^{k-1}$.  Therefore, after these cancellations, the number of occurrences of $\sigma_j$ in the first half is less than the number of occurrences of $\sigma_j$ in the second half, for some $j$\ldots\todo{finish up after figuring out $X$ and $Y$.}
-% \end{proof}
-%
-
-
-
-%
-%
-% In the following, we will prove some lemmas that involve substrings of $S_i^k$ that are ``nicely aligned'' for various definition of nicely aligned.  We will then construct a subgraph
-%
-% \begin{clm}
-%     Let $s$ be a prefix of $S_i^k$ of length $|s|=n$ and, for each $j\in\{1,\ldots,m\}$, let $\hist_j$ be the number of occurrences of $\sigma_j$ in $s$, define $b:=2m-1$, and $\ell=\lfloor\log_b n\rfloor.  Then
-%     \begin{compactenum}[(i)]
-%         \item $\hist_i \ge n/m +  \log_b n$
-% \end{clm}
-
-
-
-
-%
-%  actually proves something stronger
-
-
-
-
-
-
-\end{document}
-
-\begin{clm}
-    Let $w$, $b$, $x$, $y$, $r$, and $s_0,\ldots,s_{b-1}$ be defined as above, with the additional condition that $b=kc$ for some positive integers $k$ and $c$. For each $i\in\{0,\ldots,k-1\}$, let $t_i=\sum_{j=0}^{w} i\cdot k^j$.
-
-
-      Then there exists some $j\in\{0,\ldots,b-1\}$ such that
-    \begin{compactenum}
-        \item $\lfloor (x+s_j)/b^r\rfloor = \lfloor (y+s_j)/b^r\rfloor$;
-        \item $\lfloor(y+s_j)/b^{r-1}\rfloor-\lfloor(x+s_j)/b^{r-1}\rfloor\ge b/c$;
-    \end{compactenum}
-    or there exists some $j\in\{0,\ldots,b/c-1\}$ such that
-\end{clm}
-
-
-
-
-For each $i\in\{0,\ldots,10\}$, let $t_i=\sum_{j=0}^w i\cdot 11^j$.
-
-
-
-
-
-
-
-\section{A Lemma}
-
-Let $S$ be an anagram-free string over some alphabet $\Sigma$ and, for each $x\in\Sigma$ and $j\in\{0,\ldots,r\}$, let $x_j=(x,j)$. In this way, $\bigcup_{x\in \Sigma}\bigcup_{j=0}^r x_j=\Sigma\times\{0,\ldots,r\}$ is a set of $k(r+1)$ distinct symbols.  For each $i\in\{1,\ldots,k\}$, define the string $T_x:=x_{0}x_{1}x_{2}\cdots x_{r}$.  Now derive the length-$((r+1)|S|)$ string $S^+$ by replacing each occurrence of $x$ in $S$ with the string $T_x$, for each $x\in\Sigma$.
-
-
-\begin{lem}
-    $S^+$ is anagram-free.
-\end{lem}
-
-\begin{proof}
-    The string $S^+$ consists of a sequence of length-$2r$ \emph{blocks} $B_1,\ldots,B_{|S|}$ where each $B_i=T_x$ for some $x\in\Sigma$. Let $s=s_1s_2$ be a substring of $S^+$ where $s_1$ and $s_2$ each have length $k\ge 1$.  We must show that $s_1$ is not an anagram of $s_2$.
-
-    We exhaustively perform the following \emph{cancellation} operation.  If $s_1$ contains a block $B_x$, $s_2$ contains a block $B_y$, and $B_x=B_y$, then we remove $B_x$ from $s_1$ and remove $B_y$ from $s_2$. Observe that $s_1$ is an anagram of $s_2$ before performing this operation if and only if $s_1$ is an anagram of $s_2$ after performing this operation.  Furthermore, since $S$ is anagram-free, this cancellation operation cannot reduce the lengths of $s_1$ and $s_2$ to $0$.
-
-    Assume, for the sake of contradiction, that the strings $s_1$ and $s_2$ are anagrams of each other.  We will distinguish between two cases, with the simpler case first:
-    \begin{enumerate}
-        \item The last character of $s_1$ is the last character of a block (so the first character of $s_2$ is the first character of the next block).  After performing the cancellation operation, there exists sequences $X_1$ and $X_2$ of equal length whose elements come from $\{T_x:x\in\Sigma\}$ and there exists $a,b\in[k]$ and $t\in\{0,\ldots,r\}$ such that
-        \begin{compactenum}
-            \item $s_1$ contains a length-$t$ suffix of $T_a$ followed by the blocks in $X_1$; and
-            \item $s_2$ contains the blocks in $X_2$ followed by the length-$t$ prefix of $T_b$.
-        \end{compactenum}
-        Since cancellation is performed exhaustively, $X_1$ and $X_2$ have no blocks in common.  Furthermore, since $S$ is anagram-free, $X_1$ and $X_2$ are non-empty.   Therefore $s_1$ contains a block $T_x$ that contains $(x,r)$.  The symbol $(x,r)$ does not appear in any block of $X_2$ and it does not appear in Saman Bazarghanithe length-$t$ prefix of $B_m$ since $t\le r-1$ and $(x,r)$ appears only as the last element in $T_x$.  Therefore $(x,r)$ is in $s_1$ but does not appear in $s_2$, so $s_1$ is not an anagram of $s_2$.  (Note that a similar argument shows that there exists some $y\in\Sigma$ such that $(y,0)$ appears in $s_2$ but not in $s_1$.)
-
-        [Actually, we can do way better than this, and show that there is an entire block $T_x$ in $s_1$ or an entire block $T_y$ in $s_2$ such that $T_x$ appears twice in $s_1$ or no symbol in $T_x$ appears in $s_2$ or $T_y$ appears twice in $s_2$ or no symbol in $T_y$ appears in $s_1$.]
-
-        \item Not case 1. The last character of $s_1$ is not the last character of any block.  In this case, there is a block $B_m=T_x$ that contains the last character of $s_1$ and the first character of $s_2$.  The string $s_1$ consists of a length-$u$ (possibly empty, not necessarily proper) suffix of some block $B_a$ followed by zero or more complete blocks $B_{a+1},\ldots,B_{m-1}$ followed by a length-$t$ proper prefix $s_1'$ of $B_m$.  The string $s_2$ begins with a length-$(r+1-t)$ suffix $s_2'$ of $B_m$.
-
-        We claim that none of the blocks $B_{a+1},\ldots,B_{m-1}$ is equal to $T_x$.  Indeed, if $B_i=T_x$ for some $i\in\{a+1,\ldots,m-1\}$ then the string $s_1'$ appears at least two times in $s_1$: once in $B_m$ and once in $B_i$.  Since $s$ is an anagram, this implies that $s_1'$ appears twice in $s_2$.  This is not possible, since at least one of those occurrences is in a complete block $B_j$ and cancellation would remove $B_i$ and $B_j$.
-
-        Since $s$ is an anagram, $s_2'$ must appear in $s_1$.  Since none of $B_{a+1},\ldots,B_{m-1}$ is equal to $T_x$ and $s_2'$ does not appear in the length-$t$ prefix of $B_m$, the only remaining possibility is that $s_2'$ appears in $B_a$, so $B_a=T_x=B_m$.
-        The characters in $s_1'$ do not appear in $s_2'$ so $s_2$ must contain a prefix of some block $B_b=T_x$ of length at least $t$.  In $s_1$, each character of $s_2'$ appears in $B_a$ and nowhere else.  Therefore each character of $s_2'$ appears at most once in $s_1$.  Therefore, $s_2$ must contain a prefix of $B_b$ of length exactly $t < r+1$.
-
-        Therefore, $B_b$ contains the last character of $s_2$.  Therefore, if $c$ is the number of full blocks in $s_2$ then the length of $s_2$ is
-        \[
-            |s_2|=  |s_2'| + c(r+1) + t = r+1-t + c(r+1) + t = (c+1)(r+1)
-        \]
-        Recall that $t<r+1$, so $2r+1 \ge u+t=|s_1|=|s_2|$, so we conclude that $c=0$ and $s_2$ contains no complete blocks. Therefore the sequence of blocks that contain $s_1$ and $s_2$ (after cancellation) is $B_a,B_m,B_b$ = $T_x,T_x,T_x$.  This is a contradiction, since it implies that $B_a,\ldots,B_{b-1}$ determines an anagram $S_a,\ldots,S_{b-1}$ in $S$ (and so does $S_{a+1},\ldots,S_b$).\todo{This is sloppy, it's mixing indices before and after cancellation.}
-    \end{enumerate}
-\end{proof}
-
 
 
 
