@@ -207,7 +207,7 @@ Observe that, for $n=2t+1$, $S_n$ can be constructed by gluing together $t$ copi
 
   The substring $p_1,\ldots,p_{2r}$ corresponds to a sequence of $2r$ blocks in the original graph $S_n$. For each $x\in X'$, let $\delta_x:=\hist_x(p_1,\ldots,p_r)-\hist_x(p_{r+1},\ldots,p_{2r})$.  By \cref{near_anagram_fourier}, $|\delta_x|\le \epsilon r$.
 
-  To deal with the fact that $\delta_x>0$ we need $6\delta_x$ copies of $x$ in $p_1,\ldots,p_r$ and $4\delta_x$ copies of $x$ in $p_{r+1},\ldots,p_{2r}$.  By using paths $Q_1,\ldots,Q_3$ ($2\delta_x$ times each) in the first half and using $P_1,\ldots,P_r$ ($\delta_x$ times each) in the second half we are able to cancel everything.\todo{Explain how we can use $4$ versus $3$ to fix parity also.}  This is not a problem because each of these contains at least $r/\ell$ copies of $x$.  Doing this for each $x\in X'$ gives rise to a demand for a total of at most
+  To deal with the fact that $\delta_x>0$ we need $6\delta_x$ copies of $x$ in $p_1,\ldots,p_r$ and $4\delta_x$ copies of $x$ in $p_{r+1},\ldots,p_{2r}$.  By using paths $Q_1,\ldots,Q_3$ ($2\delta_x$ times each) in the first half and using $P_1,\ldots,P_r$ ($\delta_x$ times each) in the second half we are able to cancel everything.\todo{First deal with the parity issue. (First $S_3$ colourings, then $S_{\le\ell}$ colourings, then parity vectors.)}  This is not a problem because each of these contains at least $r/\ell$ copies of $x$.  Doing this for each $x\in X'$ gives rise to a demand for a total of at most
   \[
     \sum_{x\in |X'|} 4|\delta_x| \le \sum_{x\in |X'|} 4\epsilon r = 4|X'|\epsilon r\le 4c^7\epsilon r
   \]
