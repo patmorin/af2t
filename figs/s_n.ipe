@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.21">
-<info created="D:20210318131430" modified="D:20210318133055"/>
+<info created="D:20210318131430" modified="D:20210322090522"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -312,27 +312,27 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<path layer="alpha" stroke="lightgray" pen="heavier">
+<path layer="alpha" stroke="black" pen="heavier">
 128 736 m
 128 704 l
 </path>
-<path matrix="1 0 0 1 64 0" stroke="lightgray" pen="heavier">
+<path matrix="1 0 0 1 64 0" stroke="black" pen="heavier">
 128 736 m
 128 704 l
 </path>
-<path matrix="1 0 0 1 128 0" stroke="lightgray" pen="heavier">
+<path matrix="1 0 0 1 128 0" stroke="black" pen="heavier">
 128 736 m
 128 704 l
 </path>
-<path matrix="1 0 0 1 192 0" stroke="lightgray" pen="heavier">
+<path matrix="1 0 0 1 192 0" stroke="black" pen="heavier">
 128 736 m
 128 704 l
 </path>
-<path matrix="1 0 0 1 256 0" stroke="lightgray" pen="heavier">
+<path matrix="1 0 0 1 256 0" stroke="black" pen="heavier">
 128 736 m
 128 704 l
 </path>
-<path stroke="lightgray" pen="heavier">
+<path stroke="black" pen="heavier">
 448 736 m
 448 704 l
 </path>
@@ -498,8 +498,8 @@ h
 </path>
 <use name="mark/disk(sx)" pos="448 704" size="normal" stroke="black"/>
 <use name="mark/disk(sx)" pos="448 736" size="normal" stroke="black"/>
-<text matrix="1 0 0 1 -4 0" transformations="translations" pos="128 736" stroke="black" type="label" width="9.736" height="4.294" depth="1.49" halign="right" valign="baseline" style="math">a_1</text>
-<text matrix="1 0 0 1 13 1" transformations="translations" pos="112 704" stroke="black" type="label" width="8.745" height="6.923" depth="1.49" halign="right" valign="top" style="math">b_1</text>
+<text matrix="1 0 0 1 -4 0" transformations="translations" pos="128 736" stroke="black" type="label" width="9.736" height="4.294" depth="1.49" halign="right" valign="baseline" style="math">a_0</text>
+<text matrix="1 0 0 1 13 1" transformations="translations" pos="112 704" stroke="black" type="label" width="8.745" height="6.923" depth="1.49" halign="right" valign="top" style="math">b_0</text>
 <text matrix="1 0 0 1 3 -1" transformations="translations" pos="448 736" stroke="black" type="label" width="10.689" height="4.294" depth="1.49" valign="baseline" style="math">a_n</text>
 <text matrix="1 0 0 1 3 2" transformations="translations" pos="448 704" stroke="black" type="label" width="9.699" height="6.923" depth="1.49" valign="top" style="math">b_n</text>
 </page>

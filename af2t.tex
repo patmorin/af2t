@@ -70,6 +70,9 @@
 \DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\dc}{dc}
 
+\DeclareMathOperator{\afci}{\overline{\chi}_\pi}
+\DeclareMathOperator{\afcn}{\dot{\chi}_\pi}
+
 \newcommand{\ellt}{{\lfloor\ell/2\rfloor}}
 
 \title{\MakeUppercase{Pathwidth-$2$ Graphs have Unbounded Anagram-Free Chromatic Number}\thanks{This research was partly funded by NSERC.}}
@@ -109,43 +112,255 @@
 
 \section{Introduction}
 
-Let $s:=s_1,\ldots,s_n$ be a string over an alphabet $A$ and, for each $a\in A$, define $\hist_a(s):=|\{i\in\{1,\ldots,n\}:s_i=a\}$.  The \emph{histogram} of $s$ is the real-valued $|A|$-vector $\hist(s):=(\hist_a(s):a\in A)$ indexed by elements of $A$.  Let $\|\cdot\|_1$ denote the L1 norm.  Note that a string $s_1,\ldots,s_{2r}$ is an anagram if and only if $\hist(s_1,\ldots,s_r)=\hist(s_{r+1},\ldots,s_{2r})$.  Equivalently, $\hist(s_1,\ldots,s_r)-\hist(s_{r+1},\ldots,s_{2r})=\boldsymbol{0}$ or
+Two strings $s$ and $t$ are said to be \emph{anagrams} of each other if $s$ is a permutation of $t$.  A single string $s:=s_1,\ldots,s_{2r}$ is \emph{anagramish} if its first half $s_1,\ldots,s_r$ and its second half $s_{r+1},\ldots,s_{2r}$ ar anagrams of each other.
+
+A \emph{vertex $c$-colouring} $\phi:V(G)\to\{1,\ldots,c\}$ is \emph{anagram-free} if $G$ has no path $v_1,\ldots,v_{2r}$ such that $\phi(v_1),\ldots,\phi(v_{2r})$ is anagramish.
+
+\todo[inline]{Previous work and obvious gap (pathwidth-2)}
+
+
+\begin{thm}\label{main_vertex}
+    For every $c\in\N$, there exists a graph of $G$ of pathwidth $2$ that has no anagram-free vertex $c$-colouring.
+\end{thm}
+
+\todo[inline]{Statement of vertex colouring result (hopefully)}
+
+An \emph{edge $c$-colouring} $\varphi:E(G)\to\{1,\ldots,c\}$ is \emph{anagram-free} if $G$ has no path $v_0,\ldots,v_{2r}$ such that $\varphi(v_0v_1),\ldots,\varphi(v_{2r-1}v_{2r})$ is anagramish.  We also give an edge colouring version of \cref{main_vertex}.
+
+\begin{thm}\label{main_edge}
+    For every $c\in\N$, there exists a graph of $G$ of pathwidth $2$ that has no anagram-free edge $c$-colouring.
+\end{thm}
+
+
+\todo[inline]{Relation to Existing Work}
+
+The remainder of the paper is organized as follows.  In \cref{near_anagram_statement} we state the main lemma, which shows that, under a certain periodicity condition, every sufficiently long string contains a substring that is $\epsilon$-close to being anagramish.  In \cref{edge_colourings} we prove \cref{main_edge}.  In \cref{vertex_colourings} we prove \cref{main_vertex}.  Finally, in \cref{near_anagram_proof} we prove the main lemma.
+
+\section{Statement of the Main Lemma}
+\label{near_anagram_statement}
+
+Let $s:=s_1,\ldots,s_n$ be a string over an alphabet $\Sigma:=\{s_i:i\in\{1,\ldots,n\}\}$ and, for each $a\in \Sigma$, define $\hist_a(s):=|\{i\in\{1,\ldots,n\}:s_i=a\}$.  The \emph{histogram} of $s$ is the integer-valued $|\Sigma|$-vector $\hist(s):=(\hist_a(s):a\in\Sigma)$ indexed by elements of $\Sigma$.  Let $\|\cdot\|_1$ denote the L1 norm of a vector.\footnote{For real-valued $d$-vector $\boldsymbol{v}:=(v_1,\ldots,v_d)$, $\|\boldsymbol{V}\|_1=\sum_{i=1}^d|v_i|$.}  Note that a string $s_1,\ldots,s_{2r}$ is anagramish if and only if $\hist(s_1,\ldots,s_r)=\hist(s_{r+1},\ldots,s_{2r})$.  Equivalently, $\hist(s_1,\ldots,s_r)-\hist(s_{r+1},\ldots,s_{2r})=\boldsymbol{0}$ or
 $\|\hist(s_1,\ldots,s_r)-\hist(s_{r+1},\ldots,s_{2r})\|_1=0$.
 
-A string $s\in A^*$ is $\ell$-periodic if each length-$\ell$ substring of $s$ contains every character in $A$.  We make use of the following lemma:
+A string $s:=s_1,\ldots,s_n$ is $\ell$-periodic if each length-$\ell$ substring of $s$ contains every character in $\Sigma:=\bigcup_{i=1}^n s_i$.  We make use of the following lemma, which states that every sufficiently long $\ell$-periodic string contains a substring that is $\epsilon$-close to being anagramish.
 
 \begin{lem}\label{near_anagram_fourier}
-    For each $C,r_0,\ell\in\N$ and each $\epsilon>0$, there exists a positive integer $N$ such that each anagram-free $\ell$-periodic string $s_1,\ldots,s_N\in\{1,\ldots,C\}^N$ contains a substring $s_{i+1},\ldots,s_{i+2r}$ of length $2r \ge 2r_0$ such that $\|\hist(s_{i+1},\ldots,s_{i+r})-\hist(s_{i+r+1},\ldots,s_{i+2r})\|_1 \le \epsilon r$.
+    For each $C,r_0,\ell\in\N$ and each $\epsilon>0$, there exists a positive integer $N$ such that each anagram-free\todo{Do we need anagram-free specifically, or can use a generic property?} $\ell$-periodic string $s_1,\ldots,s_N\in\{1,\ldots,C\}^N$\todo{Do we need $C$ here, or is $\ell$-periodic enough?} contains a substring $s_{i+1},\ldots,s_{i+2r}$ of length $2r \ge 2r_0$ such that $\|\hist(s_{i+1},\ldots,s_{i+r})-\hist(s_{i+r+1},\ldots,s_{i+2r})\|_1 \le \epsilon r$.
 \end{lem}
 
-The proof of \cref{near_anagram_fourier} is deferred to \cref{near_anagram_section}.  We now give some intuition as to how it is used.  \cref{near_anagram_fourier} tells us that, even though we cannot always find an anagram, we can always find a substring that is $\epsilon$-close to being an anagram.  The process of checking if a string is anagram is often viewed as finding common terms in the first and second halves and crossing them both out.  If this results in a complete cancellation, then the string is an anagram.  \cref{near_anagram_fourier} tells us that we can always find a substring where, after exhaustive cancellation, only an $\epsilon$ fraction of the original terms remain.
+The proof of \cref{near_anagram_fourier} is deferred to \cref{near_anagram_proof}.  We now give some intuition as to how it is used.  The process of checking if a string is anagramish is often viewed as finding common terms in the first and second halves and crossing them both out.  If this results in a complete cancellation of all terms, then the string is an anagram.  \cref{near_anagram_fourier} tells us that we can always find a substring where, after exhaustive cancellation, only an $\epsilon$ fraction of the original terms remain.
 
-Our strategy is to use \cref{near_anagram_fourier} to show that, if four terms in one half are allowed to gang up and cancel six terms in the second half (and vice-versa) then (under conditions that we guarantee) we will be able to fully complete the cancellation process.  To achieve this type of four versus six cancellation, we study a small subgraph that has a set of four paths that use every edge exactly twice and also has a set of three paths that use every edge exactly once.  Using the latter set of paths twice gives a collection of six paths that covers every edge twice.  Thus four terms in one half can be used to cancel six terms in the other half.
+Our strategy is to use \cref{near_anagram_fourier} to show that, if four terms in one half are allowed to gang up and cancel six terms in the other half then (under conditions that we guarantee) we will be able to fully complete the cancellation process.  To achieve this type of four versus six cancellation, we study a small subgraph that has a set of four paths that use every edge exactly twice and also has a set of three paths that use every edge exactly once.  Using the latter set of paths twice gives a collection of six paths that covers every edge twice.  Thus four terms in one half can be used to cancel six terms in the other half.
+
+Note that \cref{near_anagram_fourier} requires that the string $s$ be $\ell$-periodic.  The following lemma will be helpful in obtaining strings that can be used with \cref{near_anagram_fourier}.
+
+\begin{lem}\label{periodicity}
+    Let $\Sigma$ be a finite set and let $P:A^*\to\{0,1\}$ be a function such that,
+    \begin{compactenum}[({A}1)]
+        \item if $P(s')=0$ for some substring $s'$ of $s$ then $P(s)=0$; and
+        \item for each $n\in\N$, there exists at least one $s\in A^n$ such that $P(s)=1$.
+    \end{compactenum}
+    Then there exists $\ell\in\N$ and $\Phi\subseteq A$ for each $n\in\N$, there exists $s\in \Phi^*$ such that:
+    \begin{compactenum}[(C1)]
+        \item $P(s)=1$; and
+        \item $s$ is $\ell$-periodic.
+    \end{compactenum}
+\end{lem}
+
+\begin{proof}
+    Take $\Phi$ to be a minimal subset of $\Sigma$ such that there exists $s\in\Phi^n$ with $P(s)=1$, for each $n\in N$.  Such a $\Phi$ exists by (A2) and the fact that $\Sigma$ is finite. By definition $\Phi$ satisfies (C1) so we need only show that it also satisifies (C2).  If $|\Phi|=1$ then we are done since every string over a $1$-character alphabet is $1$-periodic, so assume $|\Phi|>1$.
+
+    The minimality of $\Phi$ implies that, for any $x\in\Phi$, there exist $\ell_x\in\N$ such that $P(s)=0$ for each $s\in\Phi^{\ell_x}$.  Therefore (A2) implies that $P(s)=0$ for each $s\in\Phi^*$, with $|s|\ge \ell_x$.  Set $\ell:=\max\{\ell_x:x\in \Phi\}$.  Now (A1) implies that, for every $s\in\Phi^*$, every length $\ell$-substring of $s$ contains every character in $\Phi$, so $s$ is $\ell$-periodic.
+\end{proof}
 
 
-\section{Edge Colouring}
+\section{Vertex Colouring}
+\label{vertex_colourings}
 
-For any $n\in N$, let $S_n$ be the graph with vertex set $V(S_n):=\{a_1,\ldots,a_n,b_1,\ldots,b_n\}$ and edge set
+For each $n\in\N$, let $G_n$ be the $2\times n$ square grid with top row $a_1,ldots,a_n$ and bottom row $b_1,\ldots,b_n$.
+
+
+Let $\phi^*$ be a vertex colouring of $G_4$.  We say that a vertex colouring $\phi$ of $G_n$ is $(\phi^*,\ell)$-periodic if $\phi^*\in \{phi_{4i,4},\ldots,\phi_{4(i+\ell),4}\}$ for each $i\in\{1,\ldots,\lfloor(n-\ell+1)/4\rfloor\}$.
+
+\begin{lem}
+    If $\afcn(G_n)\le c$ for all $n\in\N$ then there exists $\ell\in\N$ and colouring vertex $\phi^*\in\Phi_4$ such that, for every $n\in\N$, $G_n$ has an anagram-free $(\phi^*,\ell)$-periodic vertex colouring.
+\end{lem}
+
+
+Let $s_1,\ldots,s_r$ be a sequence where each $s_i$ is a pair $(k_i,\phi_i)$ with $k_i\in\{1,\ldots,\ell\}$ and $\phi_i$ is a vertex colouring of $G_{4k_i}$.  
+
+
+
+
+
+
+
+
+
+\section{Dead}
+
+
+
+
+
+
+
+
+
+
+
+Let $A=\{a_i:i\in\N\}$ and $B:=\{b_i:i\in\N\}$ be two infinite sets indexed by natural numbers.  Let $G$ be the graph with vertex set $V(S):=A\cup B$  and edge set
 \[
-    E(S_n) := \bigcup_{i=1}^{n-1} \{a_ib_i,a_ia_{i+1},b_ib_{i+1},a_ib_{i+1}\} \cup \{a_nb_n\} \enspace
+    E(G) := \bigcup_{i=0}^{\infty} \{a_ib_i,a_ia_{i+1},b_ib_{i+1}\} \enspace
 \]
-(see \cref{s_n}).
+% It is easy to see that $\pw(G)=2$
+% The graph $G$ has pathwidth at least $2$ because, it contains, for example, the $4$-cycle $a_1a_2b_2b_1$.  It has pathwidth at most $2$ because it has a path decomposition $(B_x:x\in V(P))$ whose largest bag has size $3$.  Specifically, $P:=(0,1,2,\ldots)$, $B_{2i}:=\{a_{i},a_i,b_{i+1}\}$, and $B_{2i+1}:=\{a_{i},a_{i+1},b_{i+1}\}$ for each $i\in\N$.
+
+For each $i,j\in\N$ with $i\le j$, define $G[i,j]:=G[\bigcup_{k=i}^j\{a_k,b_k\}]$ and we call $G[i,j]$ a \emph{$(j-i)$-block}.  For each $n\in\N$, $G_n:=S[0,n]$.  Note that each $t$-block $G[i,i+t]$ is isomorphic to $G_t$ with the mapping $f:G_t\to V(G[i,i+t])$ given by $f_i(a_{j}):=a_{i+j}$ and $f_i(b_{j}):=b_{i+j}$ for each $j\in\{0,\ldots,t\}$; see \cref{g_n}.
 
 \begin{figure}
     \begin{center}
-        \includegraphics{figs/s_n}
-    \end{center}
-    \caption{The graph $S_n$}
-    \label{s_n}
+    % \includegraphics{figs/g_n}
+\end{center}
+\caption{The graph $G_n$}
+\label{g_n}
 \end{figure}
 
-Our first result shows that the anagram-free chromatic index of $S_n$ is unbounded.
+For each $n\in\N$, let $\Phi_n$ denote the set of vertex $c$-colourings of $G_n$. Since $G_n$ has $2n+2$ vertices, $|\Phi_n|=c^{2n+1}$.  Given some $\phi\in\Phi_n$, each $t$-block $S[i,i+t]$ defines an edge colouring $\phi_{i,t}\in \Phi_t$ of $S_t$ given by $\phi_{i,t}(v):=\varphi(f_i(v))$. For odd $n\ge 1$, define $s_\phi:=\langle\sigma_{2i,1}:i=0,\ldots,(n-1)/2\}$.  That is, $s_\phi$ is a sequence of vertex colourings in $\Phi_1$.  Each of these colourings is a colouring of the $4$-cycle $a_1b_1b_2a_2$.
 
-\begin{thm}\label{edge_colouring}
-    For any $c\in\N$, there exists $n\in\N$ such that, for any edge $c$-colouring $\varphi:E(S_n)\to\{1,\ldots,c\}$ of $S_n$, there exists a path $v_0,\ldots,v_{2r}$ in $S_n$ such that $\varphi(v_0v_1),\ldots,\varphi(v_{r-1}v_r)$ is a permutation of $\varphi(v_rv_{r+1},\ldots,v_{2r-1}v_{2r})$.
-\end{thm}
+\begin{lem}\label{periodic_vertex_colouring}
+    If $\afcn(G_n)\le c$ for each $n\in\N$, then there exists $\ell\in\N$ and $\Phi\subseteq\Phi_1$ such that, for each $b\in\N$,
+    \begin{compactenum}
+        \item $G_{2b-1}$ has at least one anagram-free vertex colouring $\phi$ with $s_\phi\in\Phi^{b}$; and
+        \item each anagram-free vertex colouring $\phi$ of $G_{2b-1}$ with $\phi\in\Phi^{b}$ is $\ell$-periodic.
+    \end{compactenum}
+\end{lem}
 
-Let $S_n':=S_n-\{a1b_1,a_nb_n\}$. Before proving \cref{edge_colouring} we need the following easy constructions that allow the kind of four versus six cancellation described earlier.  These three lemmas are illustrated in \cref{good_paths}:\todo{Write these paths down for the visually impaired.}
+
+\begin{lem}\label{fixed_breaker_blocks}
+    If $\phi:V(G_{2b-1})\to\{1,\ldots,c\}$ is an anagram-free vertex colouring of $G_n$ then $\phi':V(G_{5b}\to\{1,\ldots,c+6\}$ in which
+    \[
+        DEFINE \phi'
+    \]
+    is an anagram-free colouring of $G_{5b-1}$.
+\end{lem}
+
+
+\begin{proof}[Proof of \cref{main_vertex}]
+    Suppose, for the sake of contradiction, that $\afcn(G_n)\le c$ for each $n\in\N$.  Then applying \cref{periodic_vertex_colouring} and \cref{near_anagram_fourier}, we find some $N\in\N$ and some anagram-free vertex $c$-colouring of $G_N$ that, contains a subgraph isomorphic to $G_n$ that has a colouring $\phi:V(G_{4b-1})\to\{1,\ldots,c\}$ such that $\|\hist(\phi_{0,1},\ldots,\phi_{2b-1,1})-\hist(\phi_{2b,1},\ldots,\phi_{4b-1,1})\|\le\epsilon b$.In
+
+    For each $i\in\{0,\ldots,b-1\}$, let $\alpha_i:=\phi_{2i,1}$ and $\beta_i:=\phi_{2b+2i}$. Let $\alpha:=\alpha_0,\ldots,\alpha_{b-1}$ adn let $\beta:=\beta_0,\ldots,\beta_{b-1}$.  For each $x\in\Phi_1$, let $\delta_x:=\hist(\alpha)-\hist(\beta)$.
+
+    Define subsets $A,B\subseteq \{1,\ldots,b-2\}$ with the following properties:
+    \begin{compactenum}[(a)]
+        \item There is no pair $i,j\in A$ with $i-j=1$ and no pair $i,j\in B$ with $i-j=1$.
+        \item if $\delta_x>0$ then $|\{i\in A:\alpha_i=x\}|=\delta_x=\tfrac{1}{2}|\{|i\in B:\beta_i=x\}|$
+        \item if $\delta_x<0$ then $|\{i\in A:\alpha_i=x\}|=2\delta_x=2|\{|i\in B:\beta_i=x\}|$.
+        \item if $\delta_x=0$ then $|\{i\in A:\alpha_i=x\}|=|\{|i\in B:\beta_i=x\}|=0$.
+    \end{compactenum}
+    The existence of such sets $A$ and $B$ is not difficult since their total size is only $\epsilon n$ and $\alpha$ and $\beta$ each contain at least $n/2\ell$ occurrences of each $x\in\Phi_1$.\todo{Give details!}
+
+    Now, construct the colouring $\phi'$ of $G_{5b-1}$ defined in \cref{fixed_breaker_blocks}.  We will show that $G_{5b-1}$ contains a path $P$ from $a_0$ to $a_{5b-1}$ whose colour sequence is anagramy.  For each $x\in\Phi_1$, let $A_x:=\{i\in A:\alpha_i=x\}$ and let $B_x:=\{i\in B:\beta_i=x\}$.
+
+    Let $x\in\Phi_1$ be such that $\delta_x>0$.
+    For each $i\in A_x$, $P$ contains the subpath $a_rb_rb_{r+1}a_{r+1}$ for the appropriate value of $r<2b$.\todo{Define $r$}.  Now, partition the values in $B_x$ into $\delta_x$ pairs. For each pair $P$ will contain the subpaths $a_{r_1}a_{r_1+1}$ and $b_{r_1}b_{r_1+1}$.
+
+    For $x\in\Phi_1$ such that $\delta_x < 0$ we proceed symmetrically, reversing the roles of $A$ and $B$.
+\end{proof}
+
+
+
+%
+%
+% Let $b\in\N$, let $n:=2b$, and let $\phi:V(G_n)\to\{1,\ldots,c\}$ be a vertex colouring of $G_n$.  For each $i\in\{0,\ldots,b-1\}$, let $\sigma_
+%
+
+
+
+\todo[inline]{Come up with a similar argument to show that anagram-free vertex colouring of $S_n$ with a constant number of colours is not possible.}
+
+\todo[inline]{See if we could even do the graph $2\times n$ grid that Wilson conjectures can't be anagram-free coloured with a constant number of colours.}
+
+
+
+
+\section{Edge Colouring}
+\label{edge_colourings}
+
+Let $A=\{a_i:i\in\N\}$ and $B:=\{b_i:i\in\N\}$ be two infinite sets indexed by natural numbers.  Let $S$ be the graph with vertex set $V(S):=A\cup B$  and edge set
+\[
+    E(S_n) := \bigcup_{i=0}^{\infty} \{a_ib_i,a_ia_{i+1},b_ib_{i+1},a_ib_{i+1}\} \enspace
+\]
+(see \cref{s_n}).  The graph $S$ has pathwidth at least $2$ because, for example $a_1b_1b_2$ is a clique on $3$ vertices.  It has pathwidth at most $2$ because it has a path decomposition $(B_x:x\in V(P))$ whose largest bag has size $3$.  Specifically, $P:=(0,1,2,\ldots)$, $B_{2i}:=\{a_{i},a_i,b_{i+1}\}$, and $B_{2i+1}:=\{a_{i},a_{i+1},b_{i+1}\}$ for each $i\in\N$.
+
+For any $i,j\in\N$ with $i\le j$, define $S[i,j]:=S[\bigcup_{k=i}^j\{a_k,b_k\}]$ and we call $S[i,j]$ a \emph{$(j-i)$-block}.  For each $n\in\N$, $S_n:=S[0,n]$.  Note that each $t$-block $S[i,i+t]$ is isomorphic to $S_t$ with the mapping $f:S_t\to V(S[i,i+t])$ given by $f_i(a_{j}):=a_{i+j}$ and $f_i(b_{j}):=b_{i+j}$ for each $j\in\{0,\ldots,t\}$; see \cref{s_n}.
+
+\begin{figure}
+    \begin{center}
+    \includegraphics{figs/s_n}
+\end{center}
+\caption{The graph $S_n$}
+\label{s_n}
+\end{figure}
+
+For each $n\in\N$ let $\Phi_n$ be the set of edge $c$-colourings of $S_n$.  Since $S_n$ has $2n+1$ edges, $|\Phi_n|=c^{2n+1}$.
+Given some $\varphi\in\Phi_n$, each $t$-block $S[i,i+t]$ defines an edge colouring $\varphi_{i,t}\in \Phi_t$ of $S_t$ given by $\varphi_{i,t}(v):=\varphi(f_i(v))$.  For any $b\in\N$, $n:=3b$, and any edge  colouring $\varphi$ of $S_n$, we define the \emph{$3$-block colour sequence} $s_\varphi:=\langle \varphi_{3i,3}: i=0,\ldots,b\rangle$.  We say that $\varphi$ is \emph{$3$-block $\ell$-periodic} if $s_\varphi$ is $\ell$-periodic.
+
+\begin{lem}\label{block_breakers}
+    If $\afci(S_n)\le c$ for each $n\in\N$ then there exists an integer $\ell_3:=\ell_3(c)$ and an edge colouring $c_3\in\Phi_3$ such that, for each $n\in\N$ there exists an anagram-free edge $c$-colouring of $S_n$ that is $3$-block $\ell$-periodic.
+\end{lem}
+
+% For any string $s\in \Sigma^*$, define \emph{parity histogram} $\p(s):=(\h_a(s)\bmod 2: a\in\Sigma)$.
+
+
+
+ % the $|A|$-vector indexed by elements of $A$ where $p_a
+
+
+
+
+% \begin{proof}
+%     If the statement is true for $S_n$ then it is true for all $n'\le n$. Thus, we may assume that $n=2b$ is even.  A sequence $\varphi_0,\ldots,\varphi_{b-1}$ of edge $c$-colourings of $S_2$ is \emph{compatible} if $\varphi_{i}(a_{2}b_{2})=\varphi_{i+1}(a_0b_0)$ for each $i\in\{0,\ldots,b-1\}$. Observe that any compatible sequence $\varphi_0,\ldots,\varphi_{b-1}$ defines an edge colouring of $S_n$ by colouring $S[2i,2i+2]$ using $\varphi_i$ for each $i\in\{0,\ldots,b-1\}$.
+%
+%     The predicate $P$ defined by the statement
+%     ``$\varphi_0,\ldots,\varphi_{b-1}$ defines an anagram-free edge colouring of $S_n$'' satisfies assumption (A1) of \cref{periodicity}.  The assumption that $\afci(S_n)\le c$ ensures that $P$ also satisfies assumption (A2).  Therefore, by \cref{periodicity} there exists a sequence $\varphi_0,\ldots,\varphi_{b-1}$ that defines an anagram-free edge $c$-colouring of $S_n$ and is $\ell$-periodic.
+% \end{proof}
+%
+% Let $n:=2b$, let $\varphi$ be an edge $c$-colouring of $S_n$, let $c_2\in\Phi_2$, and let $I=\{i\in\{0,\ldots,b-1\}:\varphi_{2i,2}=c_2\}$ and label the elements of $I$ as $i_0<i_1<\cdots<i_k$. Consider the sequence of blocks $C_1,\ldots,C_k$ where $C_q:=S[2i_q+1,2i_{q+1}]$ and let $t_q:=i_{q+1}-i_q$ for each $q\in\{1,\ldots,k\}$.  Each $C_q$ is a $2t_q$-block and it defines a colouring $\zeta_q:=\varphi_{2i_q,t_q}$.  Define $s_{\varphi,c_2}:=\zeta_1,\ldots,\zeta_k$.
+%
+% \begin{lem}
+%     If $\afci(S_n)\le c$ for each $n\in\N$ then there exists an integer $\ell:=\ell(c)$ and an edge colouring $c_2\in\Phi_2$ such that, for each $n\in\N$ there exists an anagram-free edge $c$-colouring such that any length-$\ell$ substring of $s_\varphi$ contains $c_2$ and the $s_{\varphi,c_2}$ is $\ell$-periodic.
+% \end{lem}
+%
+% \begin{proof}
+%     By \cref{block_breakers} there exists $c_2\in\Phi_2$ and, for each $b\in\N$, there is a colouring $\varphi^{(b)}$ of $S_{2b}$ so that every length $\ell_2$ substring of $s_{\varphi^{(b)}}$ contains $c_2$.  Let $I_n:=\{i\in\{1,\ldots,b\}:\varphi_{2i,2}=c\}$.
+% \end{proof}
+%
+%
+%
+%
+%
+%
+% Then the graph $S_n-\{\bigcup_{i\in I}\{a_{2i+1},b_{2i+1}\}$ contains $k$ components $C_1,\ldots,C_{|I|-1}$ where each component $C_k:=S[2i+2,2j]$ for distinct $i,j\in I$.  (It may also contain up to two additional components, one that contains $S[0,0]$ and one that contains $S[n,n]$.)  It component $C_k$ is a $t$-block for some $t\le 2\ell$, which is
+%
+% % $ contains two vertices of $S[i:i+2]$ and two vertices for $S[j:j+2]$ for distinct $i,j\in I$.  Each component
+%
+%
+%
+%
+%
+% Note that each graph $S_n$ is a subgraph of the infinite graph $S:=S_\infty$.  For each
+%
+
+% Our first result shows that the anagram-free chromatic index of $S_n$ is unbounded.
+%
+% \begin{thm}\label{edge_colouring}
+%     For any $c\in\N$, there exists $n\in\N$ such that, for any edge $c$-colouring $\varphi:E(S_n)\to\{1,\ldots,c\}$ of $S_n$, there exists a path $v_0,\ldots,v_{2r}$ in $S_n$ such that $\varphi(v_0v_1),\ldots,\varphi(v_{r-1}v_r)$ is a permutation of $\varphi(v_rv_{r+1},\ldots,v_{2r-1}v_{2r})$.
+% \end{thm}
+
+Our strategy is break $S_n$ up into \emph{blocks} whose size is upper bounded by some value $\ell$ depending only on $c$. More precisely, for each  using the mapping $\rho:V(S_{i,i+t})\to V(S_t)$ given by $\rho(a_{i+j}):=a_{j}$ and $\rho(b_{i+j}):=b_{j}$.  In this way, any (edge or vertex) colouring $\varphi$ of $S[i,i+t]$ defines a colouring $\varphi_{i,t}:V(G)$ of $S_t$.  We say that two $t$-blocks $B_{i,t}$ and $B_{j,t})$ have the same colouring (under $\varphi$) if $\varphi_{i,t}=\varphi_{j,t}$.
+
+Let $S_n':=S_n-\{a1b_1,a_nb_n\}$. We need the following easy constructions that allow the kind of four versus six cancellation described earlier.  These three lemmas are illustrated in \cref{good_paths}:\todo{Write these paths down for the visually impaired.}
 
 \begin{figure}
     \begin{center}
@@ -184,48 +399,103 @@ Let $S_n':=S_n-\{a1b_1,a_nb_n\}$. Before proving \cref{edge_colouring} we need t
 \end{lem}
 
 
-In addition to the path sets described above, we need a simple gadget with three paths $a_1\rightsquigarrow a_3$, $a_1\rightsquigarrow b_3$ and $b_1\rightsquigarrow a_1$ without interfering with larger adjacent pieces.
-
+In addition to the path sets described above, we use three paths in $S_3$, $R_1:=a_1\rightsquigarrow a_3$, $R_2:=a_1\rightsquigarrow b_3$ and $R_3:=b_1\rightsquigarrow a_1$ that allows us to connect blocks without interfering with larger adjacent pieces.
 
 \begin{lem}
     The graph $S_3'$ contains three paths $R_1,\ldots,R_3$. For each $(x,y)\in\{(a_1,a_3),(a_1,b_3),(b_1,a_1)\}$ exactly one of these paths begins at $x$ and ends at $y$ and this path includes exactly one of $\{a_1,b_1\}$ and exactly one of $\{a_3,b_3\}$.
 \end{lem}
 
-Observe that, for $n=2t+1$, $S_n$ can be constructed by gluing together $t$ copies of $S_3$ where the vertices $a_3$ and $b_3$ in each copy are identified with the vertices $a_1$ and $b_1$ in the next copy.  In our proof we will not use the edges $a_{2x+1}b_{2x+1}$ for any $x\in\{0,\ldots,t\}$  (which is why these edges are lighter in \cref{s_n}).  Thus, the graph we are really interested in is the graph obtained by gluing together $t$ copies of $S_3'$.  We now proceed with the proof of \cref{edge_colouring}.
-
-\begin{proof}[Proof of \cref{edge_colouring}]
-  Consider the graph $S_N$ for a very large value $N:=2t+1$ to be discussed shortly.  As discussed above, this graph is obtained by from $t$ copies of $S_3$ and we will only make use of the edges in $S_3'$.  The graph $S_3'$ has $7$ edges and therefore has a set $X$ of $c^7$ possible edge $c$-colourings.
-  For $X'\subseteq X$, we say that an edge colouring of $S_N$ is $X'$-restricted each of the $t$ copies of $S_3$ uses a colouring in $X'$.
-
-  Suppose, for the sake of contradiction, that $S_N$ has anagram-free edge-colouring that uses $c$ colours, for every $N\in\N$.  Take a minimal subset $X'\subseteq X$ such that $S_N$ has an $X'$-restricted anagram-free $c$-edge colouring for every $N\in\N$.  This implies that there exists an integer $\ell:=\ell(X')$ such that, for every $N\in\N$, every $i\in\{0,\ldots,t-\ell\}$, every $X'$-restricted anagram-free edge $c$-colouring of $S_N$ and every $\rho\in X$, the subgraph of $S_N$ induced by $\{a_{2i+1},\ldots,a_{2(i+\ell)+1}\}\cup \{b_{2i+1},\ldots,b_{2(i+\ell)+1}\}\}$ contains a copy of $S_3'$ coloured using $\rho$.
+Observe that, for $n=2b+1$, we can always thinking of $S_n$ as a sequence of $b$ $3$-blocks $\langle B_{2j+1,3}: j=0,\ldots,b-1\rangle$.
 
 
-  Fix some $X'$-restricted anagram-free edge $c$-colouring $\varphi$ of $S_N$.
-  Now select any $\rho\in X'$ and use each occurrence of the colouring $\rho$ to break $S_N$ into blocks, each of length at most $\ell$ with each pair of consecutive blocks separated by a copy of $S_3'$ coloured using the colouring $\rho$.  Now, each block is a copy of $S_k$ for some $k\in\{3,\ldots,\ell-1\}$.  The graph $S_k'$ has $4k-5$ edges and therefore has at most $c^{4k-5}$ possible edge $c$-colourings.  Thus, there are at most $\sum_{k=3}^{\ell-1} c^{4k-5} < c^{4\ell-5}$ types of blocks.\todo{constants.}
+Our first step is to break $S_n$ up into blocks of length at most $2\ell$ using a sequence of $3$-blocks that all have the same colouring.  We begin with the following immediate consquence of \cref{periodicity}.
 
-  These blocks define a string $s_0,\ldots,s_m$ over an alphabet $A$ of size $C\le c^{4\ell-4}$.  Let $r_0:=10^{100}$ and $\epsilon=1/1000000c^{4\ell-4}\ell$. Note that $\epsilon$ and $r_0$ depends only on $\ell$, which depends only on $X'$, which depends only $c$.  None of these values depends on $N:=2t+1$.  Therefore, by \cref{near_anagram_fourier}, we can choose $t$ sufficiently large to obtain a substring $p:=p_1,\ldots,p_{2r}$ of $s_0,\ldots,s_m$ whose length is $2r>2r_0$ and such that $\|\hist(p_1,\ldots,p_{r})-\hist(p_{r+1},\ldots,p_{2r})\|_1\le \epsilon r$.
+\begin{lem}\label{block_breaker}
+    If $\afci(S_n)\le c$ for each $n\in\N$ then there exists an integer $\ell$ and an edge $c$-colouring $\varphi^*$ of $S_3$ such that, for each $b\in\N$, there exists an anagram-free edge $c$-colouring $\varphi:E(S_{2b+1})\to\{1,\ldots,c\}$ such, for each $i\in\{0,\ldots,b-\ell-1\}$ XXXXXa;lskdfjl;kadsjfqjw o;eiu3qp4 that the sequence $\langle \varphi_{2i+1,3}:i=0,\ldots,b-1\rangle\in\Phi^b$ and is $\ell$-periodic.
+\end{lem}
 
-  The substring $p_1,\ldots,p_{2r}$ corresponds to a sequence of $2r$ blocks in the original graph $S_n$. For each $x\in X'$, let $\delta_x:=\hist_x(p_1,\ldots,p_r)-\hist_x(p_{r+1},\ldots,p_{2r})$.  By \cref{near_anagram_fourier}, $|\delta_x|\le \epsilon r$.
+% Let $\ell$ and $\Phi$ be the integer and set of colouring of $S_3$ given by \cref{block_breaker}.  For each $b\in\N$, fix a particular anagram-free edge $c$ colouring $\varphi^{(b)}$ of $S_{2b+1}$ satisfying the conditions of \cref{block_breaker}. For each $b\in\N$, let $J_{b}:=\{j\in\{0,\ldots,b-1\}:\varphi^{(b)}_{2j+1,3}=\varphi^*\}$.  Finally, let $\Phi_b$ be the set of all anagram-free edge $c$-colourings $\varphi$ of $S_{2b+1}$ such that $\varphi_{2j+1,3}=\varphi^*$ for each $j\in J_b$.  Under the assumption of \cref{block_breaker}---namely that $\afci(S_n)\le c$ for each $n\in\N$---we know that $\Phi_b$ is non-empty for all $b\in\N$.
+%
+% Now, consider the set $J_b$ for some $b\in\N$ and let $j_1<j_2<\cdots<j_k$ be the elements of $J_b$.  Each pair of consecutive elements $j_{x},j_{x+1}\in J$ defines a block $B_x:=B_{2j_x+3,2(j_{x+1}-j_x-1)}$ that begins where $B_{j_x,3}$ ends and ends where $B_{j_{x+1},3}$ begins.  For any colouring $\varphi\in\Phi_b$, each block $B_x$ has an associated length $\ell_x=j_{x+1}-j_x$ and colouring $\varphi_x:=\varphi_{2j_x+1,2\ell_x+1}$.  The sequence $\langle (\ell_x,\varphi_x):x=1,\ldots,b-1\rangle$ is certainly anagram-free since, otherwise, the colouring $\varphi$ is not anagram-free.  We can now apply \cref{periodicity} again to show that
+%
+% \begin{lem}
+%     If $\afci(S_n)\le c$ for each $n\in\N$ then there exists an integer $\ell$ and a
+%
+%
+%
+%
+%     set $\Phi$ of edge $c$-colourings of $S_3$ such that, for each $b\in\N$, there exists an anagram-free edge $c$-colouring $\varphi:E(S_{2b+1})\to\{1,\ldots,c\}$ such that the sequence $\langle \varphi_{2i+1,3}:i=0,\ldots,b-1\rangle\in\Phi^b$ and is $\ell$-periodic.
+% \end{lem}
+% %
+% %
+% %
+% % Call these blocks $B_1,\ldots,B_{|J|-1}$ so that $B_i$ precedes $B_{j}$ if $a_{V(B_i)$ in this order if $B_{i}:=B_{x,(y-x)} By \cref{block_breaker} $y-x<\ell$, so $B_{}$
+%
+%
+% %
+% %  $\Phi_n$ be the set of all anagram-free $c$-colourings of $S_n$ that satisfy the conditions of \cref{block_breaker}. Take any $\varphi^*\in\Phi$ and let $J_\phi:=, for any $\varphi\in\Phi_n$, the
+% %
+% %
+% %
+% % Then, for any $b\in\N$ and any edge $c$-colouring of $S_n$
+% %
+% % Let $\ell$ and $\varphi^*$ be an integer and an edge $c$-colouring of $S_3$ that satisfy the conditions of \cref{block_breaker}.  If $\afci(S_n)\le c$ for each $n\in\N$, then, for each $n\in\N$, $S_n$ has a non-empty set $\Phi_n$ of edge $c$-colourings satisfying the conditions of \cref{block_breaker}. For each $\varphi\in \Phi_n$, consider the subset $J:=\{j\in\{0,\ldots,b-1\}:\varphi_{2j+1,3}=\varphi^*\}$.
+%
+% %
+% %
+% %
+% %  This defines a set $B$ of $|J|-1$ maximal blocks in $S_n$ each of the form $B_{2j+3,\ell_j}$ where $j\in J$ and $\{j,\ldots,j+(\ell-1)/2\}\cap J=\{j,j+(\ell-1)/2\}$.  In words, each block in $B$ is bookended by a pair of $3$-blocks coloured with $\varphi^*$.  Furthermore, $\ell_j\le
+% %
+%
+%
+%
+%
+%
+%
+% For each $n\in\N$, there
+%
+%
+%
+%
+%
+% Observe that, for $n=2t+1$, $S_n$ can be constructed by gluing together $t$ copies of $S_3$ where the vertices $a_3$ and $b_3$ in each copy are identified with the vertices $a_1$ and $b_1$ in the next copy.
+%
+%
+% In our proof we will not use the edges $a_{2x+1}b_{2x+1}$ for any $x\in\{0,\ldots,t\}$  (which is why these edges are lighter in \cref{s_n}).  Thus, the graph we are really interested in is the graph obtained by gluing together $t$ copies of $S_3'$.  We now proceed with the proof of \cref{edge_colouring}.
+%
+% \begin{proof}[Proof of \cref{edge_colouring}]
+%   Consider the graph $S_N$ for a very large value $N:=2t+1$ to be discussed shortly.  As discussed above, this graph is obtained by from $t$ copies of $S_3$ and we will only make use of the edges in $S_3'$.  The graph $S_3'$ has $7$ edges and therefore has a set $X$ of $c^7$ possible edge $c$-colourings.
+%   For $X'\subseteq X$, we say that an edge colouring of $S_N$ is $X'$-restricted each of the $t$ copies of $S_3$ uses a colouring in $X'$.
+%
+%   Suppose, for the sake of contradiction, that $S_N$ has anagram-free edge-colouring that uses $c$ colours, for every $N\in\N$.  Take a minimal subset $X'\subseteq X$ such that $S_N$ has an $X'$-restricted anagram-free $c$-edge colouring for every $N\in\N$.  This implies that there exists an integer $\ell:=\ell(X')$ such that, for every $N\in\N$, every $i\in\{0,\ldots,t-\ell\}$, every $X'$-restricted anagram-free edge $c$-colouring of $S_N$ and every $\rho\in X$, the subgraph of $S_N$ induced by $\{a_{2i+1},\ldots,a_{2(i+\ell)+1}\}\cup \{b_{2i+1},\ldots,b_{2(i+\ell)+1}\}\}$ contains a copy of $S_3'$ coloured using $\rho$.
+%
+%
+%   Fix some $X'$-restricted anagram-free edge $c$-colouring $\varphi$ of $S_N$.
+%   Now select any $\rho\in X'$ and use each occurrence of the colouring $\rho$ to break $S_N$ into blocks, each of length at most $\ell$ with each pair of consecutive blocks separated by a copy of $S_3'$ coloured using the colouring $\rho$.  Now, each block is a copy of $S_k$ for some $k\in\{3,\ldots,\ell-1\}$.  The graph $S_k'$ has $4k-5$ edges and therefore has at most $c^{4k-5}$ possible edge $c$-colourings.  Thus, there are at most $\sum_{k=3}^{\ell-1} c^{4k-5} < c^{4\ell-5}$ types of blocks.\todo{constants.}
+%
+%   These blocks define a string $s_0,\ldots,s_m$ over an alphabet $\Sigma$ of size $C\le c^{4\ell-4}$.  Let $r_0:=10^{100}$ and $\epsilon=1/1000000c^{4\ell-4}\ell$. Note that $\epsilon$ and $r_0$ depends only on $\ell$, which depends only on $X'$, which depends only $c$.  None of these values depends on $N:=2t+1$.  Therefore, by \cref{near_anagram_fourier}, we can choose $t$ sufficiently large to obtain a substring $p:=p_1,\ldots,p_{2r}$ of $s_0,\ldots,s_m$ whose length is $2r>2r_0$ and such that $\|\hist(p_1,\ldots,p_{r})-\hist(p_{r+1},\ldots,p_{2r})\|_1\le \epsilon r$.
+%
+%   The substring $p_1,\ldots,p_{2r}$ corresponds to a sequence of $2r$ blocks in the original graph $S_n$. For each $x\in X'$, let $\delta_x:=\hist_x(p_1,\ldots,p_r)-\hist_x(p_{r+1},\ldots,p_{2r})$.  By \cref{near_anagram_fourier}, $|\delta_x|\le \epsilon r$.
+%
+%   To deal with the fact that $\delta_x>0$ we need $6\delta_x$ copies of $x$ in $p_1,\ldots,p_r$ and $4\delta_x$ copies of $x$ in $p_{r+1},\ldots,p_{2r}$.  By using paths $Q_1,\ldots,Q_3$ ($2\delta_x$ times each) in the first half and using $P_1,\ldots,P_r$ ($\delta_x$ times each) in the second half we are able to cancel everything.\todo{First deal with the parity issue. (First $S_3$ colourings, then $S_{\le\ell}$ colourings, then parity vectors.)}  This is not a problem because each of these contains at least $r/\ell$ copies of $x$.  Doing this for each $x\in X'$ gives rise to a demand for a total of at most
+%   \[
+%     \sum_{x\in |X'|} 4|\delta_x| \le \sum_{x\in |X'|} 4\epsilon r = 4|X'|\epsilon r\le 4c^7\epsilon r
+%   \]
+%   elements from each half.
+%   \todo[inline]{Explain that we use an independent set of blocks and how we (easily) get it.}
+%   \todo[inline]{Explain that every block we don't use just uses the straight path $a_1,\ldots,a_r$ across the top.}
+%   \todo[inline]{Explain that, for each of the three types of connector blocks, that type of block is used the same number of times in the first half and in the second half, so these connectors cancel each other out.}
+% \end{proof}
+%
+%
+%
 
-  To deal with the fact that $\delta_x>0$ we need $6\delta_x$ copies of $x$ in $p_1,\ldots,p_r$ and $4\delta_x$ copies of $x$ in $p_{r+1},\ldots,p_{2r}$.  By using paths $Q_1,\ldots,Q_3$ ($2\delta_x$ times each) in the first half and using $P_1,\ldots,P_r$ ($\delta_x$ times each) in the second half we are able to cancel everything.\todo{First deal with the parity issue. (First $S_3$ colourings, then $S_{\le\ell}$ colourings, then parity vectors.)}  This is not a problem because each of these contains at least $r/\ell$ copies of $x$.  Doing this for each $x\in X'$ gives rise to a demand for a total of at most
-  \[
-    \sum_{x\in |X'|} 4|\delta_x| \le \sum_{x\in |X'|} 4\epsilon r = 4|X'|\epsilon r\le 4c^7\epsilon r
-  \]
-  elements from each half.
-  \todo[inline]{Explain that we use an independent set of blocks and how we (easily) get it.}
-  \todo[inline]{Explain that every block we don't use just uses the straight path $a_1,\ldots,a_r$ across the top.}
-  \todo[inline]{Explain that, for each of the three types of connector blocks, that type of block is used the same number of times in the first half and in the second half, so these connectors cancel each other out.}
-\end{proof}
 
-\section{Vertex Colouring}
-\label{vertex_colouring}
 
-\todo[inline]{Come up with a similar argument to show that anagram-free vertex colouring of $S_n$ with a constant number of colours is not possible.}
 
-\todo[inline]{See if we could even do the graph $2\times n$ grid that Wilson conjectures can't be anagram-free coloured with a constant number of colours.}
 
 \section{Proof of \cref{near_anagram_fourier}}
-\label{near_anagram_section}
+\label{near_anagram_proof}
 
 \todo[inline]{This proof is taken from a draft of an older paper that was proving a lower bound for anagram-free vertex colouring.  Eventually, we found a simpler argument, so we never used this proof.  Right now, it proves the existence of a $2$-balanced substring but the same technique should work to give an $\epsilon$-balanced substring.  I also think this lemma (and probably a better quantitative version) has a proof using Fourier approximation, but I don't know enough about Fourier approximation.}
 
