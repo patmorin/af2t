@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
-<ipe version="70206" creator="Ipe 7.2.7">
-<info created="D:20180202090001" modified="D:20180202102838"/>
+<ipe version="70218" creator="Ipe 7.2.21">
+<info created="D:20180202090001" modified="D:20210323135246"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -190,8 +190,8 @@ h
 <arrowsize name="small" value="5"/>
 <arrowsize name="tiny" value="3"/>
 <color name="red" value="1 0 0"/>
-<color name="green" value="0 1 0"/>
 <color name="blue" value="0 0 1"/>
+<color name="green" value="0 1 0"/>
 <color name="yellow" value="1 1 0"/>
 <color name="orange" value="1 0.647 0"/>
 <color name="gold" value="1 0.843 0"/>
@@ -215,8 +215,8 @@ h
 <color name="lightgray" value="0.827"/>
 <color name="lightgreen" value="0.565 0.933 0.565"/>
 <color name="lightyellow" value="1 1 0.878"/>
-<dashstyle name="dashed" value="[4] 0"/>
 <dashstyle name="dotted" value="[1 3] 0"/>
+<dashstyle name="dashed" value="[4] 0"/>
 <dashstyle name="dash dotted" value="[4 2 1 2] 0"/>
 <dashstyle name="dash dot dotted" value="[4 2 1 2 1 2] 0"/>
 <textsize name="large" value="\large"/>
@@ -265,7 +265,49 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<path layer="alpha" matrix="0.03125 0 0 1.47059 286 -753.882" stroke="brew6" fill="brew6" pen="ultrafat">
+<path layer="alpha" matrix="0.03125 0 0 1.47059 222 -753.882" stroke="brew6" fill="brew6" pen="ultrafat">
+320 624 m
+320 608 l
+576 608 l
+576 624 l
+h
+</path>
+<path matrix="0.03125 0 0 1.47059 238 -753.882" stroke="brew6" fill="brew6" pen="ultrafat">
+320 624 m
+320 608 l
+576 608 l
+576 624 l
+h
+</path>
+<path matrix="0.0625 0 0 1.47059 204 -721.882" stroke="brew6" fill="brew6" pen="ultrafat">
+320 624 m
+320 608 l
+576 608 l
+576 624 l
+h
+</path>
+<path matrix="0.0625 0 0 1.47059 220 -721.882" stroke="brew6" fill="brew6" pen="ultrafat">
+320 624 m
+320 608 l
+576 608 l
+576 624 l
+h
+</path>
+<path matrix="0.125 0 0 1.47059 184 -689.882" stroke="brew8" fill="brew8" pen="ultrafat">
+320 624 m
+320 608 l
+576 608 l
+576 624 l
+h
+</path>
+<path matrix="0.25 0 0 1.47059 112 -657.882" stroke="brew6" fill="brew6" pen="ultrafat">
+320 624 m
+320 608 l
+576 608 l
+576 624 l
+h
+</path>
+<path matrix="0.03125 0 0 1.47059 286 -753.882" stroke="brew6" fill="brew6" pen="ultrafat">
 320 624 m
 320 608 l
 576 608 l
