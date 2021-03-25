@@ -81,9 +81,10 @@
     ¿Therese Biedl?%
     % \thanks{Department of Computer Science and Electrical Engineering, University of Ottawa}
     \qquad
-    ¿Paz Carmi?\qquad
+    Paz Carmi%
+    \thanks{Ben-Gurion University of the Negev}\qquad
     Vida Dujmović\footnotemark[2]\qquad
-    Pat Morin\footnotemark[3]%
+    Pat Morin%
     \thanks{School of Computer Science, Carleton University}}
 
 \DeclareMathOperator{\ddiv}{div}
@@ -197,9 +198,9 @@ Since \cref{near_anagram_fourier} requires that the string $s$ be $\ell$-periodi
 For each $n\in\N$, let $G_n$ be the $2\times n$ square grid with top row $a_0,\ldots,a_{n-1}$ and bottom row $b_0,\ldots,b_{n-1}$ (see \cref{g_n}). For convenience, we let $G:=G_\infty$.  For each $i,j\in\N$ with $i\le j$, define $G[i\mathbin{:}j]:=G[\bigcup_{k=i}^{j-1}\{a_k,b_k\}]$ and we call $G[i\mathbin{:}j]$ a \emph{$(j-i)$-block}. Note that each $t$-block $G[i\mathbin{:}i+t]$ is isomorphic to $G_t$ with the mapping $f:G_t\to V(G[i\mathbin{:}i+t])$ given by $f_i(a_{j}):=a_{i+j}$ and $f_i(b_{j}):=b_{i+j}$ for each $j\in\{0,\ldots,t-1\}$.
 
 \begin{figure}
-    \begin{center}
+    \centering{
         \includegraphics{figs/g_n}
-    \end{center}
+    }
     \caption{The graph $G_n$}
     \label{g_n}
 \end{figure}
@@ -222,8 +223,13 @@ Let $\Sigma:=\{(k,\phi):k\in\{1,\ldots,\ell\},\, \phi\in\Phi_{4k}\}$.  For a str
     \item for each $i\in\{0,\ldots,r\}$, $\phi[n_{s,i},n_{s,i+4}]:=\phi^*$, where $\phi^*$ is defined in \cref{breakers};
     \item for each $i\in\{1,\ldots,r\}$, $\phi[n_{s,i-1}+4,n_{s,i}]:=\phi_i$.
 \end{compactenum}
-In words, $G_{n_s}$ is decomposed into blocks each of whose length is a multiple of $4$.  There are \emph{colourful} blocks of lengths $4k_1,4k_2,\ldots,4k_{|s|}\le 4\ell$ and these are interleaved with \emph{boring} blocks, each of length $4$.  The colourful blocks have their vertex colours determined by $s$. The boring blocks are all coloured the same way, by $\phi^*$.
+See \cref{bigexample}.  In words, $G_{n_s}$ is decomposed into blocks each of whose length is a multiple of $4$.  There are \emph{colourful} blocks of lengths $4k_1,4k_2,\ldots,4k_{|s|}\le 4\ell$ and these are interleaved with \emph{boring} blocks, each of length $4$.  The colourful blocks have their vertex colours determined by $s$. The boring blocks are all coloured the same way, by $\phi^*$.
 
+\begin{figure}
+    \centering{\includegraphics{figs/bigexample-1}}
+    \caption{A string $s\in\Sigma^{10}$ and its corresponding coloured graph $G_{n_s}$.}
+    \label{bigexample}
+\end{figure}
 Define the function $P:\Sigma^*\to\{0,1\}$ so that $P(s):=1$ if and only if $\phi_s$ is an anagram-free colouring of $G_{n_s}$.  Observe that any substring $s'$ of $s$ defines a colouring $\phi_{s'}$ of $G_{n_{s'}}$ that appears in the colouring $\phi_s$ of $G_{n_s}$. Therefore $P$ satisfies property (A1) of \cref{periodicity}.  Furthermore, if $\afcn(G_n)\le c$ for each $n\in\N$, then \cref{breakers} implies that there exists a string $s\in\Sigma^{b}$ with $P(s)=1$ for each $b\in\N$.  Therefore $P$ satisfies property (A2) of \cref{periodicity}.  Therefore, \cref{periodicity} implies the following result:
 
 \begin{lem}\label{block_colouring}
@@ -253,26 +259,65 @@ Define the function $P:\Sigma^*\to\{0,1\}$ so that $P(s):=1$ if and only if $\ph
         \item If $\delta_a>0$ then $|A_a|=2\delta_x=2|B_a|$.
         \item If $\delta_a<0$ then $|A_a|=\delta_x=\tfrac{1}{2}|B_a|$.
     \end{compactenum}
-    The sets $A_a$ and $B_a$ are chosen so that they satisfy the following global \emph{independence constraint}:  There is no pair $i,j\in \bigcup_{a\in\Sigma}(A_a\cup B_a)$ such that $i-j=1$.  To see that this is possible, first observe that we need only concern ourselves with pairs where both $i,j\in\{1,\ldots,r-1\}$ or pairs where $i,j\in\{r+1,\ldots,2r-1\}$.  Thus, we can choose the elements of $A_a$, for $a\in\Sigma$ and then indpendently choose the elements of $B_a$, for all $a\in\Sigma$.
+    Let $A:=\bigcup_{a\in\Sigma} A_a$ and $B:=\bigcup_{a\in\Sigma} B_a$.
+    The sets $A_a$ and $B_a$ are chosen so that they satisfy the following global \emph{independence constraint}:  There is no pair $i,j\in A\cup B$ such that $i-j=1$.  To see that this is possible, first observe that, because $r$ is not in $A$ or $B$ we need only concern ourselves with pairs where both $i,j\in\{1,\ldots,r-1\}$ or pairs where both $i,j\in\{r+1,\ldots,2r-1\}$.  Thus, we can choose the elements of $A_a$, for each $a\in\Sigma$ and then independently choose the elements of $B_a$, for each $a\in\Sigma$.
 
-    We show how to choose the elements of $A_a$ for each $a\in\Sigma$.  The same method works for choosing the elements in $B_a$. Observe that, because $s$ is $\ell$-periodic, $|\{i\in \{1,\ldots,r-1\}:s_i=a\}|\ge (r-1)/\ell$ for each $a\in\Sigma$.  This allows us to greedily choose the elements in $A_a$ for each $a\in\Sigma$. At each step we simply avoid choosing $i$ if $i-1$ or $i+1$ have already been in some previous step.  At any step in the process, at most $\epsilon r$ elements have already been chosen in previous steps and each of these eliminates at most $2$ options.  Therefore, there will always be an element available to choose, provided that $2\epsilon r < (r-1)/\ell$.  This is satisfied for any $\epsilon < (r-1)/(2r\ell)$. In particular, for any $r\ge r_0\ge 2$, $\epsilon < 1/(4\ell)$ works.
+    We show how to choose the elements of $A_a$ for each $a\in\Sigma$.  The same method works for choosing the elements in $B_a$. Observe that, because $s$ is $\ell$-periodic, $|\{i\in \{1,\ldots,r-1\}:s_i=a\}|\ge \lfloor(r-1)/\ell\rfloor$ for each $a\in\Sigma$.  This allows us to greedily choose the elements in $A_a$ for each $a\in\Sigma$. At each step we simply avoid choosing $i$ if $i-1$ or $i+1$ have already been chosen in some previous step.  At any step in the process, at most $\epsilon r$ elements have already been chosen in previous steps and each of these eliminates at most $2$ options.  Therefore, there will always be an element available to choose, provided that $2\epsilon r < \lfloor(r-1)/\ell\rfloor$.  In particular, for any $r\ge r_0\ge 2\ell$, $\epsilon < 1/(4\ell)$ works.
 
-    We now construct the path $P$ in a piecewise fashion.  For each $i\in\{1,\ldots,2r\}$, let $H_i:=G[n_{s,i},n_{s,i+1}-4]$. The subgraph $H_1,\ldots,H_{2r}$ are what is referred to above as colourful blocks.  The colouring $V(B_i)$ by $\phi_s$ is defined by $s_i$.
+    We now construct the path $P$ in a piecewise fashion.  Refer to \cref{path_construction}  For each $i\in\{1,\ldots,2r\}$, let $H_i:=G[n_{s,i},n_{s,i+1}-4]$. The subgraph $H_1,\ldots,H_{2r}$ are what is referred to above as colourful blocks.  The colouring $V(B_i)$ by $\phi_s$ is defined by $s_i$.
+    \begin{figure}
+        \centering{
+            \includegraphics{figs/bigexample-1} \\
+            \includegraphics{figs/bigexample-2} \\
+            \includegraphics{figs/bigexample-3} \\
+            \includegraphics{figs/bigexample-4}
+        }
+        \caption{Constructing the anagramish path $P$:
+            (1) top and bottom paths are matched with zig-zag paths;
+            (2) all remaining colourful blocks receive top paths;
+            (3) all boring blocks receive top, updown, or downup paths.
+        }
+        \label{path_construction}
+    \end{figure}
     \begin{compactenum}
         \item For each $a\in\Sigma$ such that $\delta_a>0$, group the elements of $A_a$ into pairs.  For each pair $(i,j)$, $P$ contains the path through the top row of $H_i$ and the path through the bottom row of $H_j$.  For each element $i\in B_a$, $P$ contains the zig-zag path with both endpoints in the top row of $H_i$ and that contains every vertex of $H_i$.  (Note that the zig-zag path begins at the top and bottom row because $H_i$ is a $t$-block for $t$ a multiple of $4$; in particular, $t$ is even.)
+
+        \begin{figure}
+            \centering{
+                \begin{tabular}{ccc}
+                    \includegraphics{figs/paths-1} &
+                    \includegraphics{figs/paths-2} &
+                    \includegraphics{figs/paths-3}
+                \end{tabular}
+            }
+            \caption{Subpaths of $P$ through colourful blocks: A top path and a bottom path contribute the same amount as a single zig-zag path.}
+        \end{figure}
 
         \item For each $a\in\Sigma$ such that $\delta_1<0$ we proceed symmetrically to the previous case, but reversing the roles of $A_a$ and $B_a$.  Specifically, we group the elements of $B_a$ into pairs.  For each pair $(i,j)$, $P$ contains the path through the top row of $H_i$ and the path through the bottom row of $B_j$.  For each element $i\in A_a$, $P$ contains the zig-zag path with both endpoints in the top row of $H_i$ and that contains every vertex of $H_i$.
 
         \item For each $i\in\{1,\ldots,2r\}\setminus\bigcup_{a\in\Sigma}(I_a\cup B_a)$, $P$ contains the top row of $H_i$.
     \end{compactenum}
-    The rules above define the intersection $P_i$ of $P$ with each colourful block $H_i$ of $G_{n_s}$.  If $P_i$ is the path through the bottom (top) row of $H_i$ then we call $H_i$ a \emph{bottom (top) block}.  If $P_i$ is the zig-zag path that contains every vertex of $H_i$ then we call $H_i$ a \emph{zig-zag block}.  Note that $\sum_{a\in\Sigma} \delta_a = 0$ and this implies that the number of bottom blocks among $H_1,\ldots,H_{r-1}$ is the same as the number of bottom blocks among $H_{r+1},\ldots,H_{2r}$.  Indeed, this number is exactly $\beta:=\tfrac{1}{2}\sum_{a\in\Sigma} |\delta_a|=\tfrac{1}{2}\|\hist(s_1,\ldots,s_r)-\hist(s_{r+1},\ldots,s_{2r})\|_1$.
+    The rules above define the intersection $P_i$ of $P$ with each colourful block $H_i$ of $G_{n_s}$.  If $P_i$ is the path through the bottom (top) row of $H_i$ then we call $H_i$ a \emph{bottom (top) block}.  If $P_i$ is the zig-zag path that contains every vertex of $H_i$ then we call $H_i$ a \emph{zig-zag block}.  Note that $\sum_{a\in\Sigma} \delta_a = 0$ and this implies that the number of bottom blocks among $H_1,\ldots,H_{r-1}$ is the same as the number of bottom blocks among $H_{r+1},\ldots,H_{2r}$.  Indeed, this number is exactly $\beta:=\tfrac{1}{2}\sum_{a\in\Sigma} |\delta_a|=\tfrac{1}{2}\tau(s)$.
 
-    We now define how $P$ behaves for the boring blocks, that we name $Q_0,\ldots,Q_{2r-1}$. The first boring block $Q_0$ comes immediately before $H_1$. Each boring block $Q_j$, for $j\in\{1,\ldots,2r-1\}$ comes immediately after $H_j$ and immediately before $H_{j+1}$.\todo{Deal with stupid boundary case where \cref{near_anagram_fourier} gives a prefix of $s$.}  In almost every case, $P$ uses the path through the top row of $Q_j$.  The only exceptions are when $H_j$ or $H_{j+1}$ are bottom blocks. Note that, because of the global independent constraint, these two cases are mutually exclusive:
+    We now define how $P$ behaves for the boring blocks, that we name $Q_0,\ldots,Q_{2r-1}$. The first boring block $Q_0$ comes immediately before $H_1$. Each boring block $Q_j$, for $j\in\{1,\ldots,2r-1\}$ comes immediately after $H_j$ and immediately before $H_{j+1}$.  In almost every case, $P$ uses the path through the top row of $Q_j$.  The only exceptions are when $H_j$ or $H_{j+1}$ are bottom blocks. Note that, because of the global independence constraint, these two cases are mutually exclusive. See \cref{updownup}.
+
+    \begin{figure}
+        \centering{
+            \begin{tabular}{ccc}
+                \includegraphics{figs/crossings-1} &
+                \includegraphics{figs/crossings-2} &
+                \includegraphics{figs/crossings-3}
+            \end{tabular}
+            \caption{The paths taken by $P$ through boring blocks: A top path, a downup path, and an updown path.}
+            \label{updownup}
+        }
+    \end{figure}
+
     \begin{compactenum}
-        \item When $H_j$ is a bottom block $P$ uses a path that begins at the bottom row of $Q_j$ but moves immediately to the top row of $Q_j$ and uses the entire path along the top row. We call this a \emph{down-up} path.
-        \item When $H_{j+1}$ is a bottom block, $P$ uses a path that begins at the top row of $Q_j$ and moves immediately to to the bottom row of $Q_j$ ad uses the entire path along the bottom row.  We call this a \emph{up-down} path.
+        \item When $H_j$ is a bottom block $P$ uses a path that begins at the bottom row of $Q_j$ but moves immediately to the top row of $Q_j$ and uses the entire path along the top row. We call this a \emph{downup} path.
+        \item When $H_{j+1}$ is a bottom block, $P$ uses a path that begins at the top row of $Q_j$ and moves immediately to to the bottom row of $Q_j$ ad uses the entire path along the bottom row.  We call this a \emph{updown} path.
     \end{compactenum}
-    This completely defines the path $P:=v_1,\ldots,v_{2m}$, all that remains is to argue that $\rho:=\phi_s(v_1),\ldots,\phi_s(2m)$ is anagramish.
+    This completely defines the path $P:=v_1,\ldots,v_{2m}$. All that remains is to argue that $\rho:=\phi_s(v_1),\ldots,\phi_s(2m)$ is anagramish.
 
     Observe that the number of downup paths and the number of updown paths in $Q_0,\ldots,Q_{r-1}$ is exactly the same as the number of bottom blocks among $H_1,\ldots,H_{r-1}$ which is exactly $\beta$.  Similarly, the number of updown paths and downup paths in $Q_{r+1},\ldots,Q_{2r-1}$ is exactly $\beta$.  Now every path that is neither downup nor updown uses the top row.  This implies that the sequence of colours contributed to $\rho$ by  the intersection of $P$ with $Q_0,\ldots,Q_{r-1}$ is a permutation of the sequence of colours contributed to $\rho$ by the intersection of $P$ with $Q_{r+1},\ldots,Q_{2r-1}$.
 
@@ -296,20 +341,20 @@ For completeness, we wrap up the proof of \cref{main_vertex}:
 \section{Proof of \cref{near_anagram_fourier}}
 \label{near_anagram_proof}
 
-\todo[inline]{I think this lemma (and probably a better quantitative version) has a proof using Fourier approximation, but I don't know enough about Fourier approximation and my half-assed attempt to learn about it wasn't sufficient.}
+\todo[inline]{I suspect this lemma (and probably a better quantitative version) has a proof using Fourier approximation, but I don't know enough about Fourier approximation and my half-assed attempt to learn about it wasn't sufficient.}
 
 
 \begin{proof}[Proof of \cref{near_anagram_fourier}]
-    Define an even-length string $t$ over the alphabet $\Sigma$ to be \emph{$a$-unbalanced} if $\tau_a(t)>\epsilon|t|/\ell$ and \emph{$a$-balanced} otherwise.  If $t$ is $a$-balanced for each $a\in\Sigma$ then $t$ is \emph{balanced}. Observe that, if $t$ is $a$-balanced then $\tau(t)\le \epsilon|t|$. A string is \emph{everywhere unbalanced} if it contains no balanced substring of length $r\ge r_0$. Our goal therefore is to show that there is an upper bound $n:=n(\ell,\epsilon,r_0)$ on the length of any $\ell$-periodic everywhere unbalanced string.
+    Define an even-length string $t$ over the alphabet $\Sigma$ to be \emph{$a$-unbalanced} if $\tau_a(t)>\epsilon|t|/\ell$ and \emph{$a$-balanced} otherwise.  If $t$ is $a$-balanced for each $a\in\Sigma$ then $t$ is \emph{balanced}. Observe that, if $t$ is balanced then $\tau(t)\le \epsilon|t|$. A string is \emph{everywhere unbalanced} if it contains no balanced substring of length $r\ge r_0$. Our goal therefore is to show that there is an upper bound $n:=n(\ell,\epsilon,r_0)$ on the length of any $\ell$-periodic everywhere unbalanced string.
 
-    Let $h\in\N$ whose values will be discussed later, and let $n:=r_02^{h}$. Let $s$ be an $\ell$-periodic everywhere unbalanced string of length $n$ over the alphabet $\Sigma$.  The fact that $s$ is $\ell$-periodic, implies that the $|\Sigma|\le\ell$.  Assume, without loss of generality, that $r_0$ is a multiple of $\ell$.
+    Let $h$ be a positive integer (that determines $n$ and whose value will be discussed later), and let $n:=r_02^{h}$. Let $s$ be an $\ell$-periodic everywhere unbalanced string of length $n$ over the alphabet $\Sigma$.  The fact that $s$ is $\ell$-periodic, implies that the $|\Sigma|\le\ell$.  Assume, without loss of generality, that $r_0$ is a multiple of $\ell$.
 
-    Consider the complete binary tree $T$ of height $h$ whose leaves, in order, are length-$r_0$ strings whose concatenation is $s$ and for which each internal node is the substring obtained by concatenating the node's left and right child.  See \cref{binary_tree}.  Note that for any $v\in V(T)$ and any $a\in\Sigma$, the fact that $s$ is $\ell$-periodic and $r_0$ is multiple of $\ell$ implies that $\hist_a(v)\ge |v|/\ell$.
+    Consider the complete binary tree $T$ of height $h$ whose leaves, in order, are length-$r_0$ strings whose concatenation is $s$ and for which each internal node is the substring obtained by concatenating the node's left and right child.  See \cref{binary_tree}.  Note that for each $v\in V(T)$ and each $a\in\Sigma$, the fact that $s$ is $\ell$-periodic and $r_0$ is multiple of $\ell$ implies that $\hist_a(v)\ge |v|/\ell$.
 
     \begin{figure}
-        \begin{center}
+        \centering{
             \includegraphics[width=\textwidth]{figs/binary-tree-1}
-        \end{center}
+        }
         \caption{Building a binary tree $T$ over the string $s$.}
         \label{binary_tree}
     \end{figure}
@@ -325,9 +370,9 @@ For completeness, we wrap up the proof of \cref{main_vertex}:
   % is $i$-unbalanced}\}$.
 
   \begin{figure}
-    \begin{center}
+    \centering{
        \includegraphics[width=\textwidth]{figs/binary-tree-3}
-    \end{center}
+    }
     \todo[inline]{This is an old figure and needs updating.}
     \caption{The tree $T$ with the vector $(\hist_1(v),\ldots,\hist_5(v))$ for each
      internal node $v$.  The unbalanced index that defines $\ell(v)$ is highlited for each node.}
@@ -345,23 +390,23 @@ For completeness, we wrap up the proof of \cref{main_vertex}:
       \le (\tfrac12-\tfrac{\epsilon}{2\ell})W(v) \enspace .
   \]
 
-  From this point on we use the following shorthands. For any $S\subseteq V(T)$, $L(S):=\sum_{v\in S}|v|$\todo{$L$ and $R$ are bad choices}, $W(S):=\sum_{v\in S}W(v)$, and $R(S)=\{R(v):v\in S\}$.  Summarizing, we have a complete binary tree $T$ of height $h$ and
+  From this point on we use the following shorthands. For any $S\subseteq V(T)$, $L(S):=\sum_{v\in S}|v|$\todo{$L$ and $R$ are bad notation choices: $L$ for length, $R$ for right child}, $W(S):=\sum_{v\in S}W(v)$, and $R(S)=\{R(v):v\in S\}$.  Summarizing, we have a complete binary tree $T$ of height $h$ and
   $X\subseteq V(T)$ with the following properties:
   \begin{compactenum}
     % \item For each $v\in V(T)$, $w(v) \le 1/2$.
     \item For each $v\in V(T)$,  $W(v)\ge |v|/\ell$.
     % \item For each internal node $v\in V(T)$ with children $x$ and $y$,
        % $w(v) = (w(x)+w(y))/2$.
-    \item $W(X) \ge (h+1)n/\ell$.
+    \item $L(X) \ge (h+1)n/\ell$.
     \item For each non-leaf node $v\in X$,
       $W(R(v)) \le (\tfrac{1}{2}-\tfrac{\epsilon}{2\ell})W(v)$.
   \end{compactenum}
   For each $i\in\{0,\ldots,h\}$, let $X_i\subseteq X$ denote the
   set of nodes $v\in X$ for which the path from the root of $T$ to $v$
-  contains exactly $i$ nodes in $X$, excluding $v$. Observe that, since each node in $X_i$ has an ancestor in $X_{i-1}$,
+  contains exactly $i$ nodes in $X$, excluding $v$.  See \cref{bigtree}. Observe that, since each node in $X_i$ has an ancestor in $X_{i-1}$,
   \[  n \ge L(X_0) \ge L(X_1) \ge \cdots\ge L(X_{h}) \enspace . \]
 
-  We will show that, there exists an integer $t:=t(\epsilon,\ell,r_0)$ such that, for each $i\in\{0,\ldots,h-t\}$,
+  We will show that there exists an integer $t:=t(\epsilon,\ell,r_0)$ such that, for each $i\in\{0,\ldots,h-t\}$,
   \begin{equation}
      L(X_{i+t}) \le (1-(1/2)^{t+1}) L(X_i) \enspace . \label{t}
   \end{equation}
@@ -381,20 +426,20 @@ For completeness, we wrap up the proof of \cref{main_vertex}:
   \end{align*}
   which is a contradiction for sufficiently large $h$; in particular, for $h > \ell t2^{t+1}-1$.
 
-  It remains to establish \cref{t}, which we do now.  Define $A_0:= X_i$ and, for each $j\ge 1$, define $A_j$ to be the subset of $X_{i+j}$ that are descendants of some node in $R(A_{j-1})$.  See \cref{bigtree}.  To upper bound $L(X_{i+t})$ observe that $X_{i+t}$ can be split into two sets $A_0'$ and $B$.  The nodes $A_0'$ do not have an ancestor in $R(A_0)$ and therefore $L(A_0')\le (1/2)L(A_0)$. The nodes in $B$ do have an ancestor in $R(A_0)$ and therefore have an ancestor in $A_1$.  Iterating this argument, we obtain
+  It remains to establish \cref{t}, which we do now.  Define $A_0:= X_i$ and, for each $j\ge 1$, define $A_j$ to be the subset of $X_{i+j}$ that are descendants of some node in $R(A_{j-1})$.  See \cref{bigtree}.  To upper bound $L(X_{i+t})$ observe that $X_{i+t}$ can be split into two sets $A_0'$ and $B$ defined as follows:  The nodes $A_0'$ do not have an ancestor in $R(A_0)$ and therefore $L(A_0')\le (1/2)L(A_0)$. The nodes in $B$ do have an ancestor in $R(A_0)$ and therefore have an ancestor in $A_1$.  Iterating this argument, we obtain
  \begin{align*}
       L(X_{i+t})
          &\le (1/2)L(A_0) + (1/2)L(A_1) + \cdots + (1/2)L(A_{t-1}) + L(A_t) \\
          &\le (1/2)L(A_0) + (1/4)L(A_0) + \cdots + (1/2)^t L(A_{0}) + L(A_t) \\
          &  = (1-(1/2)^t)L(A_0) + L(A_t) = (1-(1/2)^t)L(X_i) + L(A_t)  \enspace .
    \end{align*}
-  So all that remains to establish \eqref{t} is to prove that
+  So all that remains to establish \ref{t} is to prove that
   $L(A_t)\le (1/2)^{t+1}L(X_i)$.
 
   \begin{figure}
-    \begin{center}
+    \centering{
        \includegraphics[width=\textwidth]{figs/bigtree}
-    \end{center}
+    }
     \caption{The partitioning of $X$ into $X_0,\ldots,X_h$. Shaded
     nodes are in $X$ and all nodes in $X_i$ are shaded with the same
     colour.   Starting with $A_0=X_0$, the elements of $A_0,\ldots,A_h$
@@ -411,12 +456,12 @@ For completeness, we wrap up the proof of \cref{main_vertex}:
   which implies
   \[
        W(A_t)
-       \le (\tfrac12-\tfrac{\epsilon}{2\ell})^t W(A_0) \le (\tfrac12-\tfrac{\epsilon}{2\ell})^t L(A_0)
-       =  (\tfrac12-\tfrac{\epsilon}{2\ell})^t|X_i|
+       \le (\tfrac12-\tfrac{\epsilon}{2\ell})^t W(A_0) \le (\tfrac12-\tfrac{\epsilon}{2\ell})^t\cdot L(A_0)
+       =  (\tfrac12-\tfrac{\epsilon}{2\ell})^t\cdot L(X_i)
   \]
   Since $s$ is $\ell$-periodic,
   \[
-        L(A_t)\le \ell\cdot W(A_t) \le \ell\cdot(\tfrac12-\tfrac{\epsilon}{2\ell})^t|X_i| \le |X_i|/2^{t+1}
+        L(A_t)\le \ell\cdot W(A_t) \le \ell\cdot(\tfrac12-\tfrac{\epsilon}{2\ell})^t\cdot L(X_i) \le L(X_i)/2^{t+1}
   \]
   for $t = \ceil{\log(2\ell)/\log((1/(1-\tfrac{\epsilon}{\ell}))}$.
 \end{proof}
