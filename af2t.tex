@@ -87,6 +87,8 @@
     Pat Morin%
     \thanks{School of Computer Science, Carleton University}}
 
+\date{}
+
 \DeclareMathOperator{\ddiv}{div}
 \DeclareMathOperator{\hist}{h}
 
@@ -396,7 +398,9 @@ All that remains is to prove \cref{near_anagram_fourier}, which we do now.
       \le (\tfrac12-\tfrac{\epsilon}{2\ell})W(v) \enspace .
   \]
 
-  From this point on we use the following shorthands. For any $S\subseteq V(T)$, $L(S):=\sum_{v\in S}|v|$\todo{$L$ and $R$ are bad notation choices: $L$ for length, $R$ for right child}, $W(S):=\sum_{v\in S}W(v)$, and $R(S)=\{R(v):v\in S\}$.  Summarizing, we have a complete binary tree $T$ of height $h$ and
+  From this point on we use the following shorthands. For any $S\subseteq V(T)$, $L(S):=\sum_{v\in S}|v|$,
+  % \todo{$L$ and $R$ are bad notation choices: $L$ for length, $R$ for right child}
+  $W(S):=\sum_{v\in S}W(v)$, and $R(S)=\{R(v):v\in S\}$.  Summarizing, we have a complete binary tree $T$ of height $h$ and
   $X\subseteq V(T)$ with the following properties:
   \begin{compactenum}
     % \item For each $v\in V(T)$, $w(v) \le 1/2$.
