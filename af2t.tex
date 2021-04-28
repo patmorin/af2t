@@ -353,15 +353,17 @@ All that remains is to prove \cref{near_anagram_fourier}, which we do now.
 
     Let $h$ be a positive integer (that determines $n$ and whose value will be discussed later), and let $n:=r_02^{h}$. Let $s$ be an $\ell$-periodic everywhere unbalanced string of length $n$ over the alphabet $\Sigma$.  The fact that $s$ is $\ell$-periodic, implies that the $|\Sigma|\le\ell$.  Assume, without loss of generality, that $r_0$ is a multiple of $\ell$.
 
-    Consider the complete binary tree $T$ of height $h$ whose leaves, in order, are length-$r_0$ strings whose concatenation is $s$ and for which each internal node is the substring obtained by concatenating the node's left and right child.  See \cref{binary_tree}.  Note that for each $v\in V(T)$ and each $a\in\Sigma$, the fact that $s$ is $\ell$-periodic and $r_0$ is multiple of $\ell$ implies that $\hist_a(v)\ge |v|/\ell$.
+    Consider the complete binary tree $T$ of height $h$ whose leaves, in order, are length-$r_0$ strings whose concatenation is $s$ and for which each internal node is the substring obtained by concatenating the node's left and right child.
+    % See \cref{binary_tree}.
+    Note that for each $v\in V(T)$ and each $a\in\Sigma$, the fact that $s$ is $\ell$-periodic and $r_0$ is multiple of $\ell$ implies that $\hist_a(v)\ge |v|/\ell$.
 
-    \begin{figure}
-        \centering{
-            \includegraphics[width=\textwidth]{figs/binary-tree-1}
-        }
-        \caption{Building a binary tree $T$ over the string $s$.}
-        \label{binary_tree}
-    \end{figure}
+    % \begin{figure}
+    %     \centering{
+    %         \includegraphics[width=\textwidth]{figs/binary-tree-1}
+    %     }
+    %     \caption{Building a binary tree $T$ over the string $s:=4 3 5 3 2\ldots5 4 1 4$.}
+    %     \label{binary_tree}
+    % \end{figure}
 
   % For each node $v$ of $T$, let $h(v)$ denote the height of $v$'s subtree
   % and $s(v)=2^{h(v)}$ denote the length of the string $v$. For each
@@ -373,15 +375,15 @@ All that remains is to prove \cref{near_anagram_fourier}, which we do now.
   % $v$ of $T$ the \emph{label} $\ell(v):=\min\{i\in\Sigma: \mbox{$v$
   % is $i$-unbalanced}\}$.
 
-  \begin{figure}
-    \centering{
-       \includegraphics[width=\textwidth]{figs/binary-tree-3}
-    }
-    \todo[inline]{This is an old figure and needs updating.}
-    \caption{The tree $T$ with the vector $(\hist_1(v),\ldots,\hist_5(v))$ for each
-     internal node $v$.  The unbalanced index that defines $\ell(v)$ is highlited for each node.}
-    \label{binary_tree_2}
-  \end{figure}
+  % \begin{figure}
+  %   \centering{
+  %      \includegraphics[width=\textwidth]{figs/binary-tree-3}
+  %   }
+  %   \todo[inline]{This is an old figure and needs updating.}
+  %   \caption{The tree $T$ with the vector $(\hist_1(v),\ldots,\hist_5(v))$ for each
+  %    internal node $v$.  The unbalanced index that defines $\ell(v)$ is highlited for each node.}
+  %   \label{binary_tree_2}
+  % \end{figure}
 
   For each $a\in\Sigma$, let $S_a:=\{v\in V(T): \text{$v$ is $a$-unbalanced}\}$. Since $s$ is everywhere unbalanced, $\bigcup_{a\in\Sigma} S_a=V(T)$. Therefore,
   \[
@@ -474,7 +476,7 @@ All that remains is to prove \cref{near_anagram_fourier}, which we do now.
 
 Although an explicit upper bound on $n:=n(\epsilon,\ell,r_0)$ could be extracted from the proof of \cref{near_anagram_fourier} it would likely be far from tight.  We suspect that there is a Fourier analytic proof that would give better quantitative bounds.  We have not pursued this, because we have no idea how to explicitly upper bound $\ell$, for reasons discussed in the next paragraph.
 
-\cref{periodicity} and its proof give absolutely no clues to help find a concrete bound on $\ell$ or to find a minimal set $\Xi$. Indeed, for some choices of $P$, doing so can be a difficult problem.  Consider the example where $|\Sigma|=5$ and $P$ is predicate that tells whether or not its input is anagram-free. It is easy to see that this predicate $P$ satisfies (A1) and the result of \citet{pleasants:non-repetitive}, published in 1970, shows that this $P$ satisfies (A2).  The question of whether $|\Xi|=4$ or $|\Xi|=5$ is then the question of determining whether there exist arbitrarily long anagram-free strings on alphabet of size $4$.  This was the open problem posed by \citet{erdos:some} in 1961 and again by \citet{brown:is} in 1971 and not resolved until 1992 when \citet{keranen:abelian,keranen:powerful} showed that the answer, in this case, is that $|\Xi|=4$.  However, if this were not the case, then determining $\ell$ would be the question of determining the length of the longest anagram-free string over an alphabet of size $4$.
+\cref{periodicity} and its proof give absolutely no clues to help find a concrete bound on $\ell$ or to find a minimal set $\Xi$. Indeed, for some choices of $P$, doing so can be a difficult problem.  Consider the example where $|\Sigma|=5$ and $P$ is predicate that tells whether or not its input is anagram-free. It is easy to see that this predicate $P$ satisfies (A1) and the result of \citet{pleasants:non-repetitive}, published in 1970, shows that this $P$ satisfies (A2).  The question of whether $|\Xi|=4$ or $|\Xi|=5$ is then the question of determining whether there exist arbitrarily long anagram-free strings on an alphabet of size $4$.  This was the open problem posed by \citet{erdos:some} in 1961 and again by \citet{brown:is} in 1971 and not resolved until 1992 when \citet{keranen:abelian,keranen:powerful} showed that the answer, in this case, is that $|\Xi|=4$.  However, if this were not the case, then determining $\ell$ would be the question of determining the length of the longest anagram-free string over an alphabet of size $4$.
 
 Our proof uses \cref{periodicity} twice and each application uses a predicate $P$ that is considerably more complicated than asking if the input string is anagram-free. It seems unlikely that we will obtain concrete bounds upper bounds on $\ell$ as a function of $c$ except, possibly, through the use of computer search. The resulting value $\ell$ is used in the application of \cref{near_anagram_fourier} and also within the proof of \cref{anagramish_path}.
 
