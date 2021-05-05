@@ -78,9 +78,6 @@
 \title{\MakeUppercase{$2\times n$ Grids have Unbounded Anagram-Free Chromatic Number}\thanks{This research was partly funded by NSERC.}}
 \author{Saman Bazarghani%
     \thanks{Department of Computer Science and Electrical Engineering, University of Ottawa}\qquad
-    ¿Therese Biedl?%
-    % \thanks{Department of Computer Science and Electrical Engineering, University of Ottawa}
-    \qquad
     Paz Carmi%
     \thanks{Ben-Gurion University of the Negev}\qquad
     Vida Dujmović\footnotemark[2]\qquad
@@ -120,7 +117,7 @@
 
 Two strings $s$ and $t$ are said to be \emph{anagrams} of each other if $s$ is a permutation of $t$.  A single string $s:=s_1,\ldots,s_{2r}$ is \emph{anagramish} if its first half $s_1,\ldots,s_r$ and its second half $s_{r+1},\ldots,s_{2r}$ are anagrams of each other.  A string is \emph{anagram-free} if it does not contain an anagramish substring.
 
-In 1961, \citet{erdos:some} asked if there exists arbitrarily long strings over an alphabet of size $4$ that are anagram-free.  In 1968 \citet{evdokimov:strongly,evdokimov:strongly2} showed that it could be done with an alphabet of size $25$ and in 1971 \citet{pleasants:non-repetitive} showed that it could be done with an alphabet of size $5$.  Erd\H{o}s's question was not fully resolved until 1992, when \citet{keranen:abelian} answered it in the affirmative.
+In 1961, \citet{erdos:some} asked if there exists arbitrarily long strings over an alphabet of size $4$ that are anagram-free.\footnote{This was an incredibly prescient question since it is not at all obvious that there exist arbitrarily long anagram-free strings over any finite alphabet. The only justification for choosing the constant $4$ is that a short case analysis rules out the possibility of length-$8$ anagram-free strings over an alphabet of size $3$.}  In 1968 \citet{evdokimov:strongly,evdokimov:strongly2} showed that it could be done with an alphabet of size $25$ and in 1971 \citet{pleasants:non-repetitive} showed that it could be done with an alphabet of size $5$.  Erd\H{o}s's question was not fully resolved until 1992, when \citet{keranen:abelian} answered it in the affirmative.
 
 A path $v_1,\ldots,v_{2r}$ in a graph $G$ is \emph{anagramish} under a vertex $c$-colouring $\phi:V(G)\to\{1,\ldots,c\}$ if $\phi(v_1),\ldots,\phi(v_{2r})$ is an anagramish string.  The colouring $\phi$ is an \emph{anagram-free colouring} of $G$ if no path in $G$ is anagramish under $\phi$.  The minimum integer $c$ for which $G$ has an anagram-free vertex $c$-colouring is called the \emph{anagram-free chromatic number} of $G$ and is denoted by $\afcn(G)$.
 
@@ -135,7 +132,7 @@ One positive result in this context is that of
 
 \citet[Section 7.1]{wilson:anagram-free} conjectured that $\afcn(G_n)\in\omega_n(1)$, so this work confirms this conjecture.  Prior to the current work, it was not even known if the family of $n\times n$ square grids had anagram-free colourings using a constant number of colours.
 
-In a larger context, this lower bound gives more evidence that, except for a few special cases (paths \cite{evdokimov:strongly,pleasants:non-repetitive,keranen:abelian}, trees of bounded pathwidth \cite{wilson.wood:anagram-free}, and highly subdivided graphs \cite{wilson.wood:anagram-free2}), the qualitative behaviour of anagram-free chromatic number is not much different than that of treedepth/centered colouring.  In most cases, the easiest way to obtain an anagram-free colouring is via a colouring in which every path contains a colour that occurs only once in the path.
+In a larger context, this lower bound gives more evidence that, except for a few special cases (paths \cite{evdokimov:strongly,pleasants:non-repetitive,keranen:abelian}, trees of bounded pathwidth \cite{wilson.wood:anagram-free}, and highly subdivided graphs \cite{wilson.wood:anagram-free2}), the qualitative behaviour of anagram-free chromatic number is not much different than that of treedepth/centered colouring \cite{nesetril.ossona:tree-depth}.  Very roughly: For most graph classes, every graph in the class has an anagram-free colouring using a bounded number of colors precisely when every graph in the class has a colouring using a bounded number of colours in which every path contains a colour that appears only once in the path.
 
 % \todo[inline]{Statement of vertex colouring result (hopefully)}
 %
@@ -150,7 +147,7 @@ In a larger context, this lower bound gives more evidence that, except for a few
 
 The remainder of this paper is organized as follows: \Cref{near_anagram_statement} gives some definitions and states a key lemma that shows that, under a certain periodicity condition, every sufficiently long string contains a substring that is $\epsilon$-close to being anagramish.
 % In \cref{edge_colourings} we prove \cref{main_edge}.
-In \cref{vertex_colourings} we prove \cref{main_vertex}.  In \cref{near_anagram_proof} we prove the key lemma.
+In \cref{vertex_colourings} we prove \cref{main_vertex}.  In \cref{near_anagram_proof} we prove the key lemma. \cref{reflections} concludes with some final remarks about the (non-)constructiveness of our proof technique.
 
 \section{Periodicity in Strings}
 \label{near_anagram_statement}
@@ -477,6 +474,7 @@ All that remains is to prove \cref{near_anagram_fourier}, which we do now.
 \end{proof}
 
 \section{Reflections}
+\label{reflections}
 
 Although an explicit upper bound on $n:=n(\epsilon,\ell,r_0)$ could be extracted from the proof of \cref{near_anagram_fourier} it would likely be far from tight.  We suspect that there is a Fourier analytic proof that would give better quantitative bounds.  We have not pursued this, because we have no idea how to explicitly upper bound $\ell$, for reasons discussed in the next paragraph.
 
