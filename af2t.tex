@@ -169,6 +169,8 @@ The proof of \cref{near_anagram_fourier} is deferred to \cref{near_anagram_proof
 
 \cref{near_anagram_fourier} says that, if up to $\epsilon r$ terms in each half of $s$ were each allowed to cancel two terms each in the other half of $s$, then it would be possible to complete the cancellation process.  To achieve this type of one-versus-two cancellation in our setting, we decompose our coloured pathwidth-$2$ graph into pieces of constant size.  The vertices in each piece can be covered with one path or partitioned into two paths.  In this way an occurrence $H_z$ of a particular coloured piece in one half can be matched with two like-coloured pieces $H_x$ and $H_y$ in the other half. We construct a single path $P$ that contains all vertices in $H_z$ and only half the vertices in each of $H_x$ and $H_y$.  In this way, the colours of vertices $P\cap H_z$ can cancel the colours of the vertices in $P\cap(H_x\cup H_y)$.
 
+
+
 Since \cref{near_anagram_fourier} requires that the word $s$ be $\ell$-periodic, the following lemma will be helpful in obtaining words that can be used with \cref{near_anagram_fourier}.
 
 \begin{lem}\label{periodicity}
@@ -294,6 +296,11 @@ Define the function $P:\Sigma^*\to\{0,1\}$ so that $P(s):=1$ if $\phi_s$ is an a
             }
             \caption{Subpaths of $P$ through colourful blocks: A top path and a bottom path contribute the same amount as a single zig-zag path.}
         \end{figure}
+
+        \todo[inline]{Handle this comment: • fig. 4. Maybe do not use the same color for the bottom and the top, it
+took me a while to notice that the shapes were different and that this
+meant that the colors were different (or you could simply add a sentence
+to clarify this).}
 
         \item For each $a\in\Sigma$ such that $\delta_a<0$ we proceed symmetrically to the previous case, but reversing the roles of $A_a$ and $B_a$.  Specifically, we group the elements of $B_a$ into pairs.  For each pair $(i,j)$, $P$ contains the path through the top row of $H_i$ and the path through the bottom row of $B_j$.  For each element $i\in A_a$, $P$ contains the zig-zag path with both endpoints in the top row of $H_i$ and that contains every vertex of $H_i$.
 
