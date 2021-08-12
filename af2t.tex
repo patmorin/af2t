@@ -152,16 +152,18 @@ In \cref{vertex_colourings} we prove \cref{main_vertex}.  In \cref{near_anagram_
 \section{Periodicity in words}
 \label{near_anagram_statement}
 
-An \emph{alphabet} $\Sigma$ is a finite non-empty set.  A \emph{word} over $\Sigma$ is a (possibly empty) sequence $s:=w_1,\ldots,w_n$ with $w_i\in\Sigma$ for each $i\in\{1,\ldots,n\}$. The \emph{length} $|s|$ of $s$ is the length, $n$, of the sequence.
+An \emph{alphabet} $\Sigma$ is a finite non-empty set and each element of $\Sigma$ is called a \emph{letter}. A \emph{word} over $\Sigma$ is a (possibly empty) sequence $s:=w_1,\ldots,w_n$ with $w_i\in\Sigma$ for each $i\in\{1,\ldots,n\}$. The \emph{length} $|s|$ of $s$ is the length, $n$, of the sequence.  A \emph{language} over $\Sigma$ is a set of words over $\Sigma$.
 
-A \emph{language} is a set of words.  For an integer $k$, $\Sigma^k$ (the $k$-fold cartesian product of $\Sigma$ with itself) is the language consisting of all length-$k$ words over $\Sigma$.  The \emph{Kleene closure} $\Sigma^*:=\bigcup_{k=0}^\infty \Sigma^k$ is the language consisting of all words over $\Sigma$.  For each $1 \le i \le j\le n+1$, $s[i\mathbin{:}j]:=w_i,w_{i+1},\ldots,w_{j-1}$ is called a \emph{factor} of $s$. (Note the convention that $s[i\mathbin{:}j]$ does not include $w_j$, so $s[i\mathbin{:}j]$ has length $j-i$.)\todo{Is this notation still needed after revisions?}
+For any alphabet $\Sigma$ and any $k\in\N$, $\Sigma^k$ (the $k$-fold cartesian product of $\Sigma$ with itself) is the language consisting of all length-$k$ words over $\Sigma$.  The \emph{Kleene closure} $\Sigma^*:=\bigcup_{k=0}^\infty \Sigma^k$ is the language consisting of all words over $\Sigma$.
 
-Let $s:=w_1,\ldots,w_n$ be a word over an alphabet $\Sigma:=\{w_i:i\in\{1,\ldots,n\}\}$ and, for each $a\in \Sigma$, define $|s|_a:=|\{i\in\{1,\ldots,n\}:w_i=a\}|$.  The \emph{Parikh vector} of $s$ is the integer-valued $|\Sigma|$-vector $\hist(s):=(|s|_{a}:a\in\Sigma)$ indexed by elements of $\Sigma$.  Observe that a word $w_1,\ldots,w_{2r}$ is anagramish if and only if $\hist(w_1,\ldots,w_r)=\hist(w_{r+1},\ldots,w_{2r})$ or, equivalently, $\hist(w_1,\ldots,w_r)-\hist(w_{r+1},\ldots,w_{2r})=\boldsymbol{0}$.
+% For each $1 \le i \le j\le n+1$, $s[i\mathbin{:}j]:=w_i,w_{i+1},\ldots,w_{j-1}$ is called a \emph{factor} of $s$. (Note the convention that $s[i\mathbin{:}j]$ does not include $w_j$, so $s[i\mathbin{:}j]$ has length $j-i$.)\todo{Is this notation still needed after revisions?}
+
+Let $s:=w_1,\ldots,w_n$ be a word over an alphabet $\Sigma$ and, for each $a\in \Sigma$, define $|s|_a:=|\{i\in\{1,\ldots,n\}:w_i=a\}|$.  The \emph{Parikh vector} of $s$ is the integer-valued $|\Sigma|$-vector $\hist(s):=(|s|_{a}:a\in\Sigma)$ that is indexed by elements of $\Sigma$.  Observe that a word $w_1,\ldots,w_{2r}$ is anagramish if and only if $\hist(w_1,\ldots,w_r)=\hist(w_{r+1},\ldots,w_{2r})$ or, equivalently, $\hist(w_1,\ldots,w_r)-\hist(w_{r+1},\ldots,w_{2r})=\boldsymbol{0}$.
 % Let $\|\cdot\|_1$ denote the L1 norm of a vector.\footnote{The L1 norm of a real-valued $d$-vector $\boldsymbol{v}:=(v_1,\ldots,v_d)$, $\|\boldsymbol{v}\|_1=\sum_{i=1}^d|v_i|$.}
-For each $a\in\Sigma$, let $\tau_a:=\big||w_1,\ldots,w_r|_{a}-|w_{r+1},\ldots,w_{2r}|_{a}\big|$.
-Then $\tau(s):=\sum_{a\in\Sigma}\tau_a(s)$ is a useful measure of how far a word is from being anagramish and $\tau(s)=0$ if and only if $s$ is anagramish.
+For each $a\in\Sigma$, let $\delta_a(w):=|w_1,\ldots,w_r|_{a}-|w_{r+1},\ldots,w_{2r}|_{a}$ and let $\tau_a(w):=|\delta_a|$.
+Then $\tau(w):=\sum_{a\in\Sigma}\tau_a(w)$ is a useful measure of how far a word is from being anagramish and $\tau(w)=0$ if and only if $s$ is anagramish.
 
-A word $s:=w_1,\ldots,w_n$ is $\ell$-periodic if each length-$\ell$ factor of $s$ contains every character in $\Sigma:=\bigcup_{i=1}^n w_i$.  We make use of the following lemma, which states that every sufficiently long $\ell$-periodic word contains a long factor that is $\epsilon$-close to being anagramish.
+A word $s:=w_1,\ldots,w_n$ is $\ell$-periodic over $\Sigma$ if each length-$\ell$ factor of $s$ contains every letter in $\Sigma$.  A language is $\ell$-periodic over $\Sigma$ if each of its words is $\ell$-periodic over $\Sigma$.  A language $L$ is \emph{periodic} if its is $\ell$-periodic for some finite $\ell$.  We make use of the following lemma, which states that every sufficiently long $\ell$-periodic word contains a long factor that is $\epsilon$-close to being anagramish.
 
 \begin{lem}\label{near_anagram_fourier}
     For each $r_0,\ell\in\N$ and each $\epsilon>0$, there exists a positive integer $n$ such that each $\ell$-periodic word $w_1,\ldots,w_n$ contains a factor $s:=w_{i+1},\ldots,w_{i+2r}$ of length $2r \ge 2r_0$ such that $\tau(s)\le \epsilon r$.
@@ -171,23 +173,23 @@ The proof of \cref{near_anagram_fourier} is deferred to \cref{near_anagram_proof
 
 \cref{near_anagram_fourier} says that, if up to $\epsilon r$ terms in each half of $w$ were each allowed to cancel two terms each in the other half of $w$, then it would be possible to complete the cancellation process.  To achieve this type of one-versus-two cancellation in our setting, we decompose our coloured pathwidth-$2$ graph into pieces of constant size.  The vertices in each piece can be covered with one path or partitioned into two paths.  In this way an occurrence $H_z$ of a particular coloured piece in one half can be matched with two like-coloured pieces $H_x$ and $H_y$ in the other half. We construct a single path $P$ that contains all vertices in $H_z$ and only half the vertices in each of $H_x$ and $H_y$.  In this way, the colours of vertices $P\cap H_z$ can cancel the colours of the vertices in $P\cap(H_x\cup H_y)$.
 
-Since \cref{near_anagram_fourier} requires that the word $w$ be $\ell$-periodic, the following lemma will be helpful in obtaining words that can be used with \cref{near_anagram_fourier}. (Although \cref{periodicity} follows immediately from considerably stronger results in combinatorics on words (e.g., \citet[Proposition~1.5.12]{lothaire:combinatorics}), we provide a proof here for the sake of completeness.)
+Since \cref{near_anagram_fourier} requires that the word $w$ be $\ell$-periodic, the following lemma will be helpful in obtaining words that can be used with \cref{near_anagram_fourier}. [Although \cref{periodicity} follows immediately from considerably stronger results in combinatorics on words (e.g., \citet[Proposition~1.5.12]{lothaire:algebraic}), we provide a proof here for the sake of completeness.]
 
 
 \begin{lem}\label{periodicity}
-    Let $L$ be an infinite factor-closed language over a (finite) alphabet $\Sigma$.  Then there exists an infinite factor-closed language $L'\subseteq L$ that is $\ell$-periodic.
+    Let $L$ be an infinite factor-closed language over a (finite) alphabet $\Sigma$.  Then there exists an infinite periodic factor-closed language $M\subseteq L$ over an alphabet $\Xi\subseteq \Sigma$.
 \end{lem}
 
 
 \begin{proof}
-    Let $\Sigma_0\subseteq\Sigma$ be a minimal subset of $\Sigma$ such that $L':=\Sigma_0^* \cap L$ is infinite.  Note that $L'$ is also factor-closed since $L$ is factor-closed.  All that remains is to show that $L'$ is $\ell$-periodic for some value of $\ell$.
+    Let $\Xi\subseteq\Sigma$ be any minimal subset of $\Sigma$ with the property that $M:=\Xi^* \cap L$ is infinite.  Observe that, since $L$ is factor closed, $M$ is also factor-closed.  Therefore $M$ is infinite and factor-closed, all that remains is to show that $M$ is $\ell$-periodic for some integer $\ell$.
 
-    Since $\Sigma_0$ is minimal, $\Xi^*\cap L$ is finite for any strict subset $\Xi\subsetneq \Sigma_0$.  Since $L$ is factor-closed and $\Xi^*\cap L$ is finite, $|w|$ is finite for any $w\in\Xi^*\cap L$.
+    Since $\Xi$ is minimal, $\Pi^*\cap L$ is finite for any strict subset $\Pi\subsetneq \Xi$.  Since $L$ is factor-closed and $\Pi^*\cap L$ is finite, $|w|$ is finite for any $w\in\Pi^*\cap L$.
     Therefore, the value
-    \[
-        \ell:=1+\max\{|w|: w\in \Xi^*\cap L,\, \Xi\subsetneq\Sigma_0\}
-    \]
-    is finite.  Now, let $f$ be any factor of any word in $L'$ that does not contain every letter of $\Sigma_0$, i.e., $f\in\Xi^*$ for some  $\Xi\subsetneq\Sigma_0$.  Since $L$ is factor closed, $f\in \Xi^*\cap L$ for some $\Xi\subsetneq\Sigma_0$, so $|f|<\ell$.
+    \begin{equation}
+        \ell:=1+\max\{|w|: w\in \Pi^*\cap L,\, \Pi\subsetneq\Xi\} \label{l-def}
+    \end{equation}
+    is finite.  Now, consider any factor $f$ of any word in $L'$ that does not contain every letter of $\Xi$, i.e., $f\in\Pi^*$ for some  $\Pi\subsetneq\Xi$.  Since $L$ is factor closed, $f\in \Pi^*\cap L$ so, by \cref{l-def}, $|f| < \ell$.  Conversely, any factor of length $\ell$ of any word in $M$ contains every element of $\Xi$, so $M$ is $\ell$-periodic over $\Xi$.
 \end{proof}
 
 
