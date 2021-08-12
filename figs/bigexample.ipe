@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.21">
-<info created="D:20210325044650" modified="D:20210325060447"/>
+<info created="D:20210325044650" modified="D:20210812074404"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -1281,12 +1281,12 @@ h
 </path>
 <use matrix="0.166667 0 0 1 437.333 0" name="mark/disk(sx)" pos="64 736" size="tiny" stroke="darkgray"/>
 <use matrix="0.166667 0 0 1 437.333 0" name="mark/disk(sx)" pos="64 704" size="tiny" stroke="darkgray"/>
-<text layer="sequence" matrix="1 0 0 1 -2 5" transformations="translations" pos="80 688" stroke="black" type="label" width="22.343" height="7.473" depth="2.49" halign="center" valign="baseline" style="math">(1,d)</text>
-<text matrix="1 0 0 1 40 5" transformations="translations" pos="80 688" stroke="black" type="label" width="22.424" height="7.473" depth="2.49" halign="center" valign="baseline" style="math">(1,a)</text>
-<text matrix="1 0 0 1 83 5" transformations="translations" pos="80 688" stroke="black" type="label" width="21.434" height="7.473" depth="2.49" halign="center" valign="baseline" style="math">(2,b)</text>
-<text matrix="1 0 0 1 126 5" transformations="translations" pos="80 688" stroke="black" type="label" width="22.424" height="7.473" depth="2.49" halign="center" valign="baseline" style="math">(1,a)</text>
-<text matrix="1 0 0 1 254 5" transformations="translations" pos="80 688" stroke="black" type="label" width="22.343" height="7.473" depth="2.49" halign="center" valign="baseline" style="math">(1,d)</text>
-<text matrix="1 0 0 1 297 5" transformations="translations" pos="80 688" stroke="black" type="label" width="22.424" height="7.473" depth="2.49" halign="center" valign="baseline" style="math">(1,a)</text>
+<text layer="sequence" matrix="1 0 0 1 -2 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.185" height="6.918" depth="0" halign="center" valign="baseline" style="math">d</text>
+<text matrix="1 0 0 1 40 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.266" height="4.289" depth="0" halign="center" valign="baseline" style="math">a</text>
+<text matrix="1 0 0 1 83 5" transformations="translations" pos="80 688" stroke="black" type="label" width="4.276" height="6.918" depth="0" halign="center" valign="baseline" style="math">b</text>
+<text matrix="1 0 0 1 126 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.266" height="4.289" depth="0" halign="center" valign="baseline" style="math">a</text>
+<text matrix="1 0 0 1 254 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.185" height="6.918" depth="0" halign="center" valign="baseline" style="math">d</text>
+<text matrix="1 0 0 1 297 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.266" height="4.289" depth="0" halign="center" valign="baseline" style="math">a</text>
 <group layer="G_n" matrix="1 0 0 1 -49.175 60.4875">
 <path matrix="0.0833335 0 0 1 197.175 -60.4875" stroke="darkgray" pen="heavier">
 64 704 m
@@ -1579,8 +1579,8 @@ h
 <use matrix="0.0555557 0 0 1 267.034 65.9396" name="mark/disk(sx)" pos="64 736" size="tiny" stroke="darkgray"/>
 <use matrix="0.0555557 0 0 1 267.034 65.9396" name="mark/disk(sx)" pos="64 704" size="tiny" stroke="darkgray"/>
 </group>
-<text layer="sequence" matrix="1 0 0 1 168 5" transformations="translations" pos="80 688" stroke="black" type="label" width="21.469" height="7.473" depth="2.49" halign="center" valign="baseline" style="math">(3,c)</text>
-<text matrix="1 0 0 1 211 5" transformations="translations" pos="80 688" stroke="black" type="label" width="21.434" height="7.473" depth="2.49" halign="center" valign="baseline" style="math">(2,b)</text>
+<text layer="sequence" matrix="1 0 0 1 168 5" transformations="translations" pos="80 688" stroke="black" type="label" width="4.311" height="4.289" depth="0" halign="center" valign="baseline" style="math">c</text>
+<text matrix="1 0 0 1 211 5" transformations="translations" pos="80 688" stroke="black" type="label" width="4.276" height="6.918" depth="0" halign="center" valign="baseline" style="math">b</text>
 <group layer="G_n" matrix="1 0 0 1 78.8253 60.4875">
 <path matrix="0.0833335 0 0 1 197.175 -60.4875" stroke="darkgray" pen="heavier">
 64 704 m
@@ -1889,7 +1889,7 @@ h
 <use matrix="0.0555557 0 0 1 267.034 65.9396" name="mark/disk(sx)" pos="64 736" size="tiny" stroke="darkgray"/>
 <use matrix="0.0555557 0 0 1 267.034 65.9396" name="mark/disk(sx)" pos="64 704" size="tiny" stroke="darkgray"/>
 </group>
-<text layer="sequence" matrix="1 0 0 1 381.333 5" transformations="translations" pos="80 688" stroke="black" type="label" width="21.469" height="7.473" depth="2.49" halign="center" valign="baseline" style="math">(3,c)</text>
+<text layer="sequence" matrix="1 0 0 1 381.333 5" transformations="translations" pos="80 688" stroke="black" type="label" width="4.311" height="4.289" depth="0" halign="center" valign="baseline" style="math">c</text>
 <path layer="G_n" matrix="1 0 0 1 213.333 0" stroke="darkgray" fill="brew8" pen="heavier">
 238.222 704 m
 234.667 704 l
@@ -1898,7 +1898,7 @@ h
 234.667 736 m
 238.222 736 l
 </path>
-<text layer="sequence" matrix="1 0 0 1 339 5" transformations="translations" pos="80 688" stroke="black" type="label" width="21.434" height="7.473" depth="2.49" halign="center" valign="baseline" style="math">(2,b)</text>
+<text layer="sequence" matrix="1 0 0 1 339 5" transformations="translations" pos="80 688" stroke="black" type="label" width="4.276" height="6.918" depth="0" halign="center" valign="baseline" style="math">b</text>
 <group layer="G_n" matrix="1 0 0 1 206.826 60.4875">
 <path matrix="0.0833335 0 0 1 197.175 -60.4875" stroke="darkgray" pen="heavier">
 64 704 m
@@ -2145,5 +2145,15 @@ h
 264 740 m
 264 700 l
 </path>
+<text layer="G_n" matrix="1 0 0 1 104 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 62 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 19 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 -24 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 146 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 189 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 232 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 275 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 318 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 360 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
 </page>
 </ipe>
