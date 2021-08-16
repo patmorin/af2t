@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.21">
-<info created="D:20210325033324" modified="D:20210325052714"/>
+<info created="D:20210325033324" modified="D:20210816063348"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -242,6 +242,7 @@ h
 <pen name="fat" value="1.2"/>
 <pen name="ultrafat" value="2"/>
 <symbolsize name="large" value="5"/>
+<symbolsize name="huge" value="10"/>
 <symbolsize name="small" value="2"/>
 <symbolsize name="tiny" value="1.1"/>
 <arrowsize name="large" value="10"/>
@@ -278,11 +279,11 @@ h
 <dashstyle name="dash dotted" value="[4 2 1 2] 0"/>
 <dashstyle name="dash dot dotted" value="[4 2 1 2 1 2] 0"/>
 <textsize name="large" value="\large"/>
+<textsize name="huge" value="\huge"/>
 <textsize name="small" value="\small"/>
 <textsize name="tiny" value="\tiny"/>
 <textsize name="Large" value="\Large"/>
 <textsize name="LARGE" value="\LARGE"/>
-<textsize name="huge" value="\huge"/>
 <textsize name="Huge" value="\Huge"/>
 <textsize name="footnote" value="\footnotesize"/>
 <textstyle name="center" begin="\begin{center}" end="\end{center}"/>
@@ -378,8 +379,7 @@ h
 128 704 m
 160 704 l
 </path>
-<use matrix="1 0 0 1 64 0" name="mark/disk(sx)" pos="128 736" size="large" stroke="black"/>
-<use matrix="1 0 0 1 64 0" name="mark/square(sx)" pos="128 704" size="large" stroke="black"/>
+<use matrix="1 0 0 1 64 0" name="mark/disk(sx)" pos="128 736" size="huge" stroke="black"/>
 <path matrix="1 0 0 1 64 0" stroke="black">
 128 736 m
 160 736 l
@@ -388,11 +388,12 @@ h
 128 704 m
 160 704 l
 </path>
-<use matrix="1 0 0 1 32 0" name="mark/disk(sx)" pos="128 736" size="large" stroke="brew3"/>
-<use matrix="1 0 0 1 32 0" name="mark/square(sx)" pos="128 704" size="large" stroke="brew3"/>
-<use matrix="1 0 0 1 96 0" name="mark/disk(sx)" pos="128 736" size="large" stroke="brew6"/>
-<use matrix="1 0 0 1 96 0" name="mark/square(sx)" pos="128 704" size="large" stroke="brew6"/>
-<use name="mark/square(sx)" pos="128 704" size="large" stroke="brew4"/>
-<use name="mark/disk(sx)" pos="128 736" size="large" stroke="brew4"/>
+<use matrix="1 0 0 1 32 0" name="mark/disk(sx)" pos="128 736" size="huge" stroke="brew3"/>
+<use matrix="1 0 0 1 32 0" name="mark/disk(sx)" pos="128 704" size="huge" stroke="brew2"/>
+<use matrix="1 0 0 1 96 0" name="mark/disk(sx)" pos="128 736" size="huge" stroke="brew6"/>
+<use matrix="1 0 0 1 96 0" name="mark/disk(sx)" pos="128 704" size="huge" stroke="brew8"/>
+<use name="mark/disk(sx)" pos="128 704" size="huge" stroke="brew1"/>
+<use name="mark/disk(sx)" pos="128 736" size="huge" stroke="brew4"/>
+<use matrix="1 0 0 1 64 0" name="mark/disk(sx)" pos="128 704" size="huge" stroke="brew7"/>
 </page>
 </ipe>
