@@ -1,0 +1,57 @@
+==========================================================================
+Referee:
+• “anagrams” → One should probably at least mentioned that in COW these
+are called abelian squares (In my opinion, it should even be mentioned in
+the first paragraph).
+
+Response:
+We have added a sentence in the first paragraph giving the various names for anagrams (abelian squares) and anagram-free (abelian square free, strongly nonrepetitive, strongly asymmetric) words.
+
+==========================================================================
+
+Referee:
+• “string, substring” → “word, factor”. String is used in the context of algorithmics on words (see, for instance, the wikipedia page on COW contains no occurrences of ”string” and 110 occurrences of ”word”)
+
+• h a (s) is usually noted |s| a , and the “histogram” h(s) is usually called the Parikh vector
+
+• ”character“ → ”letter“. The word character is usually used for a different object.
+
+Response:
+We have switched to the COW terminology and notation.  This includes "word", "factor", "Parikh vector", "letter" (and the |w|_a notation)
+
+Referee:
+• ”checking if a string is anagramish is often viewed as finding...“ → I dis- agree with the ”often“ (I wrote a few articles on abelian repetitions as well as a few programs for checking the absence of abelian powers) Can you justify this sentence with citations? Otherwise please replace this by ”can be viewed‘
+
+Response:
+We changed this "can be viewed"
+
+Referee:
+• “Let φ ∗ ” “there exists some a ∗ ” the ∗ is already used as the Kleene star
+( and in this context, a ∗ = {ε, a, aa, aaa, . . .}). Maybe use something else
+as â or α.
+
+Response:
+Good point. We have eliminated φ* and replaced a* with alpha.
+
+Referee:
+Now for the main comment: [Explanation of well-known results on uniformly recurrent sublanguages of infinite factor-closed languages]
+
+These 2 pages (everything between Lemma 3 and Lemma 6), can certainly be replaced by something sim- pler, shorter, and easier to read....
+
+
+Response:
+Thanks to the referee for pointing us to the correct literature.  We have made the following changes, which certainly make the paper nicer to read:
+
+- Lemma 3 (about l-periodic languages) has been restated in terms of infinite factor-closed languages, and the definition in terms of a predicate P has been eliminated.
+
+We still provide a proof of Lemma 3 because "l-periodic" is considerably weaker than "uniformly recurrent", so the proof is short and easier for someone with no background in COW to follow.  In particular, the definition only involves a (finite) alphabet as opposed to the (infinite) set of words in L.
+
+However, before the lemma we point out that it follows from known results (Lotaire, Proposition 1.5.12) and that the proof is only there for the sake of completeness
+
+- Section 3 has been rewritten, roughly using the same outline provided by the referee.  Our write-up is longer than the referee's (three quarters of a page), mainly because we need block sizes whose lengths are a multiple of 4 (or at least even).  (For example, we can't just pick a factor of length 4 and split a word at occurences of that factor.)
+
+Referee:
+I also have a few minor comments: [followed by three small comments]
+
+Response:
+We have addressed these three minor comments (a missing full stop, the use of shape versus colour in a figure, and defining i.)
