@@ -217,7 +217,7 @@ For reasons that will become apparent, it is useful to break $G_n$ up into block
 
 By \cref{periodicity}, there exists an infinite periodic factor-closed language $L_2\subseteq L_1$.  Let $x$ be any letter in $\Sigma_{L_2}$.  Note that the word $xx$ is not in $L_2$ since the corresponding colouring $\phi_{xx}$ of $G_8$ has, for example, the anagramish path $a_0,\ldots,a_7$.  Since $L_2$ is factor-closed, no word in $L_2$ contains $xx$ as a factor.
 
-Let $\Sigma_3$ be the set of non-empty factors words in $L_2$ that do not contain $x$.  This implies that any word in $L_2$ is of the form $w_0xw_1xw_2\cdots xw_rxw_{r+1}$ where each of $w_1,\ldots,w_{r}$ is in $\Sigma_3$ and each of $w_0,w_{r+1}$ is in $\Sigma_3\cup\{\varepsilon\}$.  Since $L_2$ is periodic, each word in $\Sigma_3$ has bounded length, so $\Sigma_3$ is finite, i.e., $\Sigma_3$ is an alphabet.  Let $L_3$ be the language consisting of all words $w_1,\ldots,w_r\in\Sigma_3^*$ such that $xw_1xw_2\cdots xw_r\in L_2$.  Since $L_2$ is infinite and each word in $L_2$ has the form described above, $L_3$ is infinite.  Since $L_2$ is factor closed, $L_3$ is also factor-closed. Therefore, by \cref{periodicity}, there exists an infinite periodic factor-closed language $L\subseteq L_3$ over the alphabet $\Sigma:=\Sigma_{L_3}$.
+Let $\Sigma_3\subset F(L_2)$ contain only those factors of $L_2$ that do not contain $x$.  Thus, any word in $L_2$ is of the form $w_0xw_1xw_2\cdots xw_rxw_{r+1}$ where each of $w_1,\ldots,w_{r}$ is in $\Sigma_3$ and each of $w_0,w_{r+1}$ is in $\Sigma_3\cup\{\varepsilon\}$.  Since $L_2$ is periodic, each word in $\Sigma_3$ has bounded length, so $\Sigma_3$ is finite, i.e., $\Sigma_3$ is an alphabet.  Let $L_3$ be the language consisting of all words $w_1,\ldots,w_r\in\Sigma_3^*$ such that $xw_1xw_2\cdots xw_r\in L_2$.  Since $L_2$ is infinite and each word in $L_2$ has the form described above, $L_3$ is infinite.  Since $L_2$ is factor closed, $L_3$ is also factor-closed. Therefore, by \cref{periodicity}, there exists an infinite periodic factor-closed language $L\subseteq L_3$ over the alphabet $\Sigma:=\Sigma_{L_3}$.
 
 See \cref{bigexample} for what follows. Each word $w:=w_1,\ldots,w_r\in L$ defines a word $w':=xw_1xw_2\cdots xw_{r}\in L_1$.  In graph colouring terms, $w$ defines an integer $n_w:=4r+\tfrac{1}{2}\sum_{i=1}^r|w_i|$ and an anagram-free colouring $\phi_w:=\phi_{w'}$ of $G_{n_w}$. The word $w'$ partitions the columns of $G_{n_w}$ into \emph{blocks}, each of which corresponds to a letter $a$ of $w'$ and whose length $|a|/2$ is a multiple of $4$.  There are two types of blocks:
 \begin{compactitem}
@@ -234,7 +234,7 @@ See \cref{bigexample} for what follows. Each word $w:=w_1,\ldots,w_r\in L$ defin
 Since $L$ is periodic, there exists an integer $\ell$ such that every word in $L$ is $\ell$-periodic.  Since $L$ is infinite, it contains arbitrarily long words.  These two facts, along with \cref{near_anagram_fourier} immediately imply the following lemma:
 
 \begin{lem}\label{near_anagram_graph}
-    If $\afcn(G_n)\le c$ for each $n\in\N$ then, for each $r_0\in\N$ and $\epsilon>0$, there exists $w\in L$ with even length $|w|\ge 2r$ and $\tau(w)\le\epsilon r$.
+    If $\afcn(G_n)\le c$ for each $n\in\N$ then, for each $r_0\in\N$ and $\epsilon>0$, there exists $w\in L$ with even length $|w|\ge 2r_0$ and $\tau(w)\le\epsilon r$.
 \end{lem}
 
 
