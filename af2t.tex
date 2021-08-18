@@ -115,9 +115,9 @@
 
 \section{Introduction}
 
-Two words $s$ and $t$ are said to be \emph{anagrams} of each other if $s$ is a permutation of $t$.  A single word $w:=w_1,\ldots,w_{2r}$ is \emph{anagramish} if its first half $w_1,\ldots,w_r$ and its second half $w_{r+1},\ldots,w_{2r}$ are anagrams of each other.  A word is \emph{anagram-free} if it does not contain an anagramish factor.  Anagramish words are also known as \emph{abelian squares} and anagram-free words are also known as \emph{abelian square free} words \cite{keranen:abelian,keranen:powerful}, \emph{strongly nonrepetitive} words \cite{pleasants:non-repetitive}, or \emph{strongly asymmetric} sequences \cite{evdokimov:strongly,evdokimov:strongly2}.
+Two words $s$ and $t$ are \emph{anagrams} of each other if $s$ is a permutation of $t$.  A single word $w:=w_1,\ldots,w_{2r}$ is \emph{anagramish} if its first half $w_1,\ldots,w_r$ and its second half $w_{r+1},\ldots,w_{2r}$ are anagrams of each other.  A word is \emph{anagram-free} if it does not contain an anagramish factor.  Anagramish words are also known as \emph{abelian squares} and anagram-free words are also known as \emph{abelian square free} words \cite{keranen:abelian,keranen:powerful}, \emph{strongly nonrepetitive} words \cite{pleasants:non-repetitive}, or \emph{strongly asymmetric} sequences \cite{evdokimov:strongly,evdokimov:strongly2}.
 
-In 1961, \citet{erdos:some} asked if there exist arbitrarily long words over an alphabet of size $4$ that are anagram-free.\footnote{This was an incredibly prescient question since it is not at all obvious that there exist arbitrarily long anagram-free words over any finite alphabet. The only justification for choosing the constant $4$ is that a short case analysis rules out the possibility of length-$8$ anagram-free words over an alphabet of size $3$.}  In 1968 \citet{evdokimov:strongly,evdokimov:strongly2} showed the existence of arbitrarily long anagram-free words over an alphabet of size $25$ and in 1971 \citet{pleasants:non-repetitive} showed an alphabet of size $5$ is sufficient.  Erd\H{o}s's question was not fully resolved until 1992, when \citet{keranen:abelian} answered it in the affirmative.
+In 1961, \citet{erdos:some} asked if there exist arbitrarily long words over an alphabet of size $4$ that are anagram-free.\footnote{This was an incredibly prescient question since it is not at all obvious that there exist arbitrarily long anagram-free words over \emph{any} finite alphabet. The only justification for choosing the constant $4$ is that a short case analysis rules out the possibility of length-$8$ anagram-free words over an alphabet of size $3$.}  In 1968 \citet{evdokimov:strongly,evdokimov:strongly2} showed the existence of arbitrarily long anagram-free words over an alphabet of size $25$ and in 1971 \citet{pleasants:non-repetitive} showed an alphabet of size $5$ is sufficient.  Erd\H{o}s's question was not fully resolved until 1992, when \citet{keranen:abelian} answered it in the affirmative.
 
 A path $v_1,\ldots,v_{2r}$ in a graph $G$ is \emph{anagramish} under a vertex $c$-colouring $\phi:V(G)\to\{1,\ldots,c\}$ if $\phi(v_1),\ldots,\phi(v_{2r})$ is an anagramish word.  The colouring $\phi$ is an \emph{anagram-free colouring} of $G$ if no path in $G$ is anagramish under $\phi$.  The minimum integer $c$ for which $G$ has an anagram-free vertex $c$-colouring is called the \emph{anagram-free chromatic number} of $G$ and is denoted by $\afcn(G)$.
 
@@ -152,31 +152,29 @@ In \cref{vertex_colourings} we use this key lemma to prove \cref{main_vertex}.  
 \section{Periodicity in words}
 \label{near_anagram_statement}
 
-An \emph{alphabet} $\Sigma$ is a finite non-empty set and each element of $\Sigma$ is called a \emph{letter}. A \emph{word} over $\Sigma$ is a (possibly empty) sequence $w:=w_1,\ldots,w_n$ with $w_i\in\Sigma$ for each $i\in\{1,\ldots,n\}$. The \emph{length} $|w|$ of $w$ is the length, $n$, of the sequence.  A word of length at least $1$ is \emph{non-empty}.  The unique word of length $0$ is denoted by $\varepsilon$. For a word $w:=w_1,\ldots,w_n$, we let $\Sigma_w:=\{w_i:i\in\{1,\ldots,n\}\}$.  For each $1 \le i \le j\le n+1$, $w_i,w_{i+1},\ldots,w_{j-1}$ is called a \emph{factor} of $w$.  The set of all factors of $w$ is denoted by $F(w)$.
+An \emph{alphabet} $\Sigma$ is a finite non-empty set and each element of $\Sigma$ is called a \emph{letter}. A \emph{word} over $\Sigma$ is a (possibly empty) sequence $w:=w_1,\ldots,w_n$ with $w_i\in\Sigma$ for each $i\in\{1,\ldots,n\}$. The \emph{length} $|w|$ of $w$ is the length, $n$, of the sequence.  A word of length at least $1$ is \emph{non-empty}.  The unique word of length $0$ is denoted by $\varepsilon$. For a word $w:=w_1,\ldots,w_n$, we let $\Sigma_w:=\{w_i:i\in\{1,\ldots,n\}\}$.  For each $1 \le i \le j\le n+1$, $w_i,w_{i+1},\ldots,w_{j-1}$ is called a \emph{factor} of $w$.\footnote{Note that this definition includes the empty factor $\varepsilon$ obtained when $i=j$.}  The set of all factors of $w$ is denoted by $F(w)$.
 
-A \emph{language} $L$ over $\Sigma$ is a set of words over $\Sigma$.  A language $L$ is \emph{infinite} if $|L|=\infty$.  We let $\Sigma_L:=\bigcup_{w\in L}\Sigma_w$.  The language $L$ is \emph{factor-closed} if $F(w)\subseteq L$ for each $w\in L$.
+A \emph{language} $L$ over $\Sigma$ is a set of words over $\Sigma$.  A language $L$ is \emph{infinite} if $|L|=\infty$.  We let $\Sigma_L:=\bigcup_{w\in L}\Sigma_w$ and $F(L):=\bigcup_{w\in L}F(w)$.  The language $L$ is \emph{factor-closed} if $F(w)\subseteq L$ for each $w\in L$.  For any alphabet $\Sigma$ and any $k\in\N$, $\Sigma^k$ (the $k$-fold cartesian product of $\Sigma$ with itself) is the language consisting of all length-$k$ words over $\Sigma$.  The \emph{Kleene closure} $\Sigma^*:=\bigcup_{k=0}^\infty \Sigma^k$ is the language consisting of all words over $\Sigma$.
 
-For any alphabet $\Sigma$ and any $k\in\N$, $\Sigma^k$ (the $k$-fold cartesian product of $\Sigma$ with itself) is the language consisting of all length-$k$ words over $\Sigma$.  The \emph{Kleene closure} $\Sigma^*:=\bigcup_{k=0}^\infty \Sigma^k$ is the language consisting of all words over $\Sigma$.
-
- (Note the convention that $w[i\mathbin{:}j]$ does not include $w_j$, so $w[i\mathbin{:}j]$ has length $j-i$.)\todo{Is this notation still needed after revisions?}
+ % (Note the convention that $w[i\mathbin{:}j]$ does not include $w_j$, so $w[i\mathbin{:}j]$ has length $j-i$.)\todo{Is this notation still needed after revisions?}
 
 Let $w:=w_1,\ldots,w_n$ be a word over an alphabet $\Sigma$ and, for each $a\in \Sigma$, define $|w|_a:=|\{i\in\{1,\ldots,n\}:w_i=a\}|$.  The \emph{Parikh vector} of $w$ is the integer-valued $|\Sigma|$-vector $\hist(w):=(|w|_{a}:a\in\Sigma)$ that is indexed by elements of $\Sigma$.  Observe that a word $w_1,\ldots,w_{2r}$ is anagramish if and only if $\hist(w_1,\ldots,w_r)=\hist(w_{r+1},\ldots,w_{2r})$ or, equivalently, $\hist(w_1,\ldots,w_r)-\hist(w_{r+1},\ldots,w_{2r})=\boldsymbol{0}$.
 % Let $\|\cdot\|_1$ denote the L1 norm of a vector.\footnote{The L1 norm of a real-valued $d$-vector $\boldsymbol{v}:=(v_1,\ldots,v_d)$, $\|\boldsymbol{v}\|_1=\sum_{i=1}^d|v_i|$.}
 For each $a\in\Sigma$, let $\delta_a(w):=|w_1,\ldots,w_r|_{a}-|w_{r+1},\ldots,w_{2r}|_{a}$ and let $\tau_a(w):=|\delta_a|$.
-Then $\tau(w):=\sum_{a\in\Sigma}\tau_a(w)$ is a useful measure of how far a word is from being anagramish and $\tau(w)=0$ if and only if $w$ is anagramish.
+Then $\tau(w):=\sum_{a\in\Sigma}\tau_a(w)$ is a useful measure of how far a word is from being anagramish and that $\tau(w)=0$ if and only if $w$ is anagramish.
 
-A word $w:=w_1,\ldots,w_n$ is $\ell$-periodic over an alphabet $\Sigma\supseteq\Sigma_w$ if each length-$\ell$ factor of $w$ contains every letter in $\Sigma$.  A language $L$ is $\ell$-periodic  if each of its words is $\ell$-periodic over $\Sigma_L$.  A language $L$ is \emph{periodic} if it is $\ell$-periodic for some finite $\ell$.  We make use of the following key lemma, which states that every sufficiently long $\ell$-periodic word contains a long factor that is $\epsilon$-close to being anagramish.
+A word $w:=w_1,\ldots,w_n$ is \emph{$\ell$-periodic} over an alphabet $\Sigma\supseteq\Sigma_w$ if each length-$\ell$ factor of $w$ contains every letter in $\Sigma$.  A language $L$ is \emph{$\ell$-periodic}  if each of its words is $\ell$-periodic over $\Sigma_L$.  A language $L$ is \emph{periodic} if it is $\ell$-periodic for some finite $\ell$.  We make use of the following key lemma, which states that every sufficiently long $\ell$-periodic word contains arbitrarily long factors that are $\epsilon$-close to being anagramish.
 
 \begin{lem}\label{near_anagram_fourier}
     For each $r_0,\ell\in\N$ and each $\epsilon>0$, there exists a positive integer $n$ such that each $\ell$-periodic word $w_1,\ldots,w_n$ contains a factor $w:=w_{i+1},\ldots,w_{i+2r}$ of length $2r \ge 2r_0$ such that $\tau(w)\le \epsilon r$.
 \end{lem}
 
-The proof of \cref{near_anagram_fourier} is deferred to \cref{near_anagram_proof}.  We now give some intuition as to how it is used.  The process of checking if a word is anagramish can be viewed as finding common terms in the first and second halves and crossing them both out.  If this results in a complete cancellation of all terms, then the word is an anagram.  \cref{near_anagram_fourier} tells us that we can always find a long factor $w$ where, after exhaustive cancellation, only an $\epsilon$-fraction of the original terms remain.
+The proof of \cref{near_anagram_fourier} is deferred to \cref{near_anagram_proof}.  We now give some intuition as to how it is used.  The process of checking if a word is anagramish can be viewed as finding common letters in the first and second halves and crossing them both out.  If this results in a complete cancellation of all letters, then the word is an anagram.  \cref{near_anagram_fourier} tells us that we can always find a long factor $w$ where, after exhaustive cancellation, only an $\epsilon$-fraction of the original letters remain.
 % Informally, the factor $w$ is $\epsilon$-close to being anagramish.
 
-\cref{near_anagram_fourier} says that, if up to $\epsilon r$ terms in each half of $w$ were each allowed to cancel two terms each in the other half of $w$, then it would be possible to complete the cancellation process.  To achieve this type of one-versus-two cancellation in our setting, we decompose our coloured pathwidth-$2$ graph into pieces of constant size.  The vertices in each piece can be covered with one path or partitioned into two paths (see \cref{paths}).  In this way an occurrence $H_z$ of a particular coloured piece in one half can be matched with two like-coloured pieces $H_x$ and $H_y$ in the other half. We construct a single path $P$ that contains all vertices in $H_z$ and only half the vertices in each of $H_x$ and $H_y$.  In this way, the colours of vertices $P\cap H_z$ can cancel the colours of the vertices in $P\cap(H_x\cup H_y)$.
+\cref{near_anagram_fourier} says that, if up to $\epsilon r$ letters in each half of $w$ were each allowed to cancel two letters of the same letters in the other half of $w$, then it would be possible to complete the cancellation process.  To achieve this type of one-versus-two cancellation in our setting, we decompose our coloured pathwidth-$2$ graph into pieces of constant size.  The vertices in each piece can be covered with one path or partitioned into two paths (see \cref{paths}).  In this way an occurrence $H_z$ of a particular coloured piece in one half can be matched with two like-coloured pieces $H_x$ and $H_y$ in the other half. We construct a single path $P$ that contains all vertices in $H_z$ and only half the vertices in each of $H_x$ and $H_y$.  In this way, the colours of vertices $P\cap H_z$ can cancel the colours of the vertices in $P\cap(H_x\cup H_y)$.
 
-Since \cref{near_anagram_fourier} requires that the word $w$ be $\ell$-periodic, the following lemma will be helpful in obtaining words that can be used with \cref{near_anagram_fourier}. (Although \cref{periodicity} follows immediately from considerably stronger results in combinatorics on words---for example \citet[Proposition~1.5.12]{lothaire:algebraic}----we provide a proof here for the sake of completeness.)
+Since \cref{near_anagram_fourier} requires that the word $w$ be $\ell$-periodic, the following lemma will be helpful in obtaining words that can be used with \cref{near_anagram_fourier}. (Although \cref{periodicity} follows immediately from considerably stronger results in combinatorics on words---for example \citet[Proposition~1.5.12]{lothaire:algebraic}---we provide a proof here for the sake of completeness.)
 
 
 \begin{lem}\label{periodicity}
@@ -185,14 +183,14 @@ Since \cref{near_anagram_fourier} requires that the word $w$ be $\ell$-periodic,
 
 
 \begin{proof}
-    Let $\Xi\subseteq\Sigma$ be any minimal subset of $\Sigma$ with the property that $M:=\Xi^* \cap L$ is infinite.  Observe that, since $L$ is factor closed, $M$ is also factor-closed.  Therefore $M$ is infinite and factor-closed, all that remains is to show that $M$ is $\ell$-periodic for some integer $\ell$.
+    Let $\Xi\subseteq\Sigma$ be any minimal subset of $\Sigma$ with the property that $M:=\Xi^* \cap L$ is infinite.  Observe that, since $L$ is factor closed, $M$ is also factor-closed.  Therefore $M$ is infinite and factor-closed.  All that remains is to show that $M$ is $\ell$-periodic for some integer $\ell$.
 
-    Since $\Xi$ is minimal, $\Pi^*\cap L$ is finite for any strict subset $\Pi\subsetneq \Xi$.  Since $L$ is factor-closed and $\Pi^*\cap L$ is finite, $|w|$ is finite for any $w\in\Pi^*\cap L$.
+    Since $\Xi$ is minimal, $\Pi^*\cap L$ is finite for any strict subset $\Pi\subsetneq \Xi$.  Since $L$ is factor-closed, $\Pi^*\cap L$ is factor-closed.  Since $\Pi^*\cap L$ is factor-closed and finite, $|w|$ is finite for each $w\in\Pi^*\cap L$.
     Therefore, the value
     \begin{equation}
         \ell:=1+\max\{|w|: w\in \Pi^*\cap L,\, \Pi\subsetneq\Xi\} \label{l-def}
     \end{equation}
-    is finite.  Now, consider any factor $f$ of any word in $M$ that does not contain every letter of $\Xi$, i.e., $f\in\Pi^*$ for some  $\Pi\subsetneq\Xi$.  Since $L$ is factor closed, $f\in \Pi^*\cap L$ so, by \cref{l-def}, $|f| < \ell$.  Contrapositively, any factor of length at least $\ell$ of any word in $M$ contains every element of $\Xi$, so $M$ is $\ell$-periodic.
+    is finite.  Now, consider any factor $f$ of any word in $M$ that does not contain every letter of $\Xi$, i.e., $f\in\Pi^*$ for some  $\Pi\subsetneq\Xi$.  Since $\Pi^*\cap L$ is factor closed, $f\in \Pi^*\cap L$ so, by \cref{l-def}, $|f| < \ell$.  Contrapositively, any factor of length at least $\ell$ of any word in $M$ contains every element of $\Xi$, so $M$ is $\ell$-periodic.
 \end{proof}
 
 
@@ -200,7 +198,7 @@ Since \cref{near_anagram_fourier} requires that the word $w$ be $\ell$-periodic,
 \label{vertex_colourings}
 
 For each $n\in\N$, let $G_n$ be the $2\times n$ square grid with top row $a_0,\ldots,a_{n-1}$ and bottom row $b_0,\ldots,b_{n-1}$ (see \cref{g_n}).  For the sake of contradiction, suppose that there exists an integer $c$ such that $\afcn(G_n)\le c$ for each $n\in\N$.  Observe that there is a bijection between vertex $c$-colourings of $G_n$ and words of length $2n$ over the alphabet $\Sigma_0:=\{1,\ldots,c\}$ where a word $w:=w_0,\ldots,w_{2n-1}$ corresponds to the colouring $\phi_w:V(G_n)\to\{1,\ldots,c\}$ defined by
-$\phi_w(a_i):=w_{2i}$ and $\phi_w(b_i)=w_{2i+1}$, for each $i\in\{0,\ldots,n-1\}$.
+$\phi_w(a_i):=w_{2i}$ and $\phi_w(b_i):=w_{2i+1}$, for each $i\in\{0,\ldots,n-1\}$.
 
 \begin{figure}
     \centering{
@@ -215,7 +213,7 @@ $\phi_w(a_i):=w_{2i}$ and $\phi_w(b_i)=w_{2i+1}$, for each $i\in\{0,\ldots,n-1\}
 
 For reasons that will become apparent, it is useful to break $G_n$ up into blocks consisting of $4$ columns each.  Let $\Sigma_1:=\Sigma_0^8$ and define the language $L_1$ to consist of exactly those words $w_1,\ldots,w_r\in \Sigma_1^*$ for which $\phi_{w_1\cdots w_r}$ is an anagram-free colouring of $G_{4r}$.  From the assumption that $\afcn(G_n)\le c$ for all $n\in\N$, it follows that $L_1$ is infinite.  From the definition of anagram-free colouring, it follows that $L_1$ is factor-closed.
 
-By \cref{periodicity}, there exists an infinite periodic factor-closed language $L_2\subseteq L_1$.  Let $x$ be any letter in $\Sigma_{L_2}$.  Note that the word $xx$ is not in $L_2$ since the corresponding colouring $\phi_{xx}$ of $G_8$ has, for example, the anagramish path $a_0,\ldots,a_7$.  Since $L_2$ is factor-closed, no word in $L_2$ contains $xx$ as a factor.
+By \cref{periodicity}, there exists an infinite periodic factor-closed language $L_2\subseteq L_1$.  Let $x$ be any letter in $\Sigma_{L_2}$.  Note that the word $xx$ is not in $L_2$ since the corresponding colouring $\phi_{xx}$ of $G_8$ has, for example, the anagramish path $a_0,\ldots,a_7$.  Since $L_2$ is factor-closed, no word in $L_2$ contains $xx$ as a factor, i.e., $xx\not\in F(L_2)$.
 
 Let $\Sigma_3\subset F(L_2)$ contain only those factors of $L_2$ that do not contain $x$.  Thus, any word in $L_2$ is of the form $w_0xw_1xw_2\cdots xw_rxw_{r+1}$ where each of $w_1,\ldots,w_{r}$ is in $\Sigma_3$ and each of $w_0,w_{r+1}$ is in $\Sigma_3\cup\{\varepsilon\}$.  Since $L_2$ is periodic, each word in $\Sigma_3$ has bounded length, so $\Sigma_3$ is finite, i.e., $\Sigma_3$ is an alphabet.  Let $L_3$ be the language consisting of all words $w_1,\ldots,w_r\in\Sigma_3^*$ such that $xw_1xw_2\cdots xw_r\in L_2$.  Since $L_2$ is infinite and each word in $L_2$ has the form described above, $L_3$ is infinite.  Since $L_2$ is factor closed, $L_3$ is also factor-closed. Therefore, by \cref{periodicity}, there exists an infinite periodic factor-closed language $L\subseteq L_3$ over the alphabet $\Sigma:=\Sigma_{L_3}$.
 
@@ -227,7 +225,7 @@ See \cref{bigexample} for what follows. Each word $w:=w_1,\ldots,w_r\in L$ defin
 
 \begin{figure}
     \centering{\includegraphics{figs/bigexample-1}}
-    \caption{A word $w\in L$ and its corresponding coloured graph $G_{n_w}$.}
+    \caption{A word $w:=dabacbdabc$, its corresponding word $w':=xdxaxbxaxcxbxdxaxbxc$, and its corresponding coloured graph $G_{n_w}$.}
     \label{bigexample}
 \end{figure}
 
@@ -250,7 +248,7 @@ Since $L$ is periodic, there exists an integer $\ell$ such that every word in $L
 
 \begin{proof}
     Let $w:=w_1,\ldots,w_{2r}$ so that the colouring $\phi_w$ is defined by the word $xw_1xw_2\cdots xw_r$ (and $r\ge r_0$).
-    Define sets $A_a\subseteq\{i\in \{1,\ldots,r-1\}: w_i=a\}$ and $B_a\subseteq\{i\in\{r+1,\ldots,2r-1\}:w_i=a\}$ as follows:
+    For each $a\in\Sigma$, define sets $A_a\subseteq\{i\in \{1,\ldots,r-1\}: w_i=a\}$ and $B_a\subseteq\{i\in\{r+1,\ldots,2r-1\}:w_i=a\}$ as follows:
     \begin{compactenum}
         \item If $\delta_a(w)=0$ then $A_a=B_a=\emptyset$.
         \item If $\delta_a(w)>0$ then $|A_a|=2\delta_a(w)=2|B_a|$.
@@ -259,9 +257,9 @@ Since $L$ is periodic, there exists an integer $\ell$ such that every word in $L
     Let $A:=\bigcup_{a\in\Sigma} A_a$ and $B:=\bigcup_{a\in\Sigma} B_a$.
     The sets $A_a$ and $B_a$ are chosen so that they satisfy the following \emph{global independence constraint}:  There is no pair $i,j\in A\cup B$ such that $i-j=1$.  To see that this is possible, first observe that, because $r$ is not in $A$ or $B$ we need only concern ourselves with pairs where both $i,j\in\{1,\ldots,r-1\}$ or pairs where both $i,j\in\{r+1,\ldots,2r-1\}$.  Thus, we can choose the elements of $A_a$, for each $a\in\Sigma$ and then independently choose the elements of $B_a$, for each $a\in\Sigma$.
 
-    We show how to choose the elements of $A_a$ for each $a\in\Sigma$.  The same method works for choosing the elements in $B_a$. Observe that, because $w\in L$, $w$ is $\ell$-periodic, so $|\{i\in \{1,\ldots,r-1\}:w_i=a\}|\ge \lfloor(r-1)/\ell\rfloor$ for each $a\in\Sigma$.  This allows us to greedily choose the elements in $A_a$ for each $a\in\Sigma$. At each step we simply avoid choosing $i$ if $i-1$ or $i+1$ have already been chosen in some previous step.  At any step in the process, at most $\epsilon r$ elements have already been chosen in previous steps and each of these eliminates at most $2$ options.  Therefore, there will always be an element available to choose, provided that $2\epsilon r < \lfloor(r-1)/\ell\rfloor$.  In particular, for any $2r\ge r_0\ge 2\ell$, $\epsilon < 1/(4\ell)$ works.
+    We show how to choose the elements of $A_a$ for each $a\in\Sigma$.  The same method works for choosing the elements in $B_a$. Observe that, because $w\in L$, $w$ is $\ell$-periodic, so $|\{i\in \{1,\ldots,r-1\}:w_i=a\}|\ge \lfloor(r-1)/\ell\rfloor$ for each $a\in\Sigma$.  This allows us to greedily choose the elements in $A_a$ for each $a\in\Sigma$. At each step we simply avoid choosing $i$ if $i-1$ or $i+1$ have already been chosen in some previous step.  At any step in the process, at most $\epsilon r$ elements have already been chosen in previous steps and each of these eliminates at most $2$ options.  Therefore, there will always be an element available to choose, provided that $2\epsilon r < \lfloor(r-1)/\ell\rfloor$.  In particular, for any $r\ge r_0\ge \ell$, $\epsilon < 1/(4\ell)$ works.
 
-    For ease of notation, let $G:=G_{n_w}$.  We now construct the anagramish path $P$ in a piecewise fashion.  Refer to \cref{path_construction}.  For each $i\in\{1,\ldots,2r\}$, let $H_i$ be the subgraph of $G$ induced by the vertices corresponding to $w_i$. (The subgraph $H_1,\ldots,H_{2r}$ are referred to above above as colourful blocks.)
+    To ease notation, let $G:=G_{n_w}$.  We now construct the anagramish path $P$ in a piecewise fashion.  Refer to \cref{path_construction}.  For each $i\in\{1,\ldots,2r\}$, let $H_i$ be the subgraph of $G$ induced by the vertices corresponding to $w_i$. (The subgraph $H_1,\ldots,H_{2r}$ are referred to above as colourful blocks.)
     \begin{figure}
         \centering{
             \includegraphics{figs/bigexample-1} \\
@@ -294,13 +292,13 @@ Since $L$ is periodic, there exists an integer $\ell$ such that every word in $L
         % \todo[inline]{Handle this comment: • fig. 4. Maybe do not use the same color for the bottom and the top, it took me a while to notice that the shapes were different and that this meant that the colors were different (or you could simply add a sentence to clarify this).
         % PM: I handled this by making the symbols huge}
 
-        \item For each $a\in\Sigma$ such that $\delta_a(w)<0$ we proceed symmetrically to the previous case, but reversing the roles of $A_a$ and $B_a$.  Specifically, we group the elements of $B_a$ into pairs.  For each pair $(i,j)$, $P$ contains the path through the top row of $H_i$ and the path through the bottom row of $B_j$.  For each element $i\in A_a$, $P$ contains the zig-zag path with both endpoints in the top row of $H_i$ and that contains every vertex of $H_i$.
+        \item For each $a\in\Sigma$ such that $\delta_a(w)<0$ we proceed symmetrically to the previous case, but reversing the roles of $A_a$ and $B_a$.  Specifically, we group the elements of $B_a$ into pairs.  For each pair $(i,j)$, $P$ contains the path through the top row of $H_i$ and the path through the bottom row of $H_j$.  For each element $i\in A_a$, $P$ contains the zig-zag path with both endpoints in the top row of $H_i$ and that contains every vertex of $H_i$.
 
         \item For each $i\in\{1,\ldots,2r\}\setminus\bigcup_{a\in\Sigma}(I_a\cup B_a)$, $P$ contains the top row of $H_i$.
     \end{compactenum}
     The rules above define the intersection, $P_i$, of $P$ with each colourful block $H_i$ of $G_{n_s}$.  If $P_i$ is the path through the bottom (top) row of $H_i$ then we call $H_i$ a \emph{bottom (top) block}.  If $P_i$ is the zig-zag path that contains every vertex of $H_i$ then we call $H_i$ a \emph{zig-zag block}.  Note that $\sum_{a\in\Sigma} \delta_a = 0$ and this implies that the number of bottom blocks among $H_1,\ldots,H_{r-1}$ is the same as the number of bottom blocks among $H_{r+1},\ldots,H_{2r}$.  Indeed, this number is exactly $\beta:=\tfrac{1}{2}\sum_{a\in\Sigma} |\delta_a(w)|=\tfrac{1}{2}\tau(w)$.
 
-    We now define how $P$ behaves for the boring blocks, which we denote by  $Q_0,\ldots,Q_{2r-1}$. The first boring block $Q_0$ comes immediately before $H_1$. Each boring block $Q_j$, for $j\in\{1,\ldots,2r-1\}$ comes immediately after $H_j$ and immediately before $H_{j+1}$.  In almost every case, $P$ uses the path through the top row of $Q_j$.  The only exceptions are when $H_j$ or $H_{j+1}$ are bottom blocks. Note that, because of the global independence constraint, these two cases are mutually exclusive. See \cref{updownup}.
+    We now define how $P$ behaves for the boring blocks, denoted by  $Q_0,\ldots,Q_{2r-1}$. The first boring block $Q_0$ comes immediately before $H_1$. Each boring block $Q_j$, for $j\in\{1,\ldots,2r-1\}$ comes immediately after $H_j$ and immediately before $H_{j+1}$.  In almost every case, $P$ uses the path through the top row of $Q_j$.  The only exceptions are when $H_j$ or $H_{j+1}$ are bottom blocks. Note that, because of the global independence constraint, these two cases are mutually exclusive. See \cref{updownup}.
 
     \begin{figure}
         \centering{
@@ -331,7 +329,7 @@ To be explicit, we finish the proof of \cref{main_vertex} by pointing out the co
 \begin{proof}[Proof of \cref{main_vertex}]
     Assume for the sake of contradiction that there exists some $c\in\N$ such that $\afcn(G_n)\le c$ for each $n\in\N$.  With this assumption, \cref{near_anagram_graph} shows that for every $\epsilon>0$ and $r_0\in\N$ there exists a word $w\in L$ with $|w|\ge 2r_0$, $\tau(w)\le\epsilon r$, and such that $\phi_w$ is an anagram-free colouring of $G_{n_w}$.
 
-    \cref{anagramish_path} shows that there are fixed values $\epsilon >0$ and $r_0\in \N$ such that, for any word $|w|\in L$ with $|w|\ge r_0$ and $\tau(w)\le\epsilon r$, the graph $G_{n_w}$ contain a path that is anagramish under $\phi_w$.  This is certainly a contradiction to the fact that $\phi_w$ is anagram-free colouring of $G_{n_w}$. We therefore conclude that, for every $c\in\N$ there exists an $n\in N$ such that $\afcn(G_n)> c$.
+    \cref{anagramish_path} shows that there are fixed values $\epsilon >0$ and $r_0\in \N$ such that, for any word $w\in L$ with $|w|\ge r_0$ and $\tau(w)\le\epsilon r$, the graph $G_{n_w}$ contain a path that is anagramish under $\phi_w$.  This certainly contradicts the fact that $\phi_w$ is an anagram-free colouring of $G_{n_w}$. We therefore conclude that, for every $c\in\N$ there exists an $n\in N$ such that $\afcn(G_n)> c$.
 \end{proof}
 
 % \todo[inline]{It would be nice to say something about the anagram-free chromatic index.  I'm pretty sure that it's constant for the $2\times n$ grid, but the result is not worth the effort.  More interesting would be a proof that its super-constant for the $2\times n$ grid with one diagonal in each square.  Almost everything we did above works except that we get hung up on a parity problem.  We can't do $2$ versus $1$ cancellation in $w$ but we can do $6$ versus $4$ cancellation. Everything works out except when the number of occurrences of some character is odd. In that case we get stuck with one uncancelled copy.}
@@ -387,8 +385,9 @@ All that remains is to prove \cref{near_anagram_fourier}, which we do now.
   For each $a\in\Sigma$, let $S_a:=\{v\in V(T): \text{$v$ is $a$-unbalanced}\}$. Since $w$ is everywhere unbalanced, $\bigcup_{a\in\Sigma} S_a=V(T)$. Therefore,
   \[
      (h+1)n = \sum_{v\in V(T)}|v|\le \sum_{a\in\Sigma} \sum_{v\in S_a} |v|
+     \enspace .
   \]
-  and therefore, there exists some $\alpha\in\Sigma$ such that $\sum_{v\in S_{\alpha}}|v|\ge (h+1)n/|\Sigma| \ge (h+1)n/\ell$.   At this point we are primarily concerned with appearances of $\alpha$, so let $X:=S_{\alpha}$, and, for each node $v\in V(T)$, let $W(v):=|v|_\alpha$.
+  Therefore, there exists some $\alpha\in\Sigma$ such that $\sum_{v\in S_{\alpha}}|v|\ge (h+1)n/|\Sigma| \ge (h+1)n/\ell$.   At this point we are primarily concerned with appearances of $\alpha$, so let $X:=S_{\alpha}$, and, for each node $v\in V(T)$, let $W(v):=|v|_\alpha$.
 
   For each non-leaf node $v$ of $T$, let $R(v)$ denote a child of $v$ such that $W(R(v))\le \tfrac12\cdot W(v)$.  (It is helpful to think of $T$ as being ordered so that each right child $y$ with sibling $x$ has $W(y)\le W(x)$.)  For a non-leaf node $v\in X$ the fact that $v$ is $\alpha$-unbalanced implies that
   \[  W(R(v)) \le \tfrac{1}{2}\cdot W(v) - \tfrac{\epsilon}{2\ell}\cdot |v|
@@ -422,7 +421,7 @@ All that remains is to prove \cref{near_anagram_fourier}, which we do now.
      (h+1)n/\ell
         \le L(X) & = \sum_{i=0}^{h} L(X_i) \\
            &\le \sum_{i=0}^{h} L(X_{t\floor{i/t}})
-             & \text{(since $t\floor{i/t}\le i$)} \\
+             & \text{(since $i\ge t\floor{i/t}$, so $L(X_i)\le L(X_{i\floor{i/t}}$))} \\
            & = t\cdot\sum_{i=0}^{h/t} L(X_{it})
              & \text{(for $h$ a multiple of $t$)} \\
            &\le t\cdot\sum_{i=0}^{\infty} (1-(1/2)^{t+1})^i L(X_0)
@@ -432,16 +431,6 @@ All that remains is to prove \cref{near_anagram_fourier}, which we do now.
            & = tn2^{t+1} \\
   \end{align*}
   which is a contradiction for sufficiently large $h$; in particular, for $h > \ell t2^{t+1}-1$.
-
-  It remains to establish \cref{t}, which we do now.  Fix some $i\in\{0,\ldots,h-1\}$, define $A_0:= X_i$ and, for each $j\ge 1$, define $A_j$ to be the subset of $X_{i+j}$ that are descendants of some node in $R(A_{j-1})$.  See \cref{bigtree}.  To upper bound $L(X_{i+t})$ observe that $X_{i+t}$ can be split into two sets $A_0'$ and $B$ defined as follows:  The nodes $A_0'$ do not have an ancestor in $R(A_0)$ and therefore $L(A_0')\le (1/2)L(A_0)$. The nodes in $B$ do have an ancestor in $R(A_0)$ and therefore have an ancestor in $A_1$.  Iterating this argument, we obtain
- \begin{align*}
-      L(X_{i+t})
-         &\le (1/2)L(A_0) + (1/2)L(A_1) + \cdots + (1/2)L(A_{t-1}) + L(A_t) \\
-         &\le (1/2)L(A_0) + (1/4)L(A_0) + \cdots + (1/2)^t L(A_{0}) + L(A_t) \\
-         &  = (1-(1/2)^t)L(A_0) + L(A_t) = (1-(1/2)^t)L(X_i) + L(A_t)  \enspace .
-   \end{align*}
-  So all that remains to establish \ref{t} is to prove that
-  $L(A_t)\le (1/2)^{t+1}L(X_i)$.
 
   \begin{figure}
     \centering{
@@ -454,7 +443,15 @@ All that remains is to prove \cref{near_anagram_fourier}, which we do now.
     \label{bigtree}
   \end{figure}
 
-  To do this, observe that, for each $j\in\{1,\ldots,t\}$,
+  It remains to establish \cref{t}, which we do now.  Fix some $i\in\{0,\ldots,h-1\}$, define $A_0:= X_i$ and, for each $j\ge 1$, define $A_j$ to be the subset of $X_{i+j}$ that are descendants of some node in $R(A_{j-1})$.  See \cref{bigtree}.  To upper bound $L(X_{i+t})$ observe that $X_{i+t}$ can be split into two sets $A_0'$ and $B$ defined as follows:  The nodes $A_0'$ do not have an ancestor in $R(A_0)$ and therefore $L(A_0')\le (1/2)L(A_0)$. The nodes in $B$ do have an ancestor in $R(A_0)$ and therefore have an ancestor in $A_1$.  Iterating this argument, we obtain
+ \begin{align*}
+      L(X_{i+t})
+         &\le (1/2)L(A_0) + (1/2)L(A_1) + \cdots + (1/2)L(A_{t-1}) + L(A_t) \\
+         &\le (1/2)L(A_0) + (1/4)L(A_0) + \cdots + (1/2)^t L(A_{0}) + L(A_t) \\
+         &  = (1-(1/2)^t)L(A_0) + L(A_t) = (1-(1/2)^t)L(X_i) + L(A_t)  \enspace .
+   \end{align*}
+  So all that remains to establish \ref{t} is to prove that
+  $L(A_t)\le (1/2)^{t+1}L(X_i)$.  To do this, observe that, for each $j\in\{1,\ldots,t\}$,
   \begin{equation}
       W(A_j)
         \le W(R(A_{j-1}))
@@ -470,7 +467,7 @@ All that remains is to prove \cref{near_anagram_fourier}, which we do now.
   \[
         L(A_t)\le \ell\cdot W(A_t) \le \ell\cdot(\tfrac12-\tfrac{\epsilon}{2\ell})^t\cdot L(X_i) \le L(X_i)/2^{t+1}
   \]
-  for $t = \ceil{\log(2\ell)/\log((1/(1-\tfrac{\epsilon}{\ell}))}$.
+  for $t := \ceil{\log(2\ell)/\log((1/(1-\tfrac{\epsilon}{\ell}))}$.
 \end{proof}
 
 \section{Reflections}
@@ -484,7 +481,7 @@ Our proof uses \cref{periodicity} twice and each uses a language $L$ that is con
 
 \section*{Acknowledgement}
 
-We would like to thank an anonymous referee for pointing out existing results and terminology from the field of combinatorics on words that helps to considerably streamline the presentation in \cref{near_anagram_statement,vertex_colourings}.
+We would like to thank an anonymous referee for pointing out existing results and terminology from the field of combinatorics on words that has helped streamline the presentation in \cref{near_anagram_statement,vertex_colourings}.
 
 \bibliographystyle{plainurlnat}
 \bibliography{af2t}

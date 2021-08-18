@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.23">
-<info created="D:20210325044650" modified="D:20210813151708"/>
+<info created="D:20210325044650" modified="D:20210818112920"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -325,12 +325,13 @@ h
 <layer name="G_n"/>
 <layer name="boring"/>
 <layer name="sequence"/>
+<layer name="x"/>
 <layer name="colourful"/>
 <layer name="interesting_paths"/>
 <layer name="top_paths"/>
 <layer name="boring_paths"/>
 <layer name="midstring"/>
-<view layers="G_n boring sequence colourful midstring" active="G_n"/>
+<view layers="G_n boring sequence x colourful midstring" active="G_n"/>
 <view layers="G_n boring colourful interesting_paths midstring" active="interesting_paths"/>
 <view layers="G_n boring colourful interesting_paths top_paths midstring" active="top_paths"/>
 <view layers="G_n boring colourful interesting_paths top_paths boring_paths midstring" active="midstring"/>
@@ -2145,15 +2146,15 @@ h
 264 740 m
 264 700 l
 </path>
-<text layer="sequence" matrix="1 0 0 1 104 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
-<text matrix="1 0 0 1 62 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
-<text matrix="1 0 0 1 19 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
-<text matrix="1 0 0 1 -24 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
-<text matrix="1 0 0 1 146 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
-<text matrix="1 0 0 1 189 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
-<text matrix="1 0 0 1 232 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
-<text matrix="1 0 0 1 275 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
-<text matrix="1 0 0 1 318 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
-<text matrix="1 0 0 1 360 5" transformations="translations" pos="80 688" stroke="black" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text layer="x" matrix="1 0 0 1 104 5" transformations="translations" pos="80 688" stroke="gray" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 62 5" transformations="translations" pos="80 688" stroke="gray" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 19 5" transformations="translations" pos="80 688" stroke="gray" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 -24 5" transformations="translations" pos="80 688" stroke="gray" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 146 5" transformations="translations" pos="80 688" stroke="gray" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 189 5" transformations="translations" pos="80 688" stroke="gray" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 232 5" transformations="translations" pos="80 688" stroke="gray" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 275 5" transformations="translations" pos="80 688" stroke="gray" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 318 5" transformations="translations" pos="80 688" stroke="gray" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
+<text matrix="1 0 0 1 360 5" transformations="translations" pos="80 688" stroke="gray" type="label" width="5.694" height="4.289" depth="0" halign="center" valign="baseline" style="math">x</text>
 </page>
 </ipe>
