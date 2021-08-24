@@ -1,3 +1,5 @@
+We would like to thank the referee for their careful and helpful review. In particular, the pointers to the relevant results and terminology on infinite factor-closed languages has helped to improve Sections 2 and 3.
+
 ==========================================================================
 
 Referee:
