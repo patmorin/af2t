@@ -255,28 +255,28 @@ The following lemma shows that any sufficiently long string $w$ in $L_3$ must de
 
 \begin{proof}
     Let $w:=w_1,\ldots,w_{2r}$ so that the colouring $\phi_w$ is defined by the word $xw_1xw_2\cdots xw_{2r}$.
-    For each $a\in\Sigma_3$, define $A^+_a:=\{i\in\{1,\ldots,r-1\}:w_i=a\}$ and $B^+_a:=\{i\in\{r+1,\ldots,2r-1\}:w_i=a\}$.  (The sets $A^+_a$ and $B^+_a$ index the occurrences of $a$ in the first and second half of $w$, respectively.)   We will now define two sets $A_a\subseteq A^+_a$ and $B_a\subseteq B^+_a$ with the following properties:
+    For each $a\in\Sigma_3$, define $X^+_a:=\{i\in\{1,\ldots,r-1\}:w_i=a\}$ and $Y^+_a:=\{i\in\{r+1,\ldots,2r-1\}:w_i=a\}$.  (The sets $X^+_a$ and $Y^+_a$ index the occurrences of $a$ in the first and second half of $w$, respectively.)   We will now define two sets $X_a\subseteq X^+_a$ and $Y_a\subseteq Y^+_a$ with the following properties:
     \begin{compactenum}
-        \item If $\delta_a(w)=0$ then $A_a=B_a=\emptyset$.
-        \item If $\delta_a(w)>0$ then $|A_a|=2\delta_a(w)=2|B_a|$.
-        \item If $\delta_a(w)<0$ then $|A_a|=\delta_a(w)=\tfrac{1}{2}|B_a|$.
+        \item If $\delta_a(w)=0$ then $X_a=Y_a=\emptyset$.
+        \item If $\delta_a(w)>0$ then $|X_a|=2\delta_a(w)=2|Y_a|$.
+        \item If $\delta_a(w)<0$ then $|X_a|=\delta_a(w)=\tfrac{1}{2}|Y_a|$.
     \end{compactenum}
-    Let $A:=\bigcup_{a\in\Sigma_3} A_a$, let $B:=\bigcup_{a\in\Sigma_3} B_a$, and observe that $|A|=|B|=3\tau(w)/2$.  The sets $A_a$ and $B_a$ will be chosen so that $A\cup B$ satisfies the following \emph{global independence constraint}:  There is no pair $i,j\in A\cup B$ such that $i-j=1$.  We now explain why, with appropriately chosen $\epsilon$ and $r_0$, this is always possible.
+    Let $X:=\bigcup_{a\in\Sigma_3} X_a$, let $Y:=\bigcup_{a\in\Sigma_3} Y_a$, and observe that $|A|=|B|=3\tau(w)/2$.  The sets $X_a$ and $Y_a$ will be chosen so that $X\cup Y$ satisfies the following \emph{global independence constraint}:  There is no pair $i,j\in X\cup Y$ such that $i-j=1$.  We now explain why, with appropriately chosen $\epsilon$ and $r_0$, this is always possible.
     
-    % To see that this is possible, first observe that, because $r$ is not in $A$ or $B$ we need only concern ourselves with pairs where both $i,j\in\{1,\ldots,r-1\}$ or pairs where both $i,j\in\{r+1,\ldots,2r-1\}$.  Thus, we can choose the elements of $A_a$, for each $a\in\Sigma$ and then independently choose the elements of $B_a$, for each $a\in\Sigma$.
+    % To see that this is possible, first observe that, because $r$ is not in $X$ or $Y$ we need only concern ourselves with pairs where both $i,j\in\{1,\ldots,r-1\}$ or pairs where both $i,j\in\{r+1,\ldots,2r-1\}$.  Thus, we can choose the elements of $X_a$, for each $a\in\Sigma$ and then independently choose the elements of $Y_a$, for each $a\in\Sigma$.
     
-    We choose the elements of $A\cup B$ using a greedy strategy. Suppose $A_a$ or $B_a$ does not yet contain enough elements, for some $a\in\Sigma_3$. Without loss of generality, assume it is $A_a$.
+    We choose the elements of $X\cup Y$ using a greedy strategy. Suppose $X_a$ or $Y_a$ does not yet contain enough elements, for some $a\in\Sigma_3$. Without loss of generality, assume it is $X_a$.
     % We can do this with a greedy strategy because we are only choosing at most $2\delta_a(w)\le 2\epsilon r$ elements from a set of size at least $\lfloor(r-1)/\ell\rfloor$ and each choice $i$ that we make eliminates the possibility of choosing at most $2$ elements, $i-1$ and $i+1$.
-    Choose an arbitrary element from $A^+_a\setminus\bigcup_{i\in A\cup B}\{i-1,i,i+1\}$ and add it to $A_a$.  To see that this is always possible observe that at the beginning of each step,
+    Choose an arbitrary element from $X^+_a\setminus\bigcup_{i\in X\cup Y}\{i-1,i,i+1\}$ and add it to $X_a$.  To see that this is always possible observe that at the beginning of each step,
     \begin{align*}
-     \left|A^+_a\setminus\bigcup_{i\in A\cup B}\{i-1,i,i+1\} \right|
-     & \ge |A^+_a| - 3|A\cup B| \\
-     % & \ge |A^+_a| - 3\left(\sum_{b\in \Sigma_3}3\tau_b(w)\,\,-1\right) \\
-     & \ge |A^+_a| - 3\left(3\tau(w)-1\right) \\
-     & \ge |A^+_a| - 9\epsilon r - 3 \enspace ,
-     % \ge |A^+_a| - 3(|\Sigma_3|\cdot 2\cdot \epsilon r-1) = |A^+_a|-6\cdot|\Sigma_3|\cdot\epsilon r +3 \enspace , 
+     \left|X^+_a\setminus\bigcup_{i\in X\cup Y}\{i-1,i,i+1\} \right|
+     & \ge |X^+_a| - 3|X\cup Y| \\
+     % & \ge |X^+_a| - 3\left(\sum_{b\in \Sigma_3}3\tau_b(w)\,\,-1\right) \\
+     & \ge |X^+_a| - 3\left(3\tau(w)-1\right) \\
+     & \ge |X^+_a| - 9\epsilon r - 3 \enspace ,
+     % \ge |X^+_a| - 3(|\Sigma_3|\cdot 2\cdot \epsilon r-1) = |X^+_a|-6\cdot|\Sigma_3|\cdot\epsilon r +3 \enspace , 
     \end{align*}
-    so there will always be an element to choose provided that $|A^+_a|> 9\epsilon r +3$.  Since $w\in L$, $w$ is $\ell$-periodic, so $|A^+_a|\ge \lfloor(r-1)/\ell\rfloor$.  Therefore, this procedure will succeed in finding sets $A$ and $B$ with the global independence property provided that $9\epsilon r-3 < \lfloor(r-1)/\ell\rfloor$.  In particular, $\epsilon < 1/(9\ell)$ satisfies this requirement.
+    so there will always be an element to choose provided that $|X^+_a|> 9\epsilon r +3$.  Since $w\in L$, $w$ is $\ell$-periodic, so $|X^+_a|\ge \lfloor(r-1)/\ell\rfloor$.  Therefore, this procedure will succeed in finding sets $X$ and $Y$ with the global independence property provided that $9\epsilon r-3 < \lfloor(r-1)/\ell\rfloor$.  In particular, $\epsilon < 1/(9\ell)$ satisfies this requirement.
 
     To ease notation, let $G:=G_{n(w)}$.  For each $i\in\{1,\ldots,2r\}$, let $H_i$ be the subgraph of $G$ induced by the vertices corresponding to $w_i$; the subgraphs $H_1,\ldots,H_{2r}$ are referred to above as colourful blocks.  We now construct the anagramish path $P$ in a piecewise fashion, as illustrated in \cref{path_construction}. 
     \begin{figure}
@@ -294,7 +294,7 @@ The following lemma shows that any sufficiently long string $w$ in $L_3$ must de
         \label{path_construction}
     \end{figure}
     \begin{compactenum}
-        \item For each $a\in\Sigma$ such that $\delta_a(w)>0$, group the elements of $A_a$ into pairs.  For each pair $(i,j)$, $P$ contains the path through the top row of $H_i$ and the path through the bottom row of $H_j$.  For each element $i\in B_a$ the path $P$ contains the zig-zag path with both endpoints in the top row of $H_i$ and that contains every vertex of $H_i$.  (Note that the zig-zag path begins at the top and ends at the bottom row because $H_i$ contains an even number of columns of $G$.)
+        \item For each $a\in\Sigma$ such that $\delta_a(w)>0$, group the elements of $X_a$ into pairs.  For each pair $(i,j)$, $P$ contains the path through the top row of $H_i$ and the path through the bottom row of $H_j$.  For each element $i\in Y_a$ the path $P$ contains the zig-zag path with both endpoints in the top row of $H_i$ and that contains every vertex of $H_i$.  (Note that the zig-zag path begins at the top and ends at the bottom row because $H_i$ contains an even number of columns of $G$.)
 
         \begin{figure}
             \centering{
@@ -311,9 +311,9 @@ The following lemma shows that any sufficiently long string $w$ in $L_3$ must de
         % \todo[inline]{Handle this comment: • fig. 4. Maybe do not use the same color for the bottom and the top, it took me a while to notice that the shapes were different and that this meant that the colors were different (or you could simply add a sentence to clarify this).
         % PM: I handled this by making the symbols huge}
 
-        \item For each $a\in\Sigma$ such that $\delta_a(w)<0$ we proceed symmetrically to the previous case, but reversing the roles of $A_a$ and $B_a$.  Specifically, we group the elements of $B_a$ into pairs.  For each pair $(i,j)$, $P$ contains the path through the top row of $H_i$ and the path through the bottom row of $H_j$.  For each element $i\in A_a$, $P$ contains the zig-zag path with both endpoints in the top row of $H_i$ and that contains every vertex of $H_i$.
+        \item For each $a\in\Sigma$ such that $\delta_a(w)<0$ we proceed symmetrically to the previous case, but reversing the roles of $X_a$ and $Y_a$.  Specifically, we group the elements of $Y_a$ into pairs.  For each pair $(i,j)$, $P$ contains the path through the top row of $H_i$ and the path through the bottom row of $H_j$.  For each element $i\in X_a$, $P$ contains the zig-zag path with both endpoints in the top row of $H_i$ and that contains every vertex of $H_i$.
 
-        \item For each $i\in\{1,\ldots,2r\}\setminus\bigcup_{a\in\Sigma}(I_a\cup B_a)$, $P$ contains the top row of $H_i$.
+        \item For each $i\in\{1,\ldots,2r\}\setminus\bigcup_{a\in\Sigma}(I_a\cup Y_a)$, $P$ contains the top row of $H_i$.
     \end{compactenum}
     The rules above define the intersection, $P_i$, of $P$ with each colourful block $H_i$ of $G_{n_s}$.  If $P_i$ is the path through the bottom row of $H_i$ then we call $H_i$ a \emph{bottom block}. If $P_i$ is the path through the top row of $H_i$ then we call $H_i$ a \emph{top block}.  If $P_i$ is the zig-zag path that contains every vertex of $H_i$ then we call $H_i$ a \emph{zig-zag block}.  Note that $\sum_{a\in\Sigma} \delta_a = 0$ and this implies that the number of bottom blocks among $H_1,\ldots,H_{r-1}$ is the same as the number of bottom blocks among $H_{r+1},\ldots,H_{2r}$.  Indeed, this number is exactly $\beta:=\tfrac{1}{2}\sum_{a\in\Sigma} |\delta_a(w)|=\tfrac{1}{2}\tau(w)$.
 
@@ -339,7 +339,7 @@ The following lemma shows that any sufficiently long string $w$ in $L_3$ must de
 
     Observe that the number of downup paths and the number of updown paths that appear in $Q_0,\ldots,Q_{r-1}$ is exactly the same as the number of bottom blocks among $H_1,\ldots,H_{r-1}$ which is exactly $\beta$.  Similarly, the number of updown paths and downup paths that appear in $Q_{r+1},\ldots,Q_{2r-1}$ is exactly $\beta$.  Now every path that is neither downup nor updown uses the top row.  This implies that the sequence of colours contributed to $\rho$ by  the intersection of $P$ with $Q_0,\ldots,Q_{r-1}$ is a permutation of the sequence of colours contributed to $\rho$ by the intersection of $P$ with $Q_{r+1},\ldots,Q_{2r-1}$.  These two sequences cancel perfectly.
 
-    Next, by construction, each pair of top and bottom blocks in $H_1,\ldots,H_{r-1}$ contributes exactly the same amount as a single matching zig-zag block in $H_{r+1},\ldots,H_{2r-1}$.  Specifically, if $x,y\in A_a$, $z\in B_a$, $H_x$ is a top block, $H_y$ is a bottom block and $H_z$ is a zig-zag block, then the contributions of $P_x$ and $P_y$ to $\rho$ cancels out the contribution of $P_z$. After doing this cancellation exhaustively, all that remains are top blocks, which also cancel each other perfectly.  This completes the proof.
+    Next, by construction, each pair of top and bottom blocks in $H_1,\ldots,H_{r-1}$ contributes exactly the same amount as a single matching zig-zag block in $H_{r+1},\ldots,H_{2r-1}$.  Specifically, if $x,y\in X_a$, $z\in Y_a$, $H_x$ is a top block, $H_y$ is a bottom block and $H_z$ is a zig-zag block, then the contributions of $P_x$ and $P_y$ to $\rho$ cancels out the contribution of $P_z$. After doing this cancellation exhaustively, all that remains are top blocks, which also cancel each other perfectly.  This completes the proof.
 \end{proof}
 
 
