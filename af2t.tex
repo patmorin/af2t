@@ -229,19 +229,19 @@ Since $L_2$ is periodic, each word in $\Sigma_3$ has bounded length, so $\Sigma_
 
 % Therefore, by \cref{periodicity}, there exists an infinite periodic factor-closed language $L\subseteq L_3$ over the alphabet $\Sigma:=\Sigma_{L_3}$.
 
-See \cref{bigexample} for what follows. Each word $w:=w_1,\ldots,w_r\in L_3$ defines a word $w':=xw_1xw_2\cdots xw_{r}\in L_2$.  In graph colouring terms, $w$ defines an integer $n_w:=4r+\tfrac{1}{2}\sum_{i=1}^r|w_i|$ and an anagram-free colouring $\phi_w:=\phi_{w'}$ of $G_{n_w}$. The word $w'$ partitions the columns of $G_{n_w}$ into \emph{blocks}, each of which corresponds to a letter $a$ of $w'$ and whose length $|a|/2$ is a multiple of $4$.  There are two types of blocks:
+See \cref{bigexample} for what follows. Each word $w:=w_1,\ldots,w_r\in L_3$ defines a word $w':=xw_1xw_2\cdots xw_{r}\in L_2$.  In graph colouring terms, $w$ defines an integer $n(w):=4r+\tfrac{1}{2}\sum_{i=1}^r|w_i|$ and an anagram-free colouring $\phi_w:=\phi_{w'}$ of $G_{n(w)}$. The word $w'$ partitions the columns of $G_{n(w)}$ into \emph{blocks}, each of which corresponds to a letter $a$ of $w'$ and whose length $|a|/2$ is a multiple of $4$.  There are two types of blocks:
 \begin{compactitem}
-    \item There are \emph{boring} blocks $Q_0,\ldots,Q_{r-1}$, each containing $4$ columns of $G_{n_w}$, and each corresponding to an occurrence of $x$ in $w'$.
-    \item There are \emph{colourful blocks} $H_1,\ldots,H_r$, where $H_i$ is the subgraph of $G_{n_w}$ corresponding to $w_i$ and contains $4|w_i|$ columns of $G_{n_w}$.
+    \item There are \emph{boring} blocks $Q_0,\ldots,Q_{r-1}$, each containing $4$ columns of $G_{n(w)}$, and each corresponding to an occurrence of $x$ in $w'$.
+    \item There are \emph{colourful blocks} $H_1,\ldots,H_r$, where $H_i$ is the subgraph of $G_{n(w)}$ corresponding to $w_i$ and contains $4|w_i|$ columns of $G_{n(w)}$.
 \end{compactitem}
 
 \begin{figure}
     \centering{\includegraphics{figs/bigexample-1}}
-    \caption{A word $w:=dabacbdabc$, its corresponding word $w':=xdxaxbxaxcxbxdxaxbxc$, and its corresponding coloured graph $G_{n_w}$.}
+    \caption{A word $w:=dabacbdabc$, its corresponding word $w':=xdxaxbxaxcxbxdxaxbxc$, and its corresponding coloured graph $G_{n(w)}$.}
     \label{bigexample}
 \end{figure}
 
-The following lemma shows that any sufficiently long string $w$ in $L_3$ must define a colouring $\phi_w$ of $G_{n_w}$ that is not anagram-free.
+The following lemma shows that any sufficiently long string $w$ in $L_3$ must define a colouring $\phi_w$ of $G_{n(w)}$ that is not anagram-free.
 
 % \begin{proof}
 %     By \cref{block_colouring}, for each $k\in\N$ there exists an $\ell$-periodic word $w'\in\Sigma^k$ such that $\phi_{s'}$ is an anagram-free vertex colouring of $G_{n_{s'}}$. Applying \cref{near_anagram_fourier} to $w'$ proves the existence of the desired word $w$.
@@ -250,23 +250,35 @@ The following lemma shows that any sufficiently long string $w$ in $L_3$ must de
 % \cref{near_anagram_graph} shows that, if $L_3$ contains a sufficiently long word, the existence of a colouring $\phi_w$ of $G_n$ (for arbitrarily large $n$) that is defined by a word $w$ that is $\epsilon$-close to being anagramish.  This implies that the path $P_0:=a_1,\ldots,a_{n}$ is $4\epsilon$-close to being anagramish under $\phi_w$.  The last step, done in the next lemma, is to show that there is enough flexibility to modify $P_0$ to obtain a path is anagramish under $\phi_w$.
 
 \begin{lem}\label{anagramish_path}
-    There exists $\epsilon>0$ and $r_0\in\N$ such that, for any $w\in L_3$ with even length $|w|\ge 2r_0$ and $\tau(w)\le\epsilon r$, the graph $G_{n_w}$ contains a path that is anagramish under $\phi_w$.
+    There exists $\epsilon>0$ and $r_0\in\N$ such that, for any $w\in L_3$ with even length $2r:=|w|\ge 2r_0$ and $\tau(w)\le\epsilon r$, the graph $G_{n(w)}$ contains a path that is anagramish under $\phi_w$.
 \end{lem}
 
 \begin{proof}
-    Let $w:=w_1,\ldots,w_{2r}$ so that the colouring $\phi_w$ is defined by the word $xw_1xw_2\cdots xw_r$ (and $r\ge r_0$).
-    For each $a\in\Sigma$, define sets $A_a\subseteq\{i\in \{1,\ldots,r-1\}: w_i=a\}$ and $B_a\subseteq\{i\in\{r+1,\ldots,2r-1\}:w_i=a\}$ as follows:
+    Let $w:=w_1,\ldots,w_{2r}$ so that the colouring $\phi_w$ is defined by the word $xw_1xw_2\cdots xw_{2r}$.
+    For each $a\in\Sigma_3$, define $A^+_a:=\{i\in\{1,\ldots,r-1\}:w_i=a\}$ and $B^+_a:=\{i\in\{r+1,\ldots,2r-1\}:w_i=a\}$.  (The sets $A^+_a$ and $B^+_a$ index the occurrences of $a$ in the first and second half of $w$, respectively.)   We will now define two sets $A_a\subseteq A^+_a$ and $B_a\subseteq B^+_a$ with the following properties:
     \begin{compactenum}
         \item If $\delta_a(w)=0$ then $A_a=B_a=\emptyset$.
         \item If $\delta_a(w)>0$ then $|A_a|=2\delta_a(w)=2|B_a|$.
         \item If $\delta_a(w)<0$ then $|A_a|=\delta_a(w)=\tfrac{1}{2}|B_a|$.
     \end{compactenum}
-    Let $A:=\bigcup_{a\in\Sigma} A_a$ and $B:=\bigcup_{a\in\Sigma} B_a$.
-    The sets $A_a$ and $B_a$ are chosen so that $A\cup B$ satisfies the following \emph{global independence constraint}:  There is no pair $i,j\in A\cup B$ such that $i-j=1$.  To see that this is possible, first observe that, because $r$ is not in $A$ or $B$ we need only concern ourselves with pairs where both $i,j\in\{1,\ldots,r-1\}$ or pairs where both $i,j\in\{r+1,\ldots,2r-1\}$.  Thus, we can choose the elements of $A_a$, for each $a\in\Sigma$ and then independently choose the elements of $B_a$, for each $a\in\Sigma$.
+    Let $A:=\bigcup_{a\in\Sigma_3} A_a$, let $B:=\bigcup_{a\in\Sigma_3} B_a$, and observe that $|A|=|B|=3\tau(w)/2$.  The sets $A_a$ and $B_a$ will be chosen so that $A\cup B$ satisfies the following \emph{global independence constraint}:  There is no pair $i,j\in A\cup B$ such that $i-j=1$.  We now explain why, with appropriately chosen $\epsilon$ and $r_0$, this is always possible.
+    
+    % To see that this is possible, first observe that, because $r$ is not in $A$ or $B$ we need only concern ourselves with pairs where both $i,j\in\{1,\ldots,r-1\}$ or pairs where both $i,j\in\{r+1,\ldots,2r-1\}$.  Thus, we can choose the elements of $A_a$, for each $a\in\Sigma$ and then independently choose the elements of $B_a$, for each $a\in\Sigma$.
+    
+    We choose the elements of $A\cup B$ using a greedy strategy. Suppose $A_a$ or $B_a$ does not yet contain enough elements, for some $a\in\Sigma_3$. Without loss of generality, assume it is $A_a$.
+    % We can do this with a greedy strategy because we are only choosing at most $2\delta_a(w)\le 2\epsilon r$ elements from a set of size at least $\lfloor(r-1)/\ell\rfloor$ and each choice $i$ that we make eliminates the possibility of choosing at most $2$ elements, $i-1$ and $i+1$.
+    Choose an arbitrary element from $A^+_a\setminus\bigcup_{i\in A\cup B}\{i-1,i,i+1\}$ and add it to $A_a$.  To see that this is always possible observe that at the beginning of each step,
+    \begin{align*}
+     \left|A^+_a\setminus\bigcup_{i\in A\cup B}\{i-1,i,i+1\} \right|
+     & \ge |A^+_a| - 3|A\cup B| \\
+     % & \ge |A^+_a| - 3\left(\sum_{b\in \Sigma_3}3\tau_b(w)\,\,-1\right) \\
+     & \ge |A^+_a| - 3\left(3\tau(w)-1\right) \\
+     & \ge |A^+_a| - 9\epsilon r - 3 \enspace ,
+     % \ge |A^+_a| - 3(|\Sigma_3|\cdot 2\cdot \epsilon r-1) = |A^+_a|-6\cdot|\Sigma_3|\cdot\epsilon r +3 \enspace , 
+    \end{align*}
+    so there will always be an element to choose provided that $|A^+_a|> 9\epsilon r +3$.  Since $w\in L$, $w$ is $\ell$-periodic, so $|A^+_a|\ge \lfloor(r-1)/\ell\rfloor$.  Therefore, this procedure will succeed in finding sets $A$ and $B$ with the global independence property provided that $9\epsilon r-3 < \lfloor(r-1)/\ell\rfloor$.  In particular, $\epsilon < 1/(9\ell)$ satisfies this requirement.
 
-    We show how to choose the elements of $A_a$ for each $a\in\Sigma$.  The same method works for choosing the elements in $B_a$. Observe that, because $w\in L$, $w$ is $\ell$-periodic, so $|\{i\in \{1,\ldots,r-1\}:w_i=a\}|\ge \lfloor(r-1)/\ell\rfloor$ for each $a\in\Sigma$.  This allows us to greedily choose the elements in $A_a$ for each $a\in\Sigma$. At each step we simply avoid choosing $i$ if $i-1$ or $i+1$ have already been chosen in some previous step.  At any step in the process, at most $\epsilon r$ elements have already been chosen in previous steps and each of these eliminates at most $2$ options.  Therefore, there will always be an element available to choose, provided that $2\epsilon r < \lfloor(r-1)/\ell\rfloor$.  In particular, for any $r\ge r_0\ge \ell$, $\epsilon < 1/(4\ell)$ works.
-
-    To ease notation, let $G:=G_{n_w}$.  We now construct the anagramish path $P$ in a piecewise fashion.  Refer to \cref{path_construction}.  For each $i\in\{1,\ldots,2r\}$, let $H_i$ be the subgraph of $G$ induced by the vertices corresponding to $w_i$. (The subgraphs $H_1,\ldots,H_{2r}$ are referred to above as colourful blocks.)
+    To ease notation, let $G:=G_{n(w)}$.  For each $i\in\{1,\ldots,2r\}$, let $H_i$ be the subgraph of $G$ induced by the vertices corresponding to $w_i$; the subgraphs $H_1,\ldots,H_{2r}$ are referred to above as colourful blocks.  We now construct the anagramish path $P$ in a piecewise fashion, as illustrated in \cref{path_construction}. 
     \begin{figure}
         \centering{
             \includegraphics{figs/bigexample-1} \\
@@ -282,7 +294,7 @@ The following lemma shows that any sufficiently long string $w$ in $L_3$ must de
         \label{path_construction}
     \end{figure}
     \begin{compactenum}
-        \item For each $a\in\Sigma$ such that $\delta_a(w)>0$, group the elements of $A_a$ into pairs.  For each pair $(i,j)$, $P$ contains the path through the top row of $H_i$ and the path through the bottom row of $H_j$.  For each element $i\in B_a$, $P$ contains the zig-zag path with both endpoints in the top row of $H_i$ and that contains every vertex of $H_i$.  (Note that the zig-zag path begins at the top and ends at the bottom row because $H_i$ contains an even number of columns of $G$.)
+        \item For each $a\in\Sigma$ such that $\delta_a(w)>0$, group the elements of $A_a$ into pairs.  For each pair $(i,j)$, $P$ contains the path through the top row of $H_i$ and the path through the bottom row of $H_j$.  For each element $i\in B_a$ the path $P$ contains the zig-zag path with both endpoints in the top row of $H_i$ and that contains every vertex of $H_i$.  (Note that the zig-zag path begins at the top and ends at the bottom row because $H_i$ contains an even number of columns of $G$.)
 
         \begin{figure}
             \centering{
@@ -303,7 +315,7 @@ The following lemma shows that any sufficiently long string $w$ in $L_3$ must de
 
         \item For each $i\in\{1,\ldots,2r\}\setminus\bigcup_{a\in\Sigma}(I_a\cup B_a)$, $P$ contains the top row of $H_i$.
     \end{compactenum}
-    The rules above define the intersection, $P_i$, of $P$ with each colourful block $H_i$ of $G_{n_s}$.  If $P_i$ is the path through the bottom (top) row of $H_i$ then we call $H_i$ a \emph{bottom (top) block}.  If $P_i$ is the zig-zag path that contains every vertex of $H_i$ then we call $H_i$ a \emph{zig-zag block}.  Note that $\sum_{a\in\Sigma} \delta_a = 0$ and this implies that the number of bottom blocks among $H_1,\ldots,H_{r-1}$ is the same as the number of bottom blocks among $H_{r+1},\ldots,H_{2r}$.  Indeed, this number is exactly $\beta:=\tfrac{1}{2}\sum_{a\in\Sigma} |\delta_a(w)|=\tfrac{1}{2}\tau(w)$.
+    The rules above define the intersection, $P_i$, of $P$ with each colourful block $H_i$ of $G_{n_s}$.  If $P_i$ is the path through the bottom row of $H_i$ then we call $H_i$ a \emph{bottom block}. If $P_i$ is the path through the top row of $H_i$ then we call $H_i$ a \emph{top block}.  If $P_i$ is the zig-zag path that contains every vertex of $H_i$ then we call $H_i$ a \emph{zig-zag block}.  Note that $\sum_{a\in\Sigma} \delta_a = 0$ and this implies that the number of bottom blocks among $H_1,\ldots,H_{r-1}$ is the same as the number of bottom blocks among $H_{r+1},\ldots,H_{2r}$.  Indeed, this number is exactly $\beta:=\tfrac{1}{2}\sum_{a\in\Sigma} |\delta_a(w)|=\tfrac{1}{2}\tau(w)$.
 
     We now define how $P$ behaves for the boring blocks, denoted by  $Q_0,\ldots,Q_{2r-1}$. The first boring block $Q_0$ comes immediately before $H_1$. Each boring block $Q_j$, for $j\in\{1,\ldots,2r-1\}$ comes immediately after $H_j$ and immediately before $H_{j+1}$.  In almost every case, $P$ uses the path through the top row of $Q_j$.  The only exceptions are when $H_j$ or $H_{j+1}$ are bottom blocks. Note that, because of the global independence constraint, these two cases are mutually exclusive. See \cref{updownup}.
 
@@ -334,9 +346,7 @@ The following lemma shows that any sufficiently long string $w$ in $L_3$ must de
 To be explicit, we finish the proof of \cref{main_vertex} by pointing out the contradiction between \cref{near_anagram_graph} and \cref{anagramish_path}:
 
 \begin{proof}[Proof of \cref{main_vertex}]
-    Assume for the sake of contradiction that there exists some $c\in\N$ such that $\afcn(G_n)\le c$ for each $n\in\N$.  Under this assumption, the language $L_1$ is infinite and, by \cref{periodicity} so are $L_2$ and $L_3$.  Therefore $L_3$ contains arbitrarily long strings so \cref{near_anagram_graph} implies that for every $\epsilon>0$ and $r_0\in\N$ there exists a word $w\in L$ with $2r:=|w|\ge 2r_0$, and $\tau(w)\le\epsilon r$, and such that $\phi_w$ is an anagram-free colouring of $G_{n_w}$.
-
-    \cref{anagramish_path} shows that there are fixed values $\epsilon >0$ and $r_0\in \N$ such that, for any word $w\in L$ with $|w|\ge r_0$ and $\tau(w)\le\epsilon r$, the graph $G_{n_w}$ contain a path that is anagramish under $\phi_w$.  This certainly contradicts the fact that $\phi_w$ is an anagram-free colouring of $G_{n_w}$. We therefore conclude that, for every $c\in\N$ there exists an $n\in N$ such that $\afcn(G_n)> c$.
+    Assume for the sake of contradiction that there exists some $c\in\N$ such that $\afcn(G_n)\le c$ for each $n\in\N$.  Then the language $L_1$ is infinite and, by \cref{periodicity} so are $L_2$ and $L_3$.  Therefore $L_3$ contains arbitrarily long strings so \cref{near_anagram_graph} implies that for every $\epsilon>0$ and $r_0\in\N$ there exists a word $w\in L$ with $2r:=|w|\ge 2r_0$, and $\tau(w)\le\epsilon r$, and such that $\phi_w$ is an anagram-free colouring of $G_{n(w)}$.  In particular, this is true for the specific values of $r_0$ and $\epsilon$ that appear in \cref{anagramish_path}.  However, \cref{anagramish_path} implies that $\phi_w$ is not an anagram-free colouring of $G_{n(w)}$, a contradiction.
 \end{proof}
 
 % \todo[inline]{It would be nice to say something about the anagram-free chromatic index.  I'm pretty sure that it's constant for the $2\times n$ grid, but the result is not worth the effort.  More interesting would be a proof that its super-constant for the $2\times n$ grid with one diagonal in each square.  Almost everything we did above works except that we get hung up on a parity problem.  We can't do $2$ versus $1$ cancellation in $w$ but we can do $6$ versus $4$ cancellation. Everything works out except when the number of occurrences of some character is odd. In that case we get stuck with one uncancelled copy.}
@@ -355,7 +365,7 @@ All that remains is to prove \cref{near_anagram_fourier}, which we do now.
     First observe that, for any $\ell$-periodic word $w$, $|\Sigma_w|\le\ell$.
     Define an even-length word $t$ to be \emph{$a$-unbalanced} if $\tau_a(t)>\epsilon|t|/\ell$ and \emph{$a$-balanced} otherwise.  If $t$ is $a$-balanced for each $a\in\Sigma_t$ then $t$ is \emph{balanced}. Observe that, if $t$ is balanced then $\tau(t)\le |\Sigma_t|\epsilon|t|/\ell\le \epsilon|t|$. A word is \emph{everywhere unbalanced} if it contains no balanced factor of length $r\ge r_0$. Our goal therefore is to show that there is an upper bound $n:=n(\ell,\epsilon,r_0)$ on the length of any $\ell$-periodic everywhere unbalanced word.
 
-    Let $h$ be a positive integer (that determines $n$ and whose value will be discussed later), and let $n:=r_02^{h}$. Let $w$ be an $\ell$-periodic everywhere unbalanced word of length $n$ over the alphabet $\Sigma$.  Assume, without loss of generality, that $r_0$ is a multiple of $\ell$.
+    Let $h$ be a positive integer whose value will be discussed later and let $n:=r_02^{h}$. Let $w$ be an $\ell$-periodic everywhere unbalanced word of length $n$ over the alphabet $\Sigma$.  Assume, without loss of generality, that $r_0$ is a multiple of $\ell$.
 
     Consider the complete binary tree $T$ of height $h$ whose leaves, in order, are length-$r_0$ words whose concatenation is $w$ and for which each internal node is the factor obtained by concatenating the node's left and right child.
     % See \cref{binary_tree}.
@@ -396,7 +406,7 @@ All that remains is to prove \cref{near_anagram_fourier}, which we do now.
   \]
   Therefore, there exists some $\alpha\in\Sigma$ such that $\sum_{v\in S_{\alpha}}|v|\ge (h+1)n/|\Sigma| \ge (h+1)n/\ell$.   At this point we are primarily concerned with appearances of $\alpha$, so let $X:=S_{\alpha}$, and, for each node $v\in V(T)$, let $W(v):=|v|_\alpha$.
 
-  For each non-leaf node $v$ of $T$, let $R(v)$ denote a child of $v$ such that $W(R(v))\le \tfrac12\cdot W(v)$.  (It is helpful to think of $T$ as being ordered so that each right child $y$ with sibling $x$ has $W(y)\le W(x)$.)  For a non-leaf node $v\in X$ the fact that $v$ is $\alpha$-unbalanced implies that
+  For each non-leaf node $v$ of $T$, let $R(v)$ denote a child of $v$ such that $W(R(v))\le \tfrac12\cdot W(v)$.  It is helpful to think of $T$ as being ordered so that each right child $y$ with sibling $x$ has $W(y)\le W(x)$. For a non-leaf node $v\in X$ the fact that $v$ is $\alpha$-unbalanced implies that
   \[  W(R(v)) \le \tfrac{1}{2}\cdot W(v) - \tfrac{\epsilon}{2\ell}\cdot |v|
       \le (\tfrac12-\tfrac{\epsilon}{2\ell})W(v) \enspace .
   \]
@@ -453,9 +463,13 @@ All that remains is to prove \cref{near_anagram_fourier}, which we do now.
   It remains to establish \cref{t}, which we do now.  Fix some $i\in\{0,\ldots,h-1\}$, define $A_0:= X_i$ and, for each $j\ge 1$, define $A_j$ to be the subset of $X_{i+j}$ that are descendants of some node in $R(A_{j-1})$.  See \cref{bigtree}.  To upper bound $L(X_{i+t})$ observe that $X_{i+t}$ can be split into two sets $A_0'$ and $B$ defined as follows:  The nodes $A_0'$ do not have an ancestor in $R(A_0)$ and therefore $L(A_0')\le (1/2)L(A_0)$. The nodes in $B$ do have an ancestor in $R(A_0)$ and therefore have an ancestor in $A_1$.  Iterating this argument, we obtain
  \begin{align*}
       L(X_{i+t})
-         &\le (1/2)L(A_0) + (1/2)L(A_1) + \cdots + (1/2)L(A_{t-1}) + L(A_t) \\
-         &\le (1/2)L(A_0) + (1/4)L(A_0) + \cdots + (1/2)^t L(A_{0}) + L(A_t) \\
-         &  = (1-(1/2)^t)L(A_0) + L(A_t) = (1-(1/2)^t)L(X_i) + L(A_t)  \enspace .
+         &\le \sum_{j=0}^{t-1}(1/2)L(A_j) + L(A_t) \\
+         &\le \sum_{j=0}^{t-1}(1/2^{j+1})L(A_0) + L(A_t) \\
+         &  = (1-(1/2)^t)L(A_0) + L(A_t) \\
+         & = (1-(1/2)^t)L(X_i) + L(A_t)  \enspace .
+         % &\le (1/2)L(A_0) + (1/2)L(A_1) + \cdots + (1/2)L(A_{t-1}) + L(A_t) \\
+         % &\le (1/2)L(A_0) + (1/4)L(A_0) + \cdots + (1/2)^t L(A_{0}) + L(A_t) \\
+         % &  = (1-(1/2)^t)L(A_0) + L(A_t) = (1-(1/2)^t)L(X_i) + L(A_t)  \enspace .
    \end{align*}
   So all that remains to establish \ref{t} is to prove that
   $L(A_t)\le (1/2)^{t+1}L(X_i)$.  To do this, observe that, for each $j\in\{1,\ldots,t\}$,
@@ -482,9 +496,9 @@ All that remains is to prove \cref{near_anagram_fourier}, which we do now.
 
 Although an explicit upper bound on $n:=n(\epsilon,\ell,r_0)$ could be extracted from the proof of \cref{near_anagram_fourier} it would likely be far from tight.  We suspect that there is a Fourier analytic proof that would give better quantitative bounds.  We have not pursued this, because we have no idea how to explicitly upper bound $\ell$, for reasons discussed in the next paragraph.
 
-\cref{periodicity} and its proof give absolutely no clues to help find a concrete bound on $\ell$ or to find a minimal set $\Xi$. Indeed, for some choices of $L$, doing so can be a difficult problem.  Consider the example where $|\Sigma|=5$ and $L$ is the language of all anagram free words in $\Sigma^*$. It is easy to see that this predicate $L$ is factor-closed and the result of \citet{pleasants:non-repetitive}, published in 1970, shows that this $L$ is infinite.  The question of whether $|\Xi|=4$ or $|\Xi|=5$ is then the question of determining whether there exist arbitrarily long anagram-free words on an alphabet of size $4$.  This was the open problem posed by \citet{erdos:some} in 1961 and again by \citet{brown:is} in 1971 and not resolved until 1992 when \citet{keranen:abelian,keranen:powerful} showed that the answer, in this case, is that $|\Xi|=4$.  However, if this were not the case, then determining $\ell$ would be the question of determining the length of the longest anagram-free word over an alphabet of size $4$.
+\cref{periodicity} and its proof give absolutely no clues to help find a concrete bound on $\ell$ or to find a minimal set $\Xi$. Indeed, for some choices of $L$, doing so can be a difficult problem.  Consider the example where $|\Sigma|=5$ and $L$ is the language of all anagram free words in $\Sigma^*$. It is easy to see that this language $L$ is factor-closed and the result of \citet{pleasants:non-repetitive}, published in 1970, shows that this $L$ is infinite.  The question of whether $|\Xi|=4$ or $|\Xi|=5$ is then the question of determining whether there exist arbitrarily long anagram-free words on an alphabet of size $4$.  This was the open problem posed by \citet{erdos:some} in 1961 and again by \citet{brown:is} in 1971 and not resolved until 1992 when \citet{keranen:abelian,keranen:powerful} showed that the answer, in this case, is that $|\Xi|=4$.  However, if this were not the case, then determining $\ell$ would be the question of determining the length of the longest anagram-free word over an alphabet of size $4$.
 
-Our proof uses \cref{periodicity} twice and each uses a language $L$ that is considerably more complicated than the language of anagram-free words. It seems unlikely that we will obtain concrete upper bounds on $\ell$ as a function of $c$ except, possibly, through the use of computer search. The resulting value $\ell$ is used in the application of \cref{near_anagram_fourier} and also within the proof of \cref{anagramish_path}.
+Our proof uses \cref{periodicity} twice and each uses a language $L_3$ that is considerably more complicated than the language of anagram-free words. It seems unlikely that we will obtain concrete upper bounds on $\ell$ as a function of $c$ except, possibly, through the use of computer search. The resulting value $\ell$ is used in the application of \cref{near_anagram_fourier} and also within the proof of \cref{anagramish_path}.
 
 \section*{Acknowledgement}
 
