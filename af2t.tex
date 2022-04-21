@@ -117,7 +117,7 @@
 
 Two words $s$ and $t$ are \emph{anagrams} of each other if $s$ is a permutation of $t$.  A single word $w:=w_1,\ldots,w_{2r}$ is \emph{anagramish} if its first half $w_1,\ldots,w_r$ and its second half $w_{r+1},\ldots,w_{2r}$ are anagrams of each other.  A word is \emph{anagram-free} if it does not contain an anagramish factor.  Anagramish words are also known as \emph{abelian squares} and anagram-free words are also known as \emph{abelian square free} words \cite{keranen:abelian,keranen:powerful}, \emph{strongly nonrepetitive} words \cite{pleasants:non-repetitive}, or \emph{strongly asymmetric} sequences \cite{evdokimov:strongly,evdokimov:strongly2}.
 
-In 1961, \citet{erdos:some} asked if there exist arbitrarily long words over an alphabet of size $4$ that are anagram-free.\footnote{This was an incredibly prescient question since it is not at all obvious that there exist arbitrarily long anagram-free words over \emph{any} finite alphabet. The only justification for choosing the constant $4$ is that a short case analysis rules out the possibility of length-$8$ anagram-free words over an alphabet of size $3$.}  In 1968 \citet{evdokimov:strongly,evdokimov:strongly2} showed the existence of arbitrarily long anagram-free words over an alphabet of size $25$ and in 1971 \citet{pleasants:non-repetitive} showed an alphabet of size $5$ is sufficient.  Erd\H{o}s's question was not fully resolved until 1992, when \citet{keranen:abelian} answered it in the affirmative.
+In 1961, \citet{erdos:some} asked if there exist arbitrarily long anagram-free words over an alphabet of size $4$.\footnote{This was an incredibly prescient question since it is not at all obvious that there exist arbitrarily long anagram-free words over \emph{any} finite alphabet. The only justification for choosing the constant $4$ is that a short case analysis rules out the possibility of length-$8$ anagram-free words over an alphabet of size $3$.}  In 1968 \citet{evdokimov:strongly,evdokimov:strongly2} showed the existence of arbitrarily long anagram-free words over an alphabet of size $25$ and in 1971 \citet{pleasants:non-repetitive} showed an alphabet of size $5$ is sufficient.  Erd\H{o}s's question was not fully resolved until 1992, when \citet{keranen:abelian} answered it in the affirmative.
 
 A path $v_1,\ldots,v_{2r}$ in a graph $G$ is \emph{anagramish} under a vertex $c$-colouring $\phi:V(G)\to\{1,\ldots,c\}$ if $\phi(v_1),\ldots,\phi(v_{2r})$ is an anagramish word.  The colouring $\phi$ is an \emph{anagram-free colouring} of $G$ if no path in $G$ is anagramish under $\phi$.  The minimum integer $c$ for which $G$ has an anagram-free vertex $c$-colouring is called the \emph{anagram-free chromatic number} of $G$ and is denoted by $\afcn(G)$.
 
@@ -166,7 +166,7 @@ Then $\tau(w):=\sum_{a\in\Sigma}\tau_a(w)$ is a useful measure of how far a word
 A word $w:=w_1,\ldots,w_n$ is \emph{$\ell$-periodic} over an alphabet $\Sigma\supseteq\Sigma_w$ if each length-$\ell$ factor of $w$ contains every letter in $\Sigma$.  A language $L$ is \emph{$\ell$-periodic}  if each of its words is $\ell$-periodic over $\Sigma_L$.  A language $L$ is \emph{periodic} if it is $\ell$-periodic for some finite $\ell$.  We make use of the following key lemma, which states that every sufficiently long $\ell$-periodic word contains arbitrarily long factors that are $\epsilon$-close to being anagramish.
 
 \begin{lem}\label{near_anagram_fourier}
-    For each $r_0,\ell\in\N$ and each $\epsilon>0$, there exists a positive integer $n$ such that each $\ell$-periodic word $w_1,\ldots,w_n$ contains a factor $w:=w_{i+1},\ldots,w_{i+2r}$ of length $2r \ge 2r_0$ such that $\tau(w)\le \epsilon r$.
+    For each $r_0,\ell\in\N$ and each $\epsilon>0$, there exists a positive integer $n$ such that every $\ell$-periodic word $w_1,\ldots,w_n$ contains a factor $w:=w_{i+1},\ldots,w_{i+2r}$ of length $2r \ge 2r_0$ such that $\tau(w)\le \epsilon r$.
 \end{lem}
 
 The proof of \cref{near_anagram_fourier} is deferred to \cref{near_anagram_proof}.  We now give some intuition as to how it is used.  The process of checking if a word is anagramish can be viewed as finding common letters in the first and second halves and crossing them both out.  If this results in a complete cancellation of all letters, then the word is an anagram.  \cref{near_anagram_fourier} tells us that we can always find a long factor $w$ where, after exhaustive cancellation, only an $\epsilon$-fraction of the original letters remain.
@@ -197,8 +197,10 @@ Since \cref{near_anagram_fourier} requires that the word $w$ be $\ell$-periodic,
 \section{Proof of \cref{main_vertex}}
 \label{vertex_colourings}
 
-For each $n\in\N$, let $G_n$ be the $2\times n$ square grid with top row $a_0,\ldots,a_{n-1}$ and bottom row $b_0,\ldots,b_{n-1}$ (see \cref{g_n}).  For the sake of contradiction, suppose that there exists an integer $c$ such that $\afcn(G_n)\le c$ for each $n\in\N$.  Observe that there is a bijection between vertex $c$-colourings of $G_n$ and words of length $2n$ over the alphabet $\Sigma_0:=\{1,\ldots,c\}$ where a word $w:=w_0,\ldots,w_{2n-1}$ corresponds to the colouring $\phi_w:V(G_n)\to\{1,\ldots,c\}$ defined by
-$\phi_w(a_i):=w_{2i}$ and $\phi_w(b_i):=w_{2i+1}$, for each $i\in\{0,\ldots,n-1\}$.
+For each $n\in\N$, let $G_n$ be the $2\times n$ square grid with top row $a_0,\ldots,a_{n-1}$ and bottom row $b_0,\ldots,b_{n-1}$ (see \cref{g_n}).  Our proof strategy is a proof by contradiction.  Ultimately, we will assume (for the sake of contradiction) that there exists an integer $c$ such that $\afcn(G_n)\le c$ for each $n\in\N$ and use this to derive a contradiction.  In the following, we will define several languages $L_1$, $L_2$, and $L_3$ that would be infinite if the preceding assumption were true.  The final contradiction will occur if $L_3$ contains a sufficiently long string.
+
+As a first step, observe that for any $n\in\N$ there is a bijection between vertex $c$-colourings of $G_n$ and words of length $2n$ over the alphabet $\Sigma_0:=\{1,\ldots,c\}$ where a word $w:=w_0,\ldots,w_{2n-1}$ corresponds to the colouring $\phi_w:V(G_n)\to\{1,\ldots,c\}$ defined by
+$\phi_w(a_i):=w_{2i}$ and $\phi_w(b_i):=w_{2i+1}$, for each $i\in\{0,\ldots,n-1\}$.  
 
 \begin{figure}
     \centering{
@@ -211,13 +213,23 @@ $\phi_w(a_i):=w_{2i}$ and $\phi_w(b_i):=w_{2i+1}$, for each $i\in\{0,\ldots,n-1\
 
 % Let $L_0\subseteq \Sigma_0^*$ consist of all words $w\in \Sigma_0^*$ whose length is a multiple of $8$ and such that $\phi_w$ is an anagram-free colouring of $G_{|w|/2}$. Furthermore, the assumption that $\afcn(G_n)\le c$ for each $n\in\N$ implies that $L_0$ is infinite.
 
-For reasons that will become apparent, it is useful to break $G_n$ up into blocks consisting of $4$ columns each.  Let $\Sigma_1:=\Sigma_0^8$ and define the language $L_1$ to consist of exactly those words $w_1,\ldots,w_r\in \Sigma_1^*$ for which $\phi_{w_1\cdots w_r}$ is an anagram-free colouring of $G_{4r}$.  From the assumption that $\afcn(G_n)\le c$ for all $n\in\N$, it follows that $L_1$ is infinite.  From the definition of anagram-free colouring, it follows that $L_1$ is factor-closed.
+For reasons that will become apparent, it is useful to break $G_n$ up into blocks consisting of $4$ columns each.  Let $\Sigma_1:=\Sigma_0^8$ and define the language $L_1$ to consist of exactly those words $w_1,\ldots,w_r\in \Sigma_1^*$ for which $\phi_{w_1\cdots w_r}$ is an anagram-free colouring of $G_{4r}$.
 
-By \cref{periodicity}, there exists an infinite periodic factor-closed language $L_2\subseteq L_1$.  Let $x$ be any letter in $\Sigma_{L_2}$.  Note that the word $xx$ is not in $L_2$ since the corresponding colouring $\phi_{xx}$ of $G_8$ has, for example, the anagramish path $a_0,\ldots,a_7$.  Since $L_2$ is factor-closed, no word in $L_2$ contains $xx$ as a factor, i.e., $xx\not\in F(L_2)$.
+% If $\afcn(G_n)\le c$ for all $n\in\N$, then $L_1$ is infinite.  
+From the definition of anagram-free colouring, it follows that $L_1$ is factor-closed.  The language $L_1$ contains a periodic factor closed language. Let $L_2$ be a maximal periodic factor-closed language contained in $L_1$, where maximal is interpreted as follows: If $L_1$ is finite, then $L_2:=L_1$ (which is certainly periodic since $L_1$ is $\ell$-periodic for $\ell=1+\max\{|s|:s\in L_1\}$).  If $L_1$ is infinite then, by \cref{periodicity}, there exists an infinite periodic factor-closed language contained in $L_1$ and we let $L_2$ be any such language.  
 
-Let $\Sigma_3\subset F(L_2)$ contain only those factors of $L_2$ that do not contain $x$.  Thus, any word in $L_2$ is of the form $w_0xw_1xw_2\cdots xw_rxw_{r+1}$ where each of $w_1,\ldots,w_{r}$ is in $\Sigma_3$ and each of $w_0,w_{r+1}$ is in $\Sigma_3\cup\{\varepsilon\}$.  Since $L_2$ is periodic, each word in $\Sigma_3$ has bounded length, so $\Sigma_3$ is finite, i.e., $\Sigma_3$ is an alphabet.  Let $L_3$ be the language consisting of all words $w_1,\ldots,w_r\in\Sigma_3^*$ such that $xw_1xw_2\cdots xw_r\in L_2$.  Since $L_2$ is infinite and each word in $L_2$ has the form described above, $L_3$ is infinite.  Since $L_2$ is factor closed, $L_3$ is also factor-closed. Therefore, by \cref{periodicity}, there exists an infinite periodic factor-closed language $L\subseteq L_3$ over the alphabet $\Sigma:=\Sigma_{L_3}$.
+Let $x$ be any letter in $\Sigma_{L_2}$.  Note that the word $xx$ is not in $L_2$ since the corresponding colouring $\phi_{xx}$ of $G_8$ has, for example, the anagramish path $a_0,\ldots,a_7$.  Since $L_2$ is factor-closed, no word in $L_2$ contains $xx$ as a factor, i.e., $xx\not\in F(L_2)$.  Let $\Sigma_3\subset F(L_2)$ contain only those factors of $L_2$ that do not contain $x$.  Thus, any word in $L_2$ is of the form $w_0xw_1xw_2\cdots xw_rxw_{r+1}$ where each of $w_1,\ldots,w_{r}$ is in $\Sigma_3$ and each of $w_0,w_{r+1}$ is in $\Sigma_3\cup\{\varepsilon\}$.  
 
-See \cref{bigexample} for what follows. Each word $w:=w_1,\ldots,w_r\in L$ defines a word $w':=xw_1xw_2\cdots xw_{r}\in L_1$.  In graph colouring terms, $w$ defines an integer $n_w:=4r+\tfrac{1}{2}\sum_{i=1}^r|w_i|$ and an anagram-free colouring $\phi_w:=\phi_{w'}$ of $G_{n_w}$. The word $w'$ partitions the columns of $G_{n_w}$ into \emph{blocks}, each of which corresponds to a letter $a$ of $w'$ and whose length $|a|/2$ is a multiple of $4$.  There are two types of blocks:
+Since $L_2$ is periodic, each word in $\Sigma_3$ has bounded length, so $\Sigma_3$ is finite, i.e., $\Sigma_3$ is an alphabet.  Let $L_3$ be the language consisting of all words $w_1,\ldots,w_r\in\Sigma_3^*$ such that $xw_1xw_2\cdots xw_r\in L_2$.  If $L_2$ is infinite, then so is $L_3$.  Since $L_2$ is factor closed and periodic, $L_3$ is also factor-closed and periodic. Along with \cref{near_anagram_fourier}, this immediately imply the following lemma:
+
+\begin{lem}\label{near_anagram_graph}
+  For each $r_0\in\N$ and $\epsilon>0$, there exists $R\in\N$ such that every length-$R$ string $W\in L_3$ contains a factor $w\in L_3$ with even length $2r:=|w|\ge 2r_0$ and with $\tau(w)\le\epsilon r$.
+\end{lem}
+
+
+% Therefore, by \cref{periodicity}, there exists an infinite periodic factor-closed language $L\subseteq L_3$ over the alphabet $\Sigma:=\Sigma_{L_3}$.
+
+See \cref{bigexample} for what follows. Each word $w:=w_1,\ldots,w_r\in L_3$ defines a word $w':=xw_1xw_2\cdots xw_{r}\in L_2$.  In graph colouring terms, $w$ defines an integer $n_w:=4r+\tfrac{1}{2}\sum_{i=1}^r|w_i|$ and an anagram-free colouring $\phi_w:=\phi_{w'}$ of $G_{n_w}$. The word $w'$ partitions the columns of $G_{n_w}$ into \emph{blocks}, each of which corresponds to a letter $a$ of $w'$ and whose length $|a|/2$ is a multiple of $4$.  There are two types of blocks:
 \begin{compactitem}
     \item There are \emph{boring} blocks $Q_0,\ldots,Q_{r-1}$, each containing $4$ columns of $G_{n_w}$, and each corresponding to an occurrence of $x$ in $w'$.
     \item There are \emph{colourful blocks} $H_1,\ldots,H_r$, where $H_i$ is the subgraph of $G_{n_w}$ corresponding to $w_i$ and contains $4|w_i|$ columns of $G_{n_w}$.
@@ -229,21 +241,16 @@ See \cref{bigexample} for what follows. Each word $w:=w_1,\ldots,w_r\in L$ defin
     \label{bigexample}
 \end{figure}
 
-Since $L$ is periodic, there exists an integer $\ell$ such that every word in $L$ is $\ell$-periodic.  Since $L$ is infinite, it contains arbitrarily long words.  These two facts, along with \cref{near_anagram_fourier} immediately imply the following lemma:
-
-\begin{lem}\label{near_anagram_graph}
-    If $\afcn(G_n)\le c$ for each $n\in\N$ then, for each $r_0\in\N$ and $\epsilon>0$, there exists $w\in L$ with even length $|w|\ge 2r_0$ and $\tau(w)\le\epsilon r$.
-\end{lem}
-
+The following lemma shows that any sufficiently long string $w$ in $L_3$ must define a colouring $\phi_w$ of $G_{n_w}$ that is not anagram-free.
 
 % \begin{proof}
 %     By \cref{block_colouring}, for each $k\in\N$ there exists an $\ell$-periodic word $w'\in\Sigma^k$ such that $\phi_{s'}$ is an anagram-free vertex colouring of $G_{n_{s'}}$. Applying \cref{near_anagram_fourier} to $w'$ proves the existence of the desired word $w$.
 % \end{proof}
 
-\cref{near_anagram_graph} shows the existence of a colouring $\phi_w$ of $G_n$ (for arbitrarily large $n$) that is defined by a word $w$ that is $\epsilon$-close to being anagramish.  This implies that the path $P_0:=a_1,\ldots,a_{n}$ is $4\epsilon$-close to being anagramish under $\phi_w$.  The last step, done in the next lemma, is to show that there is enough flexibility to modify $P_0$ to obtain a path is anagramish under $\phi_w$.
+% \cref{near_anagram_graph} shows that, if $L_3$ contains a sufficiently long word, the existence of a colouring $\phi_w$ of $G_n$ (for arbitrarily large $n$) that is defined by a word $w$ that is $\epsilon$-close to being anagramish.  This implies that the path $P_0:=a_1,\ldots,a_{n}$ is $4\epsilon$-close to being anagramish under $\phi_w$.  The last step, done in the next lemma, is to show that there is enough flexibility to modify $P_0$ to obtain a path is anagramish under $\phi_w$.
 
 \begin{lem}\label{anagramish_path}
-    There exists $\epsilon>0$ and $r_0\in\N$ such that, for any $w\in L$ with even length $|w|\ge 2r_0$ and $\tau(w)\le\epsilon r$, the graph $G_{n_w}$ contains a path that is anagramish under $\phi_w$.
+    There exists $\epsilon>0$ and $r_0\in\N$ such that, for any $w\in L_3$ with even length $|w|\ge 2r_0$ and $\tau(w)\le\epsilon r$, the graph $G_{n_w}$ contains a path that is anagramish under $\phi_w$.
 \end{lem}
 
 \begin{proof}
@@ -259,7 +266,7 @@ Since $L$ is periodic, there exists an integer $\ell$ such that every word in $L
 
     We show how to choose the elements of $A_a$ for each $a\in\Sigma$.  The same method works for choosing the elements in $B_a$. Observe that, because $w\in L$, $w$ is $\ell$-periodic, so $|\{i\in \{1,\ldots,r-1\}:w_i=a\}|\ge \lfloor(r-1)/\ell\rfloor$ for each $a\in\Sigma$.  This allows us to greedily choose the elements in $A_a$ for each $a\in\Sigma$. At each step we simply avoid choosing $i$ if $i-1$ or $i+1$ have already been chosen in some previous step.  At any step in the process, at most $\epsilon r$ elements have already been chosen in previous steps and each of these eliminates at most $2$ options.  Therefore, there will always be an element available to choose, provided that $2\epsilon r < \lfloor(r-1)/\ell\rfloor$.  In particular, for any $r\ge r_0\ge \ell$, $\epsilon < 1/(4\ell)$ works.
 
-    To ease notation, let $G:=G_{n_w}$.  We now construct the anagramish path $P$ in a piecewise fashion.  Refer to \cref{path_construction}.  For each $i\in\{1,\ldots,2r\}$, let $H_i$ be the subgraph of $G$ induced by the vertices corresponding to $w_i$. (The subgraph $H_1,\ldots,H_{2r}$ are referred to above as colourful blocks.)
+    To ease notation, let $G:=G_{n_w}$.  We now construct the anagramish path $P$ in a piecewise fashion.  Refer to \cref{path_construction}.  For each $i\in\{1,\ldots,2r\}$, let $H_i$ be the subgraph of $G$ induced by the vertices corresponding to $w_i$. (The subgraphs $H_1,\ldots,H_{2r}$ are referred to above as colourful blocks.)
     \begin{figure}
         \centering{
             \includegraphics{figs/bigexample-1} \\
@@ -327,7 +334,7 @@ Since $L$ is periodic, there exists an integer $\ell$ such that every word in $L
 To be explicit, we finish the proof of \cref{main_vertex} by pointing out the contradiction between \cref{near_anagram_graph} and \cref{anagramish_path}:
 
 \begin{proof}[Proof of \cref{main_vertex}]
-    Assume for the sake of contradiction that there exists some $c\in\N$ such that $\afcn(G_n)\le c$ for each $n\in\N$.  With this assumption, \cref{near_anagram_graph} shows that for every $\epsilon>0$ and $r_0\in\N$ there exists a word $w\in L$ with $|w|\ge 2r_0$, $\tau(w)\le\epsilon r$, and such that $\phi_w$ is an anagram-free colouring of $G_{n_w}$.
+    Assume for the sake of contradiction that there exists some $c\in\N$ such that $\afcn(G_n)\le c$ for each $n\in\N$.  Under this assumption, the language $L_1$ is infinite and, by \cref{periodicity} so are $L_2$ and $L_3$.  Therefore $L_3$ contains arbitrarily long strings so \cref{near_anagram_graph} implies that for every $\epsilon>0$ and $r_0\in\N$ there exists a word $w\in L$ with $2r:=|w|\ge 2r_0$, and $\tau(w)\le\epsilon r$, and such that $\phi_w$ is an anagram-free colouring of $G_{n_w}$.
 
     \cref{anagramish_path} shows that there are fixed values $\epsilon >0$ and $r_0\in \N$ such that, for any word $w\in L$ with $|w|\ge r_0$ and $\tau(w)\le\epsilon r$, the graph $G_{n_w}$ contain a path that is anagramish under $\phi_w$.  This certainly contradicts the fact that $\phi_w$ is an anagram-free colouring of $G_{n_w}$. We therefore conclude that, for every $c\in\N$ there exists an $n\in N$ such that $\afcn(G_n)> c$.
 \end{proof}
