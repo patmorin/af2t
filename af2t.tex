@@ -172,7 +172,7 @@ A word $w:=w_1,\ldots,w_n$ is \emph{$\ell$-periodic} over an alphabet $\Sigma\su
 The proof of \cref{near_anagram_fourier} is deferred to \cref{near_anagram_proof}.  We now give some intuition as to how it is used.  The process of checking if a word is anagramish can be viewed as finding common letters in the first and second halves and crossing them both out.  If this results in a complete cancellation of all letters, then the word is an anagram.  \cref{near_anagram_fourier} tells us that we can always find a long factor $w$ where, after exhaustive cancellation, only an $\epsilon$-fraction of the original letters remain.
 % Informally, the factor $w$ is $\epsilon$-close to being anagramish.
 
-\cref{near_anagram_fourier} says that, if up to $\epsilon r$ letters in each half of $w$ were each allowed to cancel two of the same letters in the other half of $w$, then it would be possible to complete the cancellation process.  To achieve this type of one-versus-two cancellation in our setting, we decompose our coloured pathwidth-$2$ graph into pieces of constant size.  The vertices in each piece can be covered with one path or partitioned into two paths (see \cref{paths}).  In this way an occurrence $H_z$ of a particular coloured piece in one half can be matched with two like-coloured pieces $H_x$ and $H_y$ in the other half. We construct a single path $P$ that contains all vertices in $H_z$ and only half the vertices in each of $H_x$ and $H_y$.  In this way, the colours of vertices $P\cap H_z$ can cancel the colours of the vertices in $P\cap(H_x\cup H_y)$.
+Stated differently, if up to $\epsilon r$ letters in each half of $w$ were each allowed to cancel two of the same letters in the other half of $w$, then it would be possible to complete the cancellation process.  To achieve this type of one-versus-two cancellation in our setting, we decompose our coloured pathwidth-$2$ graph into pieces of constant size.  The vertices in each piece can be covered with one path or partitioned into two paths (see \cref{paths}).  In this way an occurrence $H_z$ of a particular coloured piece in one half can be matched with two like-coloured pieces $H_x$ and $H_y$ in the other half. We construct a single path $P$ that contains all vertices in $H_z$ and only half the vertices in each of $H_x$ and $H_y$.  In this way, the colours of vertices $P\cap H_z$ can cancel the colours of the vertices in $P\cap(H_x\cup H_y)$.
 
 Since \cref{near_anagram_fourier} requires that the word $w$ be $\ell$-periodic, the following lemma will be helpful in obtaining words that can be used with \cref{near_anagram_fourier}. (Although \cref{periodicity} follows immediately from considerably stronger results in combinatorics on words---for example \citet[Proposition~1.5.12]{lothaire:algebraic}---we provide a proof here for the sake of completeness.)
 
@@ -213,7 +213,7 @@ $\phi_w(a_i):=w_{2i}$ and $\phi_w(b_i):=w_{2i+1}$, for each $i\in\{0,\ldots,n-1\
 
 % Let $L_0\subseteq \Sigma_0^*$ consist of all words $w\in \Sigma_0^*$ whose length is a multiple of $8$ and such that $\phi_w$ is an anagram-free colouring of $G_{|w|/2}$. Furthermore, the assumption that $\afcn(G_n)\le c$ for each $n\in\N$ implies that $L_0$ is infinite.
 
-For reasons that will become apparent, it is useful to break $G_n$ up into blocks consisting of $4$ columns each.  Let $\Sigma_1:=\Sigma_0^8$ and define the language $L_1$ to consist of exactly those words $w_1,\ldots,w_r\in \Sigma_1^*$ for which $\phi_{w_1\cdots w_r}$ is an anagram-free colouring of $G_{4r}$.
+For reasons that will become apparent, it is useful to break $G_n$ into blocks consisting of $4$ columns each.  Let $\Sigma_1:=\Sigma_0^8$ and define the language $L_1$ to consist of exactly those words $w_1,\ldots,w_r\in \Sigma_1^*$ for which $\phi_{w_1\cdots w_r}$ is an anagram-free colouring of $G_{4r}$.
 
 % If $\afcn(G_n)\le c$ for all $n\in\N$, then $L_1$ is infinite.  
 From the definition of anagram-free colouring, it follows that $L_1$ is factor-closed.  Define the lange $L_2\subseteq L_1$ as follows: If $L_1$ is finite, then $L_2:=L_1$.  If $L_1$ is infinite then, by \cref{periodicity}, there exists an infinite periodic factor-closed language contained in $L_1$ and we let $L_2$ be any such language.  Note that in either case $L_2$ is periodic, since every finite language is periodic.  
@@ -231,7 +231,7 @@ Since $L_2$ is periodic, each word in $\Sigma_3$ has bounded length, so $\Sigma_
 
 % Therefore, by \cref{periodicity}, there exists an infinite periodic factor-closed language $L\subseteq L_3$ over the alphabet $\Sigma:=\Sigma_{L_3}$.
 
-See \cref{bigexample} for what follows. Each word $w:=w_1,\ldots,w_r\in L_3$ defines a word $w':=xw_1xw_2\cdots xw_{r}\in L_2$.  In graph colouring terms, $w$ defines an integer $n(w):=4r+\tfrac{1}{2}\sum_{i=1}^r|w_i|$ and an anagram-free colouring $\phi_w:=\phi_{w'}$ of $G_{n(w)}$. The word $w'$ partitions the columns of $G_{n(w)}$ into \emph{blocks}, each of which corresponds to a letter $a$ of $w'$ and whose length $|a|/2$ is a multiple of $4$.  There are two types of blocks:
+See \cref{bigexample} for what follows. Each word $w:=w_1,\ldots,w_r\in L_3$ defines a word $w':=xw_1xw_2\cdots xw_{r}\in L_2$.  In graph colouring terms, $w$ defines an integer $n(w):=4\sum_{i=1}^r(1+|w_i|)$ and an anagram-free colouring $\phi_w:=\phi_{w'}$ of $G_{n(w)}$. The word $w'$ partitions the columns of $G_{n(w)}$ into \emph{blocks}, each of which corresponds to a letter $a$ of $w'$ of length $4|a|$.  There are two types of blocks:
 \begin{compactitem}
     \item There are \emph{boring} blocks $Q_0,\ldots,Q_{r-1}$, each containing $4$ columns of $G_{n(w)}$, and each corresponding to an occurrence of $x$ in $w'$.
     \item There are \emph{colourful blocks} $H_1,\ldots,H_r$, where $H_i$ is the subgraph of $G_{n(w)}$ corresponding to $w_i$ and contains $4|w_i|$ columns of $G_{n(w)}$.
@@ -252,22 +252,22 @@ The following lemma shows that any sufficiently long string $w$ in $L_3$ must de
 % \cref{near_anagram_graph} shows that, if $L_3$ contains a sufficiently long word, the existence of a colouring $\phi_w$ of $G_n$ (for arbitrarily large $n$) that is defined by a word $w$ that is $\epsilon$-close to being anagramish.  This implies that the path $P_0:=a_1,\ldots,a_{n}$ is $4\epsilon$-close to being anagramish under $\phi_w$.  The last step, done in the next lemma, is to show that there is enough flexibility to modify $P_0$ to obtain a path is anagramish under $\phi_w$.
 
 \begin{lem}\label{anagramish_path}
-    There exists $\epsilon>0$ and $r_0\in\N$ such that, for any $w\in L_3$ with even length $2r:=|w|\ge 2r_0$ and $\tau(w)\le\epsilon r$, the graph $G_{n(w)}$ contains a path that is anagramish under $\phi_w$.
+    There exists $\epsilon>0$ and $r_0\in\N$ such that, for any $w\in L_3$ that has even length $2r:=|w|\ge 2r_0$ and that has $\tau(w)\le\epsilon r$, the graph $G_{n(w)}$ contains a path that is anagramish under $\phi_w$.
 \end{lem}
 
 \begin{proof}
-    Let $w:=w_1,\ldots,w_{2r}$ so that the colouring $\phi_w$ is defined by the word $xw_1xw_2\cdots xw_{2r}$.
-    For each $a\in\Sigma_3$, define $X^+_a:=\{i\in\{1,\ldots,r-1\}:w_i=a\}$ and $Y^+_a:=\{i\in\{r+1,\ldots,2r-1\}:w_i=a\}$.  (The sets $X^+_a$ and $Y^+_a$ index the occurrences of $a$ in the first and second half of $w$, respectively.)   We will now define two sets $X_a\subseteq X^+_a$ and $Y_a\subseteq Y^+_a$ with the following properties:
+    Let $w_1,\ldots,w_{2r}:=w$ so that the colouring $\phi_w$ is defined by the word $xw_1xw_2\cdots xw_{2r}$.
+    For each $a\in\Sigma_3\setminus\{x\}$, define $X^+_a:=\{i\in\{1,\ldots,r-1\}:w_i=a\}$ and $Y^+_a:=\{i\in\{r+1,\ldots,2r-1\}:w_i=a\}$.  (The sets $X^+_a$ and $Y^+_a$ index the occurrences of $a$ in the first and second half of $w$, respectively.)   We will now define two sets $X_a\subseteq X^+_a$ and $Y_a\subseteq Y^+_a$ with the following properties:
     \begin{compactenum}
         \item If $\delta_a(w)=0$ then $X_a=Y_a=\emptyset$.
         \item If $\delta_a(w)>0$ then $|X_a|=2\delta_a(w)=2|Y_a|$.
         \item If $\delta_a(w)<0$ then $|X_a|=\delta_a(w)=\tfrac{1}{2}|Y_a|$.
     \end{compactenum}
-    Let $X:=\bigcup_{a\in\Sigma_3} X_a$, let $Y:=\bigcup_{a\in\Sigma_3} Y_a$, and observe that $|X|=|Y|=3\tau(w)/2$.  The sets $X_a$ and $Y_a$ will be chosen so that $X\cup Y$ satisfies the following \emph{global independence constraint}:  There is no pair $i,j\in X\cup Y$ such that $i-j=1$.  We now explain why, with appropriately chosen $\epsilon$ and $r_0$, this is always possible.
+    Let $X:=\bigcup_{a\in\Sigma_3} X_a$, let $Y:=\bigcup_{a\in\Sigma_3} Y_a$, and observe that the three preceding properties imply that $|X|=|Y|=3\tau(w)/2$.  The sets $X_a$ and $Y_a$ will be chosen so that $X\cup Y$ satisfies the following \emph{global independence constraint}:  There is no pair $i,j\in X\cup Y$ such that $i-j=1$.  We now explain why, with appropriately chosen $\epsilon$ and $r_0$, it is always possible to find sets $X_a$ and $Y_a$ (for each $a\in\Sigma_3\setminus\{x\}$) that satisfy these three properties.
     
     % To see that this is possible, first observe that, because $r$ is not in $X$ or $Y$ we need only concern ourselves with pairs where both $i,j\in\{1,\ldots,r-1\}$ or pairs where both $i,j\in\{r+1,\ldots,2r-1\}$.  Thus, we can choose the elements of $X_a$, for each $a\in\Sigma$ and then independently choose the elements of $Y_a$, for each $a\in\Sigma$.
     
-    We choose the elements of $X\cup Y$ using a greedy strategy. Suppose $X_a$ or $Y_a$ does not yet contain enough elements, for some $a\in\Sigma_3$. Without loss of generality, assume it is $X_a$.
+    We choose the elements of $X\cup Y$ using the following greedy strategy. Suppose $X_a$ or $Y_a$ does not yet contain enough elements, for some $a\in\Sigma_3$. Without loss of generality, assume it is $X_a$.
     % We can do this with a greedy strategy because we are only choosing at most $2\delta_a(w)\le 2\epsilon r$ elements from a set of size at least $\lfloor(r-1)/\ell\rfloor$ and each choice $i$ that we make eliminates the possibility of choosing at most $2$ elements, $i-1$ and $i+1$.
     Choose an arbitrary element from $X^+_a\setminus\bigcup_{i\in X\cup Y}\{i-1,i,i+1\}$ and add it to $X_a$.  To see that this is always possible observe that at the beginning of each step,
     \begin{align*}
@@ -280,7 +280,7 @@ The following lemma shows that any sufficiently long string $w$ in $L_3$ must de
     \end{align*}
     so there will always be an element to choose provided that $|X^+_a|> 9\epsilon r +3$.  Since $w\in L$, $w$ is $\ell$-periodic, so $|X^+_a|\ge \lfloor(r-1)/\ell\rfloor$.  Therefore, this procedure will succeed in finding sets $X$ and $Y$ with the global independence property provided that $9\epsilon r-3 < \lfloor(r-1)/\ell\rfloor$.  In particular, $\epsilon < 1/(9\ell)$ satisfies this requirement.
 
-    To ease notation, let $G:=G_{n(w)}$.  For each $i\in\{1,\ldots,2r\}$, let $H_i$ be the subgraph of $G$ induced by the vertices corresponding to $w_i$; the subgraphs $H_1,\ldots,H_{2r}$ are referred to above as colourful blocks.  We now construct the anagramish path $P$ in a piecewise fashion, as illustrated in \cref{path_construction}. 
+    To simplify notation, let $G:=G_{n(w)}$.  For each $i\in\{1,\ldots,2r\}$, let $H_i$ be the subgraph of $G$ induced by the vertices corresponding to $w_i$; the subgraphs $H_1,\ldots,H_{2r}$ are referred to above as colourful blocks.  We now construct the anagramish path $P$ in a piecewise fashion, as illustrated in \cref{path_construction}. 
     \begin{figure}
         \centering{
             \includegraphics{figs/bigexample-1} \\
@@ -296,7 +296,7 @@ The following lemma shows that any sufficiently long string $w$ in $L_3$ must de
         \label{path_construction}
     \end{figure}
     \begin{compactenum}
-        \item For each $a\in\Sigma_3$ such that $\delta_a(w)>0$, group the elements of $X_a$ into pairs.  For each pair $(i,j)$, $P$ contains the path through the top row of $H_i$ and the path through the bottom row of $H_j$.  For each element $i\in Y_a$ the path $P$ contains the zig-zag path with both endpoints in the top row of $H_i$ and that contains every vertex of $H_i$.  (Note that the zig-zag path begins at the top and ends at the bottom row because $H_i$ contains an even number of columns of $G$.)
+        \item For each $a\in\Sigma_3$ such that $\delta_a(w)>0$, group the elements of $X_a$ into pairs.  For each pair $(i,j)$, $P$ contains the path through the top row of $H_i$ and the path through the bottom row of $H_j$.  For each element $i\in Y_a$ the path $P$ contains the zig-zag path with both endpoints in the top row of $H_i$ and that contains every vertex of $H_i$. 
 
         \begin{figure}
             \centering{
@@ -317,7 +317,7 @@ The following lemma shows that any sufficiently long string $w$ in $L_3$ must de
 
         \item For each $i\in\{1,\ldots,2r\}\setminus(X\cup Y)$, $P$ contains the top row of $H_i$.
     \end{compactenum}
-    The rules above define the intersection, $P_i$, of $P$ with each colourful block $H_i$ of $G$.  If $P_i$ is the path through the bottom row of $H_i$ then we call $H_i$ a \emph{bottom block}. If $P_i$ is the path through the top row of $H_i$ then we call $H_i$ a \emph{top block}.  If $P_i$ is the zig-zag path that contains every vertex of $H_i$ then we call $H_i$ a \emph{zig-zag block}.  Note that $\sum_{a\in\Sigma_3} \delta_a(w) = 0$ and this implies that the number of bottom blocks among $H_1,\ldots,H_{r-1}$ is the same as the number of bottom blocks among $H_{r+1},\ldots,H_{2r}$.  Indeed, this number is exactly $\tau(w)$.
+    The rules above define the intersection, $P_i$, of $P$ with each colourful block $H_i$ of $G$.  If $P_i$ is the path through the bottom row of $H_i$ then we call $H_i$ a \emph{bottom block}. If $P_i$ is the path through the top row of $H_i$ then we call $H_i$ a \emph{top block}.  If $P_i$ is the zig-zag path that contains every vertex of $H_i$ then we call $H_i$ a \emph{zig-zag block}.  Note that $\sum_{a\in\Sigma_3} \delta_a(w) = 0$ and this implies that the number of bottom blocks among $H_1,\ldots,H_{r-1}$ is the same as the number of bottom blocks among $H_{r+1},\ldots,H_{2r}$.  Indeed, this number is exactly $\tfrac{1}{2}\tau(w)$.
 
     We now define how $P$ behaves for the boring blocks, denoted by  $Q_0,\ldots,Q_{2r-1}$. The first boring block $Q_0$ comes immediately before $H_1$. Each boring block $Q_j$, for $j\in\{1,\ldots,2r-1\}$ comes immediately after $H_j$ and immediately before $H_{j+1}$.  In almost every case, $P$ uses the path through the top row of $Q_j$.  The only exceptions are when $H_j$ or $H_{j+1}$ are bottom blocks. Note that, because of the global independence constraint, these two cases are mutually exclusive. See \cref{updownup}.
 
@@ -339,7 +339,7 @@ The following lemma shows that any sufficiently long string $w$ in $L_3$ must de
     \end{compactenum}
     This completely defines the path $P:=v_1,\ldots,v_{2m}$. All that remains is to argue that the word $\rho:=\phi_w(v_1),\ldots,\phi_w(v_{2m})$ is anagramish.
 
-    Observe that the number of downup paths and the number of updown paths that appear in $Q_0,\ldots,Q_{r-1}$ is exactly the same as the number of bottom blocks among $H_1,\ldots,H_{r-1}$ which is exactly $\tau(w)$.  Similarly, the number of updown paths and downup paths that appear in $Q_{r+1},\ldots,Q_{2r-1}$ is exactly $\tau(w)$.  Now every path that is neither downup nor updown uses the top row.  This implies that the sequence of colours contributed to $\rho$ by  the intersection of $P$ with $Q_0,\ldots,Q_{r-1}$ is a permutation of the sequence of colours contributed to $\rho$ by the intersection of $P$ with $Q_{r+1},\ldots,Q_{2r-1}$.  These two sequences cancel perfectly.
+    Observe that the number of downup paths and the number of updown paths that appear in $Q_0,\ldots,Q_{r-1}$ is exactly the same as the number of bottom blocks among $H_1,\ldots,H_{r-1}$ which is exactly $\tfrac12\tau(w)$.  Similarly, the number of updown paths and downup paths that appear in $Q_{r+1},\ldots,Q_{2r-1}$ is exactly $\tfrac12\tau(w)$.  Now every path that is neither downup nor updown uses the top row.  This implies that the sequence of colours contributed to $\rho$ by  the intersection of $P$ with $Q_0,\ldots,Q_{r-1}$ is a permutation of the sequence of colours contributed to $\rho$ by the intersection of $P$ with $Q_{r+1},\ldots,Q_{2r-1}$.  These two sequences cancel perfectly.
 
     Next, by construction, each pair of top and bottom blocks in $H_1,\ldots,H_{r-1}$ contributes exactly the same amount as a single matching zig-zag block in $H_{r+1},\ldots,H_{2r-1}$.  Specifically, if $x,y\in X_a$, $z\in Y_a$, $H_x$ is a top block, $H_y$ is a bottom block and $H_z$ is a zig-zag block, then the contributions of $P_x$ and $P_y$ to $\rho$ cancels out the contribution of $P_z$. After doing this cancellation exhaustively, all that remains are top blocks, which also cancel each other perfectly.  This completes the proof.
 \end{proof}
