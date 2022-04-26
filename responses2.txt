@@ -1,0 +1,157 @@
+========================================================================
+Page 1, line 14
+I would replace the sentence with "In 1961, Erdo˝s [3] asked if there exist arbitrarily long anagram-free words over an alphabet of size four." to avoid awkward sentence construction.
+--
+Done.
+
+
+========================================================================
+Page 3, line 81
+I think, grammatically, this should be "every $\ell$-periodic word" rather than "each $\ell$-periodic word".
+--
+Changed.
+
+
+========================================================================
+Page 4, line 118
+I really dislike assuming something for the sake of contradiction in the main body of the text, as occurs at the start of Section 3. Without the safety of a proof environment it is unclear where this assumption is meant to hold. It is essentially a scope issue. On a strict reading of this section, the definitions in this section only hold if this assumption is true, which may be necessary for some results, but it is not required for the results of this paper. I think most of the machinery of Section 3 could be presented before explicitly invoking the contradiction statement. This is not to say that the main text should avoid tell the reader that the machinery is being built with a proof by contradiction in mind, rather, that the assumption should be only formally invoked when required, not sooner. Lemmas 4 and 5 do not strictly depend on this assumption, and they would be much stronger without it.
+--
+We have reworded this section so that this assumption is only alluded to in the first paragraph, as part of the proof outline.  The assumption itself is then only invoked later in the (quite short) proof of Theorem 1.
+
+This causes a couple of other changes: We now need a (trivial) definition of $L_2$ for the case where $L_1$ is finite, and the statement of Lemma 4 has been reworded to say that any sufficiently long word $W$ in $L_3$ contains a factor $w$ with the desired properties.
+
+
+========================================================================
+I suggest reworking lines 117 to 153 such that the proof of Lemma 4 is inside a proof environment rather than the main body of the text. After some preamble the section could start with the proof of Lemma 4, opening with "Observe that there is a bijection" on line 119 and going mostly from there. Some notation defined within is shared between Lemmas 4 and 5, so would ideally be moved prior to the proof. Such a rework would make it easier to extract the insight from Lemma 4 as the requirements would be explicitly spelled and no stronger than they need to be. While I did not find mathematical errors here, I can't be sure that they don't exist, so such a layout would also increase the chance of finding any remaining issues.
+--
+We have chosen not to do this because the language $L_3$ is the subject of both Lemma 4 and Lemma 5, so it makes sense to define $L_3$ and then state these two lemmas.  (The references to L in Lemma 4, the subsequent paragraph, and Lemma 5 were erroneously left from a previous version, they should have been L_3)
+
+We have moved the statement of Lemma 4 so that it appears immediately after the definition of $L_3$.  Between Lemmas 4 and 5 is the definition of $\phi_w$, which is needed in Lemma 5.
+
+
+==========================================================================
+Page 4, line 141
+I would try to find a way to avoid the double subscript $G_{n_w}$, but it is a minor problem in this instance.
+--
+We have changed $n_w$ to $n(w)$.
+
+
+==========================================================================
+Page 5, line 152
+$L$ is referenced in Lemma 4 without being defined within the lemma. Unlike $G_n$, $L$ does not have a globally consistent definition within the paper. For example, on line 64 $L$ is just a language over $\Epsilon$. This makes it harder to parse and needlessly difficult to generalise the lemma for future work. Therefore, it would be best to define $L$ in the statement of the lemma and list the required properties, namely that it is periodic and factor-closed. $L$ probably has to be infinite too. This change would ideally happen as part of the restructure for my comment about page 4, line 118. Start the proof with something like "For all infinite, periodic, factor-closed languages $L$, etc..". Perhaps define a type of $L$ to make this less wordy.
+--
+As mentioned above, this should have been $L_3$, not $L$, and is now fixed.
+
+
+==========================================================================
+
+Page 5, line 159
+As with Lemma 4, $L$ is referenced in the lemma statement without definition. In some sense this is worse than in the case of Lemma 4 since, while Lemma 4 essentially starts with "In the case that the thing we assumed for the sake of contradiction on page 4, line 118, is true, then...", while Lemma 5 has no such dependence. As written, Lemma 5 depends on the contradiction assumed on page 4, line 118, because $L$ is only defined in the case that the assumption holds. I suspect that $L$ does not need to be defined this way, although I may be missing a subtlety involving $\phi_w$ here. The only requirement of $L$ used in the proof is that it is periodic, although the proof also implicitly requires that it is infinite. The fact that $L$ is factor-closed is seemingly not used at all. Check whether $L$ being factor-closed is required by the proof and include the property and state where it is used if it is. Lemma 5 will be much stronger for it, and while the strength is not strictly required for Theorem 1, it will make the proof clearer and be appreciated by anyone trying to generalise the method.
+--
+As mentioned above, this should have been $L_3$, not $L$, and is now fixed.
+
+
+===========================================================================
+Page 5, line 161
+$x$ is defined in a roundabout way. I thick it would be clearer to first define $x$ as the boring blocks of $\phi_w$, and then define $w$ in terms of $\phi_w$ and $x$. The reader can figure it out, but they have to assume that the $x$ referred to here is the same as the $x$ referred to in the main body of the paper around the discussion of boring blocks. This is a relatively minor scope issue.
+--
+Again, replacing $L$ by $L_3$ addresses this problem.  The language $L_2$ is a periodic sublanguage of $L_1$, $x$ is any letter in the alphabet of $L_2$, and then $L_3$ is defined by removing occurrences of $x$ from the words in $L_2$ (roughly).  Since the Lemma now refers to $L_3$, the definition is of $x$ is now clearly the same $x$ used to derive $L_3$ from $L_2$.
+
+(The misplaced $L$'s were a sloppy mistake in the previous version. Sorry for wasting the referee's time.)
+
+
+===========================================================================
+Page 5, line 162
+Define $r$ before using it rather than putting it in a parentheses at the end of the sentence.
+--
+We now include the definition of $r$ in the statement of the lemma.
+
+
+===========================================================================
+Page 5, lines 173-180
+The argument that A and B can be chosen to satisfy the global independence constraint could be made clearer. To core of the proof is in the definition of:
+1) the total number of elements available to be added to $A_a$ at the start of the selection process,
+2) the maximum number of choices of element removed by each step of the selection process, and
+3) the number of steps in the selection process (ranging over all $a \in \Sigma$),
+followed by the conclusion that (1) > (2)(3), so the greedy algorithm simply works as the selection process. These elements are present in the paragraph but could be made more explicit. When defining $A_a$ on line 162, it is defined as a set that is the subset of some large expression. The set that $A_a$ is selected from is the quantity (1). I suggest defining this set explicitly (see how hard it is to refer to even here), such as $A_a \subseteq X_A := [large expression]$, so that (1) can be referred to later simply as $|X_A|$. While (1) is given as $|X_A|$ across lines 174 and 175, the paragraph dances around it rather than making it the focus simply because it is so hard to refer to.
+--
+We have introduced $A^_a$ and $B^+_a$ to denote these two large sets.
+
+
+===========================================================================
+Similarly, the sentences starting on lines 175 and 177 don't do much to progress the argument and are rather passive. Rather than stating the possibility of a step that could be taken in the argument, they should simply carry out the step. The argument is not so complicated that it requires such signposting, at least when spelled out clearly. I would rework these sentences to more explicitly define (2) and (3). After establishing (1), (2) and (3) with their relevant bounds, I would put a display equation of the form (1) <= [bound on (1)] <= [bound on (2)(3)] <= (2)(3) near the end of the paragraph and state that the greedy algorithm is a selection process that brings about the desired property.
+--
+We have made this completely explicit.  While doing so we noticed that we there were two mistakes in the constants
+- Each step prevents $3$ elements from being taken in subsequent steps, not $2$.  (Choosing $i$ prevents later steps from choosing $i-1$, $i$, or $i+1$.)
+- There are $3\tau(w)$ steps, not $2\tau(w)$ steps, when choosing $A$ and $B$.  (Because reducing $\tau(w)$ requires balancing $2$ characters in $A$ with $1$ character in $B$, or vice-versa.)
+
+This argument is now a bit longer, but clearer (and correct).
+
+
+===========================================================================
+Page 6, line 181
+Move the sentence starting "We now construct" to the end of the paragraph so it is clearer that the list starting on line 185 refers to the construction of $P$.
+--
+done
+
+
+===========================================================================
+Page 6, line 183
+Add this comment to the end of the previous sentence with a comma, or simply remove the parentheses.
+--
+done
+
+
+===========================================================================
+Page 6, line 187
+"$B_a$," looks like "$B_{a'}$". I spent a short while searching for the definition of $a'$ (a prime).
+--
+We replaced the comma with two words to avoid this.  This is probably grammatically incorrect, or at least inconsistent, but avoids this issue.
+
+
+===========================================================================
+Page 5 and 6
+This is a minor sweeping change, but I found myself being put off by the choice of 'a' for $a \in \Sigma$ with sections that deal with $A_a$ and $B_a$. The choice of 'a' to index the sets $A_i$ and $B_i$ sets up the expectation that $A_a$ has some special importance, which is not the case. Perhaps invoke "without loss of generality earlier" to further avoid reference to $B_a$, or pick an appropriate symbol to use instead of 'a'.
+--
+We shose to replace the sets $A$ and $B$ with $X$ and $Y$ instead. We still use $a$ throughout to represent some arbitrary letter of some alphabet
+
+
+===========================================================================
+Page 7, line 198
+The two occurrences of "(top)" are confusing and not referenced elsewhere.
+--
+We split this into two parallel sentences.
+
+
+===========================================================================
+Page 8, lines 232-239
+As per my comment about page 4, line 118, we have already assumed this for the sake of contradiction. This would be fixed with the rework of Lemma 4, as this would then be the first time we formally assume this for the sake of contradiction.
+--
+Yes, this is now the first time that this assumption is made.
+
+
+===========================================================================
+Overall, I dislike how this proof is phrased. It often reads like text I would expect in the main body, that is, explaination and discussion of a proof rather than being a proof itself. The sentence starting on line 233 should simply invoke the objects with the properties given by Lemma 4, rather than passively stating the possibility of doing so. Similarly, the next sentence should invoke Lemma 5 rather than describing what might happen were it invoked. Use the two lemmas to simply build up statements until a contradiction is reached. The proof is so brief that no further explaination or embellishment is required.
+--
+We have rephrased this in a more active voice.
+
+
+===========================================================================
+Page 8, line 248
+I would replace the parentheses with something like ", to be determined later,".
+--
+Done
+
+
+===========================================================================
+Page 8, line 262
+For style, I would remove the parentheses around this sentence. You may also want to define $T$ with the property described here if it aids the rest of the proof.
+--
+We removed the parentheses.  It would take time to explain why the assumption that the right child of each node is the "light" one is without loss of generality.
+
+
+===========================================================================
+Page 9, lines 293-294
+I think these lines would be clearer if written in summation notation.
+--
+Done
