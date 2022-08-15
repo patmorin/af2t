@@ -101,7 +101,7 @@
 \maketitle
 
 \begin{abstract}
-    We show that anagram-free vertex colouring a $2\times n$ square grid requires a number of colours that increases with $n$.  This answers an open question in Wilson's thesis and shows that even graphs of pathwidth $2$ do not have anagram-free colourings with a bounded number of colours.
+    We show that anagram-free vertex colouring a $2\times n$ square grid requires a number of colours that increases with $n$.  This answers an open question in Wilson's thesis and shows that that are even graphs of pathwidth $2$ that do not have anagram-free colourings with a bounded number of colours.
 \end{abstract}
 % \end{titlepage}
 
@@ -200,7 +200,7 @@ Since \cref{near_anagram_fourier} requires that the word $w$ be $\ell$-periodic,
 For each $n\in\N$, let $G_n$ be the $2\times n$ square grid with top row $a_0,\ldots,a_{n-1}$ and bottom row $b_0,\ldots,b_{n-1}$ (see \cref{g_n}).  Our proof strategy is a proof by contradiction.  Ultimately, we will assume (for the sake of contradiction) that there exists an integer $c$ such that $\afcn(G_n)\le c$ for each $n\in\N$ and use this to derive a contradiction.  In the following, we will define several languages $L_1$, $L_2$, and $L_3$ that would be infinite if the preceding assumption were true.  The final contradiction will occur if $L_3$ contains a sufficiently long string.
 
 As a first step, observe that for any $n\in\N$ there is a bijection between vertex $c$-colourings of $G_n$ and words of length $2n$ over the alphabet $\Sigma_0:=\{1,\ldots,c\}$ where a word $w:=w_0,\ldots,w_{2n-1}$ corresponds to the colouring $\phi_w:V(G_n)\to\{1,\ldots,c\}$ defined by
-$\phi_w(a_i):=w_{2i}$ and $\phi_w(b_i):=w_{2i+1}$, for each $i\in\{0,\ldots,n-1\}$.  
+$\phi_w(a_i):=w_{2i}$ and $\phi_w(b_i):=w_{2i+1}$, for each $i\in\{0,\ldots,n-1\}$.
 
 \begin{figure}
     \centering{
@@ -215,15 +215,15 @@ $\phi_w(a_i):=w_{2i}$ and $\phi_w(b_i):=w_{2i+1}$, for each $i\in\{0,\ldots,n-1\
 
 For reasons that will become apparent, it is useful to break $G_n$ into blocks consisting of $4$ columns each.  Let $\Sigma_1:=\Sigma_0^8$ and define the language $L_1$ to consist of exactly those words $w_1,\ldots,w_r\in \Sigma_1^*$ for which $\phi_{w_1\cdots w_r}$ is an anagram-free colouring of $G_{4r}$.
 
-% If $\afcn(G_n)\le c$ for all $n\in\N$, then $L_1$ is infinite.  
-From the definition of anagram-free colouring, it follows that $L_1$ is factor-closed.  Define the lange $L_2\subseteq L_1$ as follows: If $L_1$ is finite, then $L_2:=L_1$.  If $L_1$ is infinite then, by \cref{periodicity}, there exists an infinite periodic factor-closed language contained in $L_1$ and we let $L_2$ be any such language.  Note that in either case $L_2$ is periodic, since every finite language is periodic.  
+% If $\afcn(G_n)\le c$ for all $n\in\N$, then $L_1$ is infinite.
+From the definition of anagram-free colouring, it follows that $L_1$ is factor-closed.  Define the lange $L_2\subseteq L_1$ as follows: If $L_1$ is finite, then $L_2:=L_1$.  If $L_1$ is infinite then, by \cref{periodicity}, there exists an infinite periodic factor-closed language contained in $L_1$ and we let $L_2$ be any such language.  Note that in either case $L_2$ is periodic, since every finite language is periodic.
 
-Let $x$ be any letter in $\Sigma_{L_2}$.  Note that the word $xx$ is not in $L_2$ since the corresponding colouring $\phi_{xx}$ of $G_8$ has, for example, the anagramish path $a_0,\ldots,a_7$.  Since $L_2$ is factor-closed, no word in $L_2$ contains $xx$ as a factor, i.e., $xx\not\in F(L_2)$.  Let $\Sigma_3\subset F(L_2)$ contain only those factors of $L_2$ that do not contain $x$.  Thus, any word in $L_2$ is of the form $w_0xw_1xw_2\cdots xw_rxw_{r+1}$ where each of $w_1,\ldots,w_{r}$ is in $\Sigma_3$ and each of $w_0,w_{r+1}$ is in $\Sigma_3\cup\{\varepsilon\}$.  
+Let $x$ be any letter in $\Sigma_{L_2}$.  Note that the word $xx$ is not in $L_2$ since the corresponding colouring $\phi_{xx}$ of $G_8$ has, for example, the anagramish path $a_0,\ldots,a_7$.  Since $L_2$ is factor-closed, no word in $L_2$ contains $xx$ as a factor, i.e., $xx\not\in F(L_2)$.  Let $\Sigma_3\subset F(L_2)$ contain only those factors of $L_2$ that do not contain $x$.  Thus, any word in $L_2$ is of the form $w_0xw_1xw_2\cdots xw_rxw_{r+1}$ where each of $w_1,\ldots,w_{r}$ is in $\Sigma_3$ and each of $w_0,w_{r+1}$ is in $\Sigma_3\cup\{\varepsilon\}$.
 
-Since $L_2$ is periodic, each word in $\Sigma_3$ has bounded length, so $\Sigma_3$ is finite, i.e., $\Sigma_3$ is an alphabet.  Let $L_3$ be the language consisting of all words $w_1,\ldots,w_r\in\Sigma_3^*$ such that $xw_1xw_2\cdots xw_r\in L_2$.  If $L_2$ is infinite, then so is $L_3$.  Since $L_2$ is factor closed and periodic, $L_3$ is also factor-closed and periodic. 
+Since $L_2$ is periodic, each word in $\Sigma_3$ has bounded length, so $\Sigma_3$ is finite, i.e., $\Sigma_3$ is an alphabet.  Let $L_3$ be the language consisting of all words $w_1,\ldots,w_r\in\Sigma_3^*$ such that $xw_1xw_2\cdots xw_r\in L_2$.  If $L_2$ is infinite, then so is $L_3$.  Since $L_2$ is factor closed and periodic, $L_3$ is also factor-closed and periodic.
 
 % Along with \cref{near_anagram_fourier}, this immediately imply the following lemma:
-% 
+%
 % \begin{lem}\label{near_anagram_graph}
 %   For each $r_0\in\N$ and $\epsilon>0$, there exists $n\in\N$ such that every length-$n$ string in $L_3$ contains a factor $w\in L_3$ with even length $2r:=|w|\ge 2r_0$ and with $\tau(w)\le\epsilon r$.
 % \end{lem}
@@ -264,9 +264,9 @@ The following lemma shows that any sufficiently long string $w$ in $L_3$ must de
         \item If $\delta_a(w)<0$ then $|X_a|=\delta_a(w)=\tfrac{1}{2}|Y_a|$.
     \end{compactenum}
     Let $X:=\bigcup_{a\in\Sigma_3} X_a$, let $Y:=\bigcup_{a\in\Sigma_3} Y_a$, and observe that the three preceding properties imply that $|X|=|Y|=3\tau(w)/2$.  The sets $X_a$ and $Y_a$ will be chosen so that $X\cup Y$ satisfies the following \emph{global independence constraint}:  There is no pair $i,j\in X\cup Y$ such that $i-j=1$.  We now explain why, with appropriately chosen $\epsilon$ and $r_0$, it is always possible to find sets $X_a$ and $Y_a$ (for each $a\in\Sigma_3\setminus\{x\}$) that satisfy these three properties.
-    
+
     % To see that this is possible, first observe that, because $r$ is not in $X$ or $Y$ we need only concern ourselves with pairs where both $i,j\in\{1,\ldots,r-1\}$ or pairs where both $i,j\in\{r+1,\ldots,2r-1\}$.  Thus, we can choose the elements of $X_a$, for each $a\in\Sigma$ and then independently choose the elements of $Y_a$, for each $a\in\Sigma$.
-    
+
     We choose the elements of $X\cup Y$ using the following greedy strategy. Suppose $X_a$ or $Y_a$ does not yet contain enough elements, for some $a\in\Sigma_3$. Without loss of generality, assume it is $X_a$.
     % We can do this with a greedy strategy because we are only choosing at most $2\delta_a(w)\le 2\epsilon r$ elements from a set of size at least $\lfloor(r-1)/\ell\rfloor$ and each choice $i$ that we make eliminates the possibility of choosing at most $2$ elements, $i-1$ and $i+1$.
     Choose an arbitrary element from $X^+_a\setminus\bigcup_{i\in X\cup Y}\{i-1,i,i+1\}$ and add it to $X_a$.  To see that this is always possible observe that at the beginning of each step,
@@ -276,11 +276,11 @@ The following lemma shows that any sufficiently long string $w$ in $L_3$ must de
      % & \ge |X^+_a| - 3\left(\sum_{b\in \Sigma_3}3\tau_b(w)\,\,-1\right) \\
      & \ge |X^+_a| - 3\left(3\tau(w)-1\right) \\
      & \ge |X^+_a| - 9\epsilon r - 3 \enspace ,
-     % \ge |X^+_a| - 3(|\Sigma_3|\cdot 2\cdot \epsilon r-1) = |X^+_a|-6\cdot|\Sigma_3|\cdot\epsilon r +3 \enspace , 
+     % \ge |X^+_a| - 3(|\Sigma_3|\cdot 2\cdot \epsilon r-1) = |X^+_a|-6\cdot|\Sigma_3|\cdot\epsilon r +3 \enspace ,
     \end{align*}
     so there will always be an element to choose provided that $|X^+_a|> 9\epsilon r +3$.  Since $w\in L$, $w$ is $\ell$-periodic, so $|X^+_a|\ge \lfloor(r-1)/\ell\rfloor$.  Therefore, this procedure will succeed in finding sets $X$ and $Y$ with the global independence property provided that $9\epsilon r-3 < \lfloor(r-1)/\ell\rfloor$.  In particular, $\epsilon < 1/(9\ell)$ satisfies this requirement.
 
-    To simplify notation, let $G:=G_{n(w)}$.  For each $i\in\{1,\ldots,2r\}$, let $H_i$ be the subgraph of $G$ induced by the vertices corresponding to $w_i$; the subgraphs $H_1,\ldots,H_{2r}$ are referred to above as colourful blocks.  We now construct the anagramish path $P$ in a piecewise fashion, as illustrated in \cref{path_construction}. 
+    To simplify notation, let $G:=G_{n(w)}$.  For each $i\in\{1,\ldots,2r\}$, let $H_i$ be the subgraph of $G$ induced by the vertices corresponding to $w_i$; the subgraphs $H_1,\ldots,H_{2r}$ are referred to above as colourful blocks.  We now construct the anagramish path $P$ in a piecewise fashion, as illustrated in \cref{path_construction}.
     \begin{figure}
         \centering{
             \includegraphics{figs/bigexample-1} \\
@@ -296,7 +296,7 @@ The following lemma shows that any sufficiently long string $w$ in $L_3$ must de
         \label{path_construction}
     \end{figure}
     \begin{compactenum}
-        \item For each $a\in\Sigma_3$ such that $\delta_a(w)>0$, group the elements of $X_a$ into pairs.  For each pair $(i,j)$, $P$ contains the path through the top row of $H_i$ and the path through the bottom row of $H_j$.  For each element $i\in Y_a$ the path $P$ contains the zig-zag path with both endpoints in the top row of $H_i$ and that contains every vertex of $H_i$. 
+        \item For each $a\in\Sigma_3$ such that $\delta_a(w)>0$, group the elements of $X_a$ into pairs.  For each pair $(i,j)$, $P$ contains the path through the top row of $H_i$ and the path through the bottom row of $H_j$.  For each element $i\in Y_a$ the path $P$ contains the zig-zag path with both endpoints in the top row of $H_i$ and that contains every vertex of $H_i$.
 
         \begin{figure}
             \centering{
