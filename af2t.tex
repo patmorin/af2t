@@ -1,4 +1,5 @@
-\documentclass{patmorin}
+\documentclass[12pt]{article}
+\usepackage{e-jc}
 \listfiles
 \usepackage{pat}
 \usepackage{paralist}
@@ -13,33 +14,33 @@
 \usepackage{cancel}
 \usepackage{enumitem}
 
-\usepackage{todonotes}
+% \usepackage{todonotes}
 
 \usepackage[longnamesfirst,numbers,sort&compress]{natbib}
 
-\usepackage[mathlines]{lineno}
-\setlength{\linenumbersep}{2em}
-\linenumbers
-% \rightlinenumbers
-\linenumbers
-\newcommand*\patchAmsMathEnvironmentForLineno[1]{%
- \expandafter\let\csname old#1\expandafter\endcsname\csname #1\endcsname
- \expandafter\let\csname oldend#1\expandafter\endcsname\csname end#1\endcsname
- \renewenvironment{#1}%
-    {\linenomath\csname old#1\endcsname}%
-    {\csname oldend#1\endcsname\endlinenomath}}%
-\newcommand*\patchBothAmsMathEnvironmentsForLineno[1]{%
- \patchAmsMathEnvironmentForLineno{#1}%
- \patchAmsMathEnvironmentForLineno{#1*}}%
-\AtBeginDocument{%
-\patchBothAmsMathEnvironmentsForLineno{equation}%
-\patchBothAmsMathEnvironmentsForLineno{align}%
-\patchBothAmsMathEnvironmentsForLineno{flalign}%
-\patchBothAmsMathEnvironmentsForLineno{alignat}%
-\patchBothAmsMathEnvironmentsForLineno{gather}%
-\patchBothAmsMathEnvironmentsForLineno{multline}%
-}
-
+% \usepackage[mathlines]{lineno}
+% \setlength{\linenumbersep}{2em}
+% \linenumbers
+% % \rightlinenumbers
+% \linenumbers
+% \newcommand*\patchAmsMathEnvironmentForLineno[1]{%
+%  \expandafter\let\csname old#1\expandafter\endcsname\csname #1\endcsname
+%  \expandafter\let\csname oldend#1\expandafter\endcsname\csname end#1\endcsname
+%  \renewenvironment{#1}%
+%     {\linenomath\csname old#1\endcsname}%
+%     {\csname oldend#1\endcsname\endlinenomath}}%
+% \newcommand*\patchBothAmsMathEnvironmentsForLineno[1]{%
+%  \patchAmsMathEnvironmentForLineno{#1}%
+%  \patchAmsMathEnvironmentForLineno{#1*}}%
+% \AtBeginDocument{%
+% \patchBothAmsMathEnvironmentsForLineno{equation}%
+% \patchBothAmsMathEnvironmentsForLineno{align}%
+% \patchBothAmsMathEnvironmentsForLineno{flalign}%
+% \patchBothAmsMathEnvironmentsForLineno{alignat}%
+% \patchBothAmsMathEnvironmentsForLineno{gather}%
+% \patchBothAmsMathEnvironmentsForLineno{multline}%
+% }
+%
 
 \newcommand{\coloured}[2]{{\color{#1}{#2}}}
 \newenvironment{colourblock}[1]{\color{#1}}{}
@@ -73,23 +74,43 @@
 \DeclareMathOperator{\afci}{\overline{\chi}_\pi}
 \DeclareMathOperator{\afcn}{\dot{\chi}_\pi}
 
+\allowdisplaybreaks
+
 \newcommand{\ellt}{{\lfloor\ell/2\rfloor}}
 
-\title{\MakeUppercase{$2\times n$ Grids have Unbounded Anagram-Free Chromatic Number}\thanks{This research was partly funded by NSERC.}}
-\author{Saman Bazargani%
-    \thanks{Department of Computer Science and Electrical Engineering, University of Ottawa}\qquad
-    Paz Carmi%
-    \thanks{Ben-Gurion University of the Negev}\qquad
-    Vida Dujmović\footnotemark[2]\qquad
-    Pat Morin%
-    \thanks{School of Computer Science, Carleton University}}
+\dateline{May 5, 2021}{Apr 27, 2020}{TBD}
+\MSC{05C15}
+\Copyright{The authors. Released under the CC BY license (International 4.0).}
 
+
+\title{$2\times n$ grids have unbounded anagram-free \\ chromatic number\thanks{This research was partly funded by NSERC.}}
+\author{%
+  Saman Bazargani\\
+  \small Department of Computer Science and Electrical Engineering\\[-0.8ex]
+  \small University of Ottawa\\[-0.8ex]
+  \small Ontario, Canada\\
+  \small\tt saman.bazargani@gmail.com
+  \and
+  Paz Carmi\\
+  \small Department of Computer Science\\[-0.8ex]
+  \small Ben-Gurion University of the Negev\\[-0.8ex]
+  \small Beer-Sheva, Israel\\
+  \small\tt carmip@cs.bgu.ac.il
+  \and Vida Dujmović\\
+  \small Department of Computer Science and Electrical Engineering\\[-0.8ex]
+  \small University of Ottawa\\[-0.8ex]
+  \small Ontario, Canada\\
+  \small\tt vida.dujmovic@uottawa.ca
+  \and
+  Pat Morin\\
+  \small School of Computer Science\\[-0.8ex]
+  \small Carleton University\\[-0.8ex]
+  \small Ottawa, Canada\\
+  \small\tt morin@scs.carleton.ca}
 \date{}
 
 \DeclareMathOperator{\ddiv}{div}
 \DeclareMathOperator{\hist}{p}
-
-\newcommand{\colored}[2]{{\color{#1}#2}}
 
 \usepackage{tabularx}
 
@@ -99,19 +120,10 @@
 
 % \begin{titlepage}
 \maketitle
-
+\vspace{-2ex} % Avoids putting subject classification on second page!
 \begin{abstract}
     We show that anagram-free vertex colouring a $2\times n$ square grid requires a number of colours that increases with $n$.  This answers an open question in Wilson's thesis and shows that that are even graphs of pathwidth $2$ that do not have anagram-free colourings with a bounded number of colours.
 \end{abstract}
-% \end{titlepage}
-
-% \pagenumbering{roman}
-% \tableofcontents
-%
-% \newpage
-% \pagenumbering{arabic}
-
-
 
 \section{Introduction}
 
@@ -505,6 +517,9 @@ Our proof uses \cref{periodicity} twice and each uses a language $L_3$ that is c
 \section*{Acknowledgement}
 
 We would like to thank an anonymous referee for pointing out existing results and terminology from the field of combinatorics on words that has helped streamline the presentation in \cref{near_anagram_statement,vertex_colourings}.
+
+
+\renewcommand{\doi}[1]{\href{https://dx.doi.org/#1}{\nolinkurl{doi:#1}}}
 
 \bibliographystyle{plainurlnat}
 \bibliography{af2t}
